@@ -1,0 +1,6 @@
+#ifndef HARMONY_CORE_HPP
+#define HARMONY_CORE_HPP
+
+
+
+#endif // HARMONY_CORE_HPP
