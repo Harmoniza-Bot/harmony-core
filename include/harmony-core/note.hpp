@@ -75,16 +75,34 @@ namespace harmony_core
         ~Note() noexcept = default;
 
         /*!
+         * \brief Задаёт основу этой ноты равной \code base\endcode.
+         * \param [in] base основа ноты.
+         */
+        void set_base(Base base) noexcept;
+
+        /*!
          * \brief Возвращает основу этой ноты.
          * @return Основа этой ноты.
          */
         Base get_base() const noexcept;
 
         /*!
+         * \brief Задаёт знак альтерации этой ноты равным \code accidental\endcode.
+         * \param [in] accidental знак альтерации ноты.
+         */
+        void set_accidental(Accidental accidental) noexcept;
+
+        /*!
          * \brief Возвращает знак альтерации этой ноты.
          * @return Знак альтерации этой ноты.
          */
         Accidental get_accidental() const noexcept;
+
+        /*!
+         * \brief Задаёт октаву этой ноты равной \code octave\endcode.
+         * \param [in] octave октава ноты.
+         */
+        void set_octave(Octave octave) noexcept;
 
         /*!
          * \brief Возвращает октаву этой ноты.
