@@ -68,7 +68,7 @@ namespace harmony_core
          * \brief Создаёт ноту на основе \code note\endcode.
          * \param [in] note другая нота.
          */
-        explicit Note(const Note &note) noexcept;
+        Note(const Note &note) noexcept;
         /*!
          * \brief Удаляет ноту.
          */
@@ -84,7 +84,7 @@ namespace harmony_core
          * \brief Возвращает основу этой ноты.
          * @return Основа этой ноты.
          */
-        Base get_base() const noexcept;
+        [[nodiscard]] Base get_base() const noexcept;
 
         /*!
          * \brief Задаёт знак альтерации этой ноты равным \code accidental\endcode.
@@ -96,7 +96,7 @@ namespace harmony_core
          * \brief Возвращает знак альтерации этой ноты.
          * @return Знак альтерации этой ноты.
          */
-        Accidental get_accidental() const noexcept;
+        [[nodiscard]] Accidental get_accidental() const noexcept;
 
         /*!
          * \brief Задаёт октаву этой ноты равной \code octave\endcode.
@@ -108,7 +108,7 @@ namespace harmony_core
          * \brief Возвращает октаву этой ноты.
          * @return Октаву этой ноты.
          */
-        Octave get_octave() const noexcept;
+        [[nodiscard]] Octave get_octave() const noexcept;
 
     private:
         /**
