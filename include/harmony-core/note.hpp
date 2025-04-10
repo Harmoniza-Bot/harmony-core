@@ -110,6 +110,25 @@ namespace harmony_core
          */
         [[nodiscard]] Octave get_octave() const noexcept;
 
+        /*!
+         * \brief Делает энгармоническую замену в указанном направлении.
+         * \param [dir] Направление замены.
+         */
+        void enharmonyChange(bool dir) noexcept;
+        
+        /*!
+         * \brief Возвращает высоту ноты от до.
+         * \@return Высоту ноты от субконтроктавы.
+         */
+        int get_height() const;
+        
+        /*!
+         * \brief Разрешает ноту в ближайшую устойчивую ступень тональности.
+         * \param [key] Тональность для разрешения.
+         * \param [dir] Направление разрешения.
+         */
+         void resolution(Note key, bool dir) noexcept;
+
     private:
         /**
          * \brief Содержит информацию об основе, знаке альтерации и октаве ноты.
