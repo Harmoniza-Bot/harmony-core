@@ -48,3 +48,15 @@ inline Octave Note::get_octave() const noexcept
 {
     return static_cast<Octave>(data / 21);
 }
+
+void Note::enharmonyChange(bool dir) const noexcept
+{
+}
+
+inline Note::get_height() const
+{
+}
+
+void Note::resolution(Note key, bool dir) noexcept
+{
+}
