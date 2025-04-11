@@ -112,7 +112,7 @@ namespace harmony_core
 
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.
-         * \param [dir] Направление замены.
+         * \param [in] dir Направление замены.
          */
         void enharmonyChange(bool dir) noexcept;
         
@@ -124,8 +124,8 @@ namespace harmony_core
         
         /*!
          * \brief Разрешает ноту в ближайшую устойчивую ступень тональности.
-         * \param [key] Тональность для разрешения.
-         * \param [dir] Направление разрешения.
+         * \param [in] key Тональность для разрешения.
+         * \param [in] dir Направление разрешения.
          */
          void resolution(Note key, bool dir) noexcept;
 
