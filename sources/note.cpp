@@ -53,8 +53,9 @@ void Note::enharmonyChange(bool dir) const noexcept
 {
 }
 
-inline Note::get_height() const
+inline int Note::get_height() const
 {
+    return (int)data;
 }
 
 void Note::resolution(Note key, bool dir) noexcept
