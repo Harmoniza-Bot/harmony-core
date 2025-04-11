@@ -51,6 +51,9 @@ inline Octave Note::get_octave() const noexcept
 
 void Note::enharmonyChange(bool dir) const noexcept
 {
+    if(dir){
+    } else {
+    }
 }
 
 inline int Note::get_height() const
