@@ -52,34 +52,51 @@ inline Octave Note::get_octave() const noexcept
 void Note::enharmonyChange(bool dir) const noexcept
 {
   int first_height = get_height();
-    if(dir){
-      if((base==Base::C || base==Base::E) && 
-      get_accidental() == Accidental::SHARP){
+  if(dir){
+    if(get_octave() == _5_LINE && get_base() == Base::B){
         return;
-      }
-      if(get_accidental() == Accidental::DOUBLE_SHARP){
-        return;
-      }
-      base = 
-      [](){
-        if(base == Base::B){
-          return Base::C;
-        }
-        return static_cast<Base>(
-          static_cast<int>(base) + 1
-          );
-        }
-        set_octave(
-          static_cast<Octave>(
-            static_cast<int> + 1
-          )
-        );
-      };
-      while(get_height() != first_height){
-        accidental = static_cast<Accidental>(static_cast<int>(accidental) - 1);
-      }
-    } else {
     }
+    if((get_base()!=Base::C || get_base()!=Base::F) &&
+      get_accidental() == Accidental::FLAT){
+        return;
+    }
+    if(get_accidental() == Accidental::DOUBLE_FLAT){
+        return;
+    }
+    set_base([](){
+      if(get_base() == Base::B){
+        set_octave(static_cast<Octave>(static_cast<int>(octave)+1));
+        return Base::C;
+      }
+      return static_cast<Base>(
+        static_cast<int>(get_base()+1);
+    });
+    while(get_height() != first_height){
+        set_accidental(static_cast<Accidental>(static_cast<int>(accidental) - 1));
+    }
+  } else {
+    if(get_octave() == Octave::SUB_CONTRA && get_base() == Base::C){
+        return;
+    }
+    if((base!=Base::B || base!=Base::E) &&
+      get_accidental() == Accidental::FLAT){
+        return;
+    }
+    if(get_accidental() == Accidental::DOUBLE_SHARP){
+        return;
+    }
+    set_base([](){
+      if(base == Base::B){
+        return Base::C;
+        set_octave(static_cast<Octave>(static_cast<int>-1
+          ));
+      }
+      return static_cast<Base>(static_cast<int>(base)-1);
+    });
+    while(get_height() != first_height){
+        set_accidental(static_cast<Accidental>(static_cast<int>(accidental) + 1));
+    }
+  }
 }
 
 inline int Note::get_height() const
