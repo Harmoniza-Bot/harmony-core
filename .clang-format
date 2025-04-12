@@ -31,7 +31,7 @@ BraceWrapping:
 BreakBeforeBraces: Custom
 BreakConstructorInitializers: AfterColon
 BreakConstructorInitializersBeforeComma: false
-ColumnLimit: 140
+ColumnLimit: 120
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 IncludeCategories: 
   - Regex: '^<.*'
