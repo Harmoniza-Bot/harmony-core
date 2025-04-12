@@ -51,7 +51,33 @@ inline Octave Note::get_octave() const noexcept
 
 void Note::enharmonyChange(bool dir) const noexcept
 {
+  int first_height = get_height();
     if(dir){
+      if((base==Base::C || base==Base::E) && 
+      get_accidental() == Accidental::SHARP){
+        return;
+      }
+      if(get_accidental() == Accidental::DOUBLE_SHARP){
+        return;
+      }
+      base = 
+      [](){
+        if(base == Base::B){
+          return Base::C;
+        }
+        return static_cast<Base>(
+          static_cast<int>(base) + 1
+          );
+        }
+        set_octave(
+          static_cast<Octave>(
+            static_cast<int> + 1
+          )
+        );
+      };
+      while(get_height() != first_height){
+        accidental = static_cast<Accidental>(static_cast<int>(accidental) - 1);
+      }
     } else {
     }
 }
