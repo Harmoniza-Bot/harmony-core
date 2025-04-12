@@ -4,31 +4,35 @@
 namespace harmony_core
 {
     /*!
-     * \brief Знак альтерации.
+     * \brief Представляет собой знак альтерации.
      */
     enum class Accidental
     {
         /*!
-         * \brief Бекар.
+         * \brief Представляет собой неопределённый знак альтерации.
          */
-        NATURAL,
+        UNDEFINED = 0b000,
         /*!
-         * \brief Бемоль.
+         * \brief Представляет собой дубль-бемоль.
          */
-        FLAT,
+        DOUBLE_FLAT = 0b001,
         /*!
-         * \brief Диез.
+         * \brief Представляет собой бемоль.
          */
-        SHARP,
+        FLAT = 0b010,
         /*!
-         * \brief Дубль-бемоль.
+         * \brief Представляет собой бекар.
          */
-        DOUBLE_FLAT,
+        NATURAL = 0b011,
         /*!
-         * \brief Дубль-диез.
+         * \brief Представляет собой диез.
          */
-        DOUBLE_SHARP
+        SHARP = 0b100,
+        /*!
+         * \brief Представляет собой дубль-диез.
+         */
+        DOUBLE_SHARP = 0b101
     };
-}
+} // harmony_core
 
 #endif // HARMONY_CORE_ACCIDENTAL_HPP
