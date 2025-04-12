@@ -69,7 +69,7 @@ void Note::enharmonyChange(bool dir) const noexcept
         return Base::C;
       }
       return static_cast<Base>(
-        static_cast<int>(get_base()+1);
+        static_cast<int>(get_base()+1));
     });
     while(get_height() != first_height){
         set_accidental(static_cast<Accidental>(static_cast<int>(accidental) - 1));
@@ -88,13 +88,12 @@ void Note::enharmonyChange(bool dir) const noexcept
     set_base([](){
       if(base == Base::B){
         return Base::C;
-        set_octave(static_cast<Octave>(static_cast<int>-1
-          ));
+        set_octave(static_cast<Octave>(static_cast<int>-1));
       }
       return static_cast<Base>(static_cast<int>(base)-1);
     });
     while(get_height() != first_height){
-        set_accidental(static_cast<Accidental>(static_cast<int>(accidental) + 1));
+        set_accidental(static_cast<Accidental>(static_cast<int>(accidental)+1));
     }
   }
 }
