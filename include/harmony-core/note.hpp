@@ -116,10 +116,10 @@ namespace harmony_core
      * - Октава ноты.
      * - Ключевой знак альтерации ноты.
      * - Случайный знак альтерации ноты.
-     * - Используемый знак альтерации ноты.
      * - Длительность ноты.
      *
-     * Также данный класс позволяет получить полное название ноты согласно указанному соглашению об именовании нот.
+     * Также данный класс позволяет получить используемый знак альтерации ноты и её полное название согласно указанному
+     * соглашению об именовании нот.
      */
     class Note final
     {
@@ -127,7 +127,7 @@ namespace harmony_core
         // constructors & destructor
 
         /*!
-         * \brief Создаёт целую ноту \code Ля¹\endcode.
+         * \brief Создаёт ноту \code Ля₂\endcode с длительностью целой ноты.
          */
         Note() noexcept;
 
@@ -234,20 +234,6 @@ namespace harmony_core
          */
         [[nodiscard]] Accidental get_random_accidental() const noexcept;
 
-        // accidental getter & setter
-
-        /*!
-         * \brief Задаёт используемый знак альтерации этой ноты равным \code accidental\endcode.
-         * \param [in] accidental новый используемый знак альтерации этой ноты.
-         */
-        void set_accidental(Accidental accidental) noexcept;
-
-        /*!
-         * \brief Возвращает используемый знак альтерации этой ноты.
-         * \return Используемый знак альтерации этой ноты.
-         */
-        [[nodiscard]] Accidental get_accidental() const noexcept;
-
         // duration getter & setter
 
         /*!
@@ -277,6 +263,14 @@ namespace harmony_core
          */
         [[nodiscard]] uint_fast8_t get_height() const noexcept;
 
+        // accidental getter
+
+        /*!
+         * \brief Возвращает используемый знак альтерации этой ноты.
+         * \return Используемый знак альтерации этой ноты.
+         */
+        [[nodiscard]] Accidental get_accidental() const noexcept;
+
         // name getter
 
         /*!
@@ -284,7 +278,7 @@ namespace harmony_core
          * \param [in] convention соглашение об именовании нот.
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
-        [[nodiscard]] const std::u8string_view &get_name(
+        [[nodiscard]] std::u8string_view get_name(
             NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
         // ...
