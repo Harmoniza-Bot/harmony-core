@@ -9,7 +9,7 @@ namespace harmony_core
     enum class Accidental
     {
         /*!
-         * \brief дубль бемоль.
+         * \brief Дубль бемоль.
          */
         DOUBLE_FLAT,
         /*!
@@ -17,11 +17,11 @@ namespace harmony_core
          */
         FLAT,
         /*!
-         * \brief бекар.
+         * \brief Бекар.
          */
         NATURAL,
         /*!
-         * \brief диез.
+         * \brief Диез.
          */
         SHARP,
         /*!
