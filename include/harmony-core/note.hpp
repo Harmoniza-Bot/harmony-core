@@ -278,8 +278,8 @@ namespace harmony_core
          * \param [in] convention соглашение об именовании нот.
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
-        [[nodiscard]] std::u8string_view get_name(
-            NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+        [[nodiscard]] std::u8string_view
+        get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
         // ...
 
@@ -375,7 +375,8 @@ namespace harmony_core
          */
         Note &operator=(const Note &note)
         {
-            if (this == &note) return *this;
+            if (this == &note)
+                return *this;
             data = note.data;
             return *this;
         }
@@ -394,6 +395,6 @@ namespace harmony_core
          */
         uint_fast16_t data;
     };
-} // harmony_core
+} // namespace harmony_core
 
 #endif // HARMONY_CORE_NOTE_HPP

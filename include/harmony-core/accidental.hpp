@@ -33,6 +33,6 @@ namespace harmony_core
          */
         DOUBLE_SHARP = 0b101
     };
-} // harmony_core
+} // namespace harmony_core
 
 #endif // HARMONY_CORE_ACCIDENTAL_HPP

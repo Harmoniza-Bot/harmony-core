@@ -2,8 +2,8 @@
 #define HARMONY_CORE_KEY_HPP
 
 #include <cstdint>
-#include <vector>
 #include <harmony_core/note.hpp>
+#include <vector>
 
 namespace harmony_core
 {
@@ -94,7 +94,6 @@ namespace harmony_core
     class Key final
     {
     public:
-
         /*!
          * \brief Создаёт тональность \code C IONIAN NAIURAL \endcode.
          */
@@ -122,11 +121,9 @@ namespace harmony_core
         explicit Key(Note note, Mode mode, Specie specie) noexcept;
 
         /*!
-         * \brief Создает тональность на основе \code Base \endcode, \code Accidental \endcode, \code Mode \endcode и \code Specie \endcode.
-         * \param [in] base основание тон-ти.
-         * \param [in] accidental знак тон-ти.
-         * \param [in] mode лад тон-ти.
-         * \param [in] specie вид тон-ти.
+         * \brief Создает тональность на основе \code Base \endcode, \code Accidental \endcode, \code Mode \endcode и
+         * \code Specie \endcode. \param [in] base основание тон-ти. \param [in] accidental знак тон-ти. \param [in]
+         * mode лад тон-ти. \param [in] specie вид тон-ти.
          */
         explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept;
 
@@ -224,7 +221,7 @@ namespace harmony_core
          * \param rhs правая тон-то.
          * \return Если левая и правая тон-ти равны, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator== (const Key &lhs, const Key &rhs)
+        friend bool operator==(const Key &lhs, const Key &rhs)
         {
             return lhs.data == rhs.data;
         }
@@ -235,7 +232,7 @@ namespace harmony_core
          * \param rhs правая тон-то.
          * \return Если левая и правая тон-ти равны, то \code false \endcode, иначе \code true \endcode.
          */
-        friend bool operator!= (const Key &lhs, const Key &rhs)
+        friend bool operator!=(const Key &lhs, const Key &rhs)
         {
             return lhs.data != rhs.data;
         }
@@ -248,7 +245,7 @@ namespace harmony_core
          * \param rhs правая тон-ть.
          * \return Если индекс квинтового круга правой тон-ти больше, то \code true\endcode, иначе \code false \endcode.
          */
-        friend bool operator< (const Key &lhs, const Key &rhs)
+        friend bool operator<(const Key &lhs, const Key &rhs)
         {
         }
 
@@ -256,7 +253,8 @@ namespace harmony_core
          * \brief Сравнивает левую и правую тональности.
          * \param lhs левая тон-ть.
          * \param rhs правая тон-ть.
-         * \return Если индекс квинтового круга правой тон-ти больше или равен, то \code true\endcode, иначе \code false \endcode.
+         * \return Если индекс квинтового круга правой тон-ти больше или равен, то \code true\endcode, иначе \code false
+         * \endcode.
          */
         friend bool operator<=(const Key &lhs, const Key &rhs)
         {
@@ -276,7 +274,8 @@ namespace harmony_core
          * \brief Сравнивает левую и правую тональности.
          * \param lhs левая тон-ть.
          * \param rhs правая тон-ть.
-         * \return Если индекс квинтового круга левой тон-ти больше или равен, то \code true\endcode, иначе \code false\endcode.
+         * \return Если индекс квинтового круга левой тон-ти больше или равен, то \code true\endcode, иначе \code
+         * false\endcode.
          */
         friend bool operator>=(const Key &lhs, const Key &rhs)
         {
@@ -291,7 +290,8 @@ namespace harmony_core
          */
         Key &operator=(const key &key)
         {
-            if (this == &key) return *this;
+            if (this == &key)
+                return *this;
             data = key.data;
             return *this;
         }
@@ -300,19 +300,20 @@ namespace harmony_core
          * \brief Увеличивают и уменьшают тон-ть изменением индекса кватро-квинтового круга.
          * Дальнейшие вычисления производятся по индексу и спецификаторам тон-ти.
          *
-         * При увеличении основание тон-ти смещается в сторону диезных тон-тей от беззнаковой тональности \code индекс \endcode раз.
-         * При этом следующая тон-ть выше на квинту (или на 7 полутонов).
+         * При увеличении основание тон-ти смещается в сторону диезных тон-тей от беззнаковой тональности \code индекс
+         * \endcode раз. При этом следующая тон-ть выше на квинту (или на 7 полутонов).
          *
-         * При уменьшении основание тон-ти смещается в сторону бемольных тон-тей от беззнаковой тональности \code индекс \endcode раз.
-         * При этом следующая тон-ть ниже на кварту (или на 5 полутонов).
+         * При уменьшении основание тон-ти смещается в сторону бемольных тон-тей от беззнаковой тональности \code индекс
+         * \endcode раз. При этом следующая тон-ть ниже на кварту (или на 5 полутонов).
          *
-         * К-во знаков равно модулю индекса. При этом знак индекса показывает вид знаков тон-ти (минус = бемоли, плюс = диезы).
-         * После седьмого знака последующие знаки становятся своей дублированной версией.
+         * К-во знаков равно модулю индекса. При этом знак индекса показывает вид знаков тон-ти (минус = бемоли, плюс =
+         * диезы). После седьмого знака последующие знаки становятся своей дублированной версией.
          */
-        Key& operator++()
+        Key &operator++()
         {
             uint8_t current_value = data & 0b0001'1111;
-            if (current_value >= 14) {
+            if (current_value >= 14)
+            {
                 return *this;
             }
             current_value++;
@@ -320,17 +321,18 @@ namespace harmony_core
             return *this;
         }
 
-//        Key operator++(int);
-//        {
-//            Key temp = *this;
-//            ++*this;
-//            return temp;
-//        }
+        //        Key operator++(int);
+        //        {
+        //            Key temp = *this;
+        //            ++*this;
+        //            return temp;
+        //        }
 
-        Key& operator--()
+        Key &operator--()
         {
             uint8_t current_value = data & 0b0001'1111;
-            if (current_value == 0) {
+            if (current_value == 0)
+            {
                 return *this;
             }
             current_value--;
@@ -339,14 +341,14 @@ namespace harmony_core
         }
 
 
-//        Key operator--(int);
-//        {
-//            Key temp = *this;
-//            --*this;
-//            return temp;
-//        }
+        //        Key operator--(int);
+        //        {
+        //            Key temp = *this;
+        //            --*this;
+        //            return temp;
+        //        }
 
-//----- specific functions ------
+        //----- specific functions ------
 
         // tone getters
 
@@ -387,7 +389,6 @@ namespace harmony_core
         vector<accidental> get_accidentals() noexcept;
 
 
-
     private:
         /**
          * \brief Представляет информацию об основании, знаке и ладе тональности.
@@ -399,6 +400,6 @@ namespace harmony_core
          */
         uint_fast16_t data;
     }
-}
+} // namespace harmony_core
 
 #endif // HARMONY_CORE_KEY_HPP

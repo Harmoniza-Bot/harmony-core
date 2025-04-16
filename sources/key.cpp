@@ -34,12 +34,12 @@ Key(const Key &key) noexcept
 
 void set_data(uint_fast16_t data) noexcept
 {
-  this->data = data;
+    this->data = data;
 }
 
 uint_fast16_t get_data() const noexcept
 {
-  return this->data;
+    return this->data;
 }
 
 void set_base(Base base) noexcept

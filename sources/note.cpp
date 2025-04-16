@@ -1,5 +1,5 @@
-#include <stdexcept>
 #include <harmony-core/note.hpp>
+#include <stdexcept>
 
 using namespace harmony_core;
 
@@ -7,15 +7,15 @@ static const char8_t *NOTE_NAMES[sizeof(NamingConvention)][9 * 7 * 3] = {
     // TODO: use correct size instead of 9 * 7 * 3
     {
         u8"" // TODO: make it completely
-    }
-};
+    }};
 
 Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED, Accidental::UNDEFINED, Duration::WHOLE)
 {
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
-           const Duration duration) noexcept : data(0)
+           const Duration duration) noexcept :
+    data(0)
 {
     set_base(base);
     set_octave(octave);
@@ -24,7 +24,7 @@ Note::Note(const Base base, const Octave octave, const Accidental key_accidental
     set_duration(duration);
 }
 
-Note::Note(const uint_fast16_t data) noexcept: data(data)
+Note::Note(const uint_fast16_t data) noexcept : data(data)
 {
 }
 
@@ -94,7 +94,8 @@ Duration Note::get_duration() const noexcept
 
 void Note::set_height(const uint_fast8_t height)
 {
-    if (height >= 9 * 7 * 2) throw std::invalid_argument("height must be less than 126");
+    if (height >= 9 * 7 * 2)
+        throw std::invalid_argument("height must be less than 126");
     set_octave(static_cast<Octave>(height / (7 * 2)));
     set_base(static_cast<Base>(height % 9 / 2));
     if (height % (9 * 7 * 2) > 0)

@@ -45,6 +45,6 @@ namespace harmony_core
          */
         _5_LINE = 0b1000,
     };
-} // harmony_core
+} // namespace harmony_core
 
 #endif // HARMONY_CORE_OCTAVE_HPP
