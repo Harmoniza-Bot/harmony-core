@@ -200,7 +200,7 @@ namespace harmony_core
          * \brief Возвращает лад тон-ти.
          * \return текущий лад тональности.
          */
-        [[nodiscard]] Accidental get_mode() noexcept;
+        [[nodiscard]] Mode get_mode() noexcept;
 
         // specie getter & setter
 
@@ -367,7 +367,7 @@ namespace harmony_core
          * \param [in] note нота для поиска
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
-        [[nodiscard]] int get_tone_index(Note note) noexcept;
+        [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
 
         // resolution
 
