@@ -75,3 +75,25 @@ Specie get_specie() noexcept
 }
 
 //--------------------------------
+
+Note get_main_tone() noexcept
+{
+}
+
+Note get_tone(uint8_t index) noexcept
+{
+}
+
+int8_t get_tone_index(Note note) noexcept
+{
+}
+
+Note resolution(Note note) noexcept
+{
+}
+
+get_accidentals() noexcept
+{
+}
+
+//--------------------------------

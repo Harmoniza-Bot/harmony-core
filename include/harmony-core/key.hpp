@@ -346,7 +346,7 @@ namespace harmony_core
 //            return temp;
 //        }
 
-//----------------- specific functions -----------------
+//----- specific functions ------
 
         // tone getters
 
