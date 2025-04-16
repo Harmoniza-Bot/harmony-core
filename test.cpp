@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <ncurses.h>
-#include "core/core.h"
+//#include "core.h"
 
 using namespace std;
 
