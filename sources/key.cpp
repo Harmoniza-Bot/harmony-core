@@ -2,12 +2,16 @@
 
 using namespace harmony_core;
 
+// Устанавливает до мажор натуральный
 Key::Key() noexcept
 {
+    data = 0b0000000000001001;
 }
 
 explicit Key(Note note) noexcept
 {
+    data = 0b0000000000001001;
+    this->set_base(Base::C);
 }
 
 explicit Key(Note note, Mode mode) noexcept

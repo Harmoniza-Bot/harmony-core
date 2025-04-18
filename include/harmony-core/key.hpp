@@ -400,6 +400,6 @@ namespace harmony_core
          */
         uint_fast16_t data;
     }
-} // namespace harmony_core
+} // namespace harmony_core 
 
 #endif // HARMONY_CORE_KEY_HPP
