@@ -10,8 +10,6 @@ Key::Key() noexcept
 
 explicit Key(Note note) noexcept
 {
-    data = 0b0000000000001001;
-    this->set_base(Base::C);
 }
 
 explicit Key(Note note, Mode mode) noexcept
@@ -28,6 +26,7 @@ explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcep
 
 explicit Key(uint_fast16_t data) noexcept
 {
+    this->data = data;
 }
 
 Key(const Key &key) noexcept
@@ -50,7 +49,7 @@ void set_base(Base base) noexcept
 {
 }
 
-Base get_dase() noexcept
+Base get_base() noexcept
 {
 }
 
