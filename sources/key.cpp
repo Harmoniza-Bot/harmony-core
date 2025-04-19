@@ -3,7 +3,9 @@
 using namespace harmony_core;
 
 // Устанавливает до мажор натуральный
-Key::Key() noexcept : data(0b0000000000001001) {}
+Key::Key() noexcept : data(0b0000000000001001)
+{
+}
 
 explicit Key(Note note) noexcept : data(0b0000000000001001)
 {
@@ -27,7 +29,7 @@ explicit Key(Note note, Mode mode, Specie specie) noexcept : data(0b000000000000
     set_specie(specie);
 }
 
-explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001) 
+explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
     this->set_base(base);
     this->set_accidental(accidental);

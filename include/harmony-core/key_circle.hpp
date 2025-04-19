@@ -5,8 +5,9 @@
 #include "harmony_core/key_circle.hpp"
 namespace harmony_core
 {
-    class key_circle final
+    enum class key_circle
     {
+
     }
 } // namespace harmony_core
 
