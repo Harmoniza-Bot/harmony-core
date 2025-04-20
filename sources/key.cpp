@@ -7,13 +7,13 @@ Key::Key() noexcept : data(0b0000000000001001)
 {
 }
 
-explicit Key(Note note) noexcept : data(0b0000000000001001)
+explicit Key::Key(Note note) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
 }
 
-explicit Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
+explicit Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
@@ -21,7 +21,7 @@ explicit Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
 }
 
 
-explicit Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
+explicit Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
@@ -29,7 +29,7 @@ explicit Key(Note note, Mode mode, Specie specie) noexcept : data(0b000000000000
     set_specie(specie);
 }
 
-explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
+explicit Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
     this->set_base(base);
     this->set_accidental(accidental);
@@ -37,84 +37,72 @@ explicit Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcep
     this->set_specie(specie);
 }
 
-explicit Key(uint_fast16_t data) noexcept
+explicit Key::Key(uint_fast16_t data) noexcept
 {
     this->data = data;
 }
 
-Key(const Key &key) noexcept
+Key::Key(const Key &key) noexcept
 {
     this->data = key.get_data();
 }
 
 //--------------------------------
 
-void set_data(uint_fast16_t data) noexcept
+void Key::set_data(uint_fast16_t data) noexcept
 {
     this->data = data;
 }
 
-uint_fast16_t get_data() const noexcept
+uint_fast16_t Key::get_data() const noexcept
 {
     return this->data;
 }
 
-void set_base(Base base) noexcept
+void Key::set_mode(Mode mode) noexcept
 {
 }
 
-Base get_base() noexcept
-{
-    int circle_index = this->data & 0b1111;
-    Base b;
-    // преобразование с помошью круга
-    return static_cast<Base>(b);
-}
-
-void set_accidental(Accidental accidental) noexcept
+void Key::set_specie(Specie specie) noexcept
 {
 }
 
-Accidental get_accidental() noexcept
+Mode Key::get_mode() noexcept
 {
 }
 
-void set_mode(Mode mode) noexcept
-{
-}
-
-void set_specie(Specie specie) noexcept
-{
-}
-
-Mode get_mode() noexcept
-{
-}
-
-Specie get_specie() noexcept
+Specie Key::get_specie() noexcept
 {
 }
 
 //--------------------------------
 
-Note get_main_tone() noexcept
+Note Key::get_main_tone() noexcept
 {
 }
 
-Note get_tone(uint8_t index) noexcept
+Note Key::get_tone(uint8_t index) noexcept
 {
 }
 
-int8_t get_tone_index(Note note) noexcept
+int8_t Key::get_tone_index(Note note) noexcept
 {
 }
 
-Note resolution(Note note) noexcept
+Note Key::resolution(Note note) noexcept
 {
 }
 
-get_accidentals() noexcept
+vector<Accidental> Key::get_accidentals() noexcept
 {
 }
 
 //--------------------------------
+
+Key::sharp_step()
+{
+}
+
+Key::flat_step()
+{
+}

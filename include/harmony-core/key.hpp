@@ -157,33 +157,19 @@ namespace harmony_core
          */
         [[nodiscard]] uint_fast16_t get_data() const noexcept;
 
-        // base getter & setter
+        // main getter & setter
 
         /*!
-         * \brief Задает основание тон-ти.
-         * \param [in] base новое основане тональности
+         * \brief Задает тонику тон-ти.
+         * \param [in] note новая тоника тональности
          */
-        void set_base(Base base) noexcept;
+        void set_main(Note note) noexcept;
 
         /*!
-         * \brief Возвращает основание тон-ти.
-         * * \return Основание тональности.
+         * \brief Возвращает тонику тон-ти.
+         * \return текущую тонику тональности.
          */
-        [[nodiscard]] Base get_dase() noexcept;
-
-        // accidental getter & setter
-
-        /*!
-         * \brief Задает знак тон-ти.
-         * \param [in] accidental знак тон-ти.
-         */
-        void set_accidental(Accidental accidental) noexcept;
-
-        /*!
-         * \brief Возвращает знак тон-ти.
-         * \return знак тональности.
-         */
-        [[nodiscard]] Accidental get_accidental() noexcept;
+        [[nodiscard]] Note get_main() noexcept;
 
         // mode getter & setter
 
@@ -213,7 +199,7 @@ namespace harmony_core
          */
         [[nodiscard]] Specie get_specie() noexcept;
 
-        // equality operator
+        //---- equality operator --------
 
         /*!
          * \brief Проверяет на равенство левую и правую тональности.
@@ -296,59 +282,7 @@ namespace harmony_core
             return *this;
         }
 
-        /*!
-         * \brief Увеличивают и уменьшают тон-ть изменением индекса кватро-квинтового круга.
-         * Дальнейшие вычисления производятся по индексу и спецификаторам тон-ти.
-         *
-         * При увеличении основание тон-ти смещается в сторону диезных тон-тей от беззнаковой тональности \code индекс
-         * \endcode раз. При этом следующая тон-ть выше на квинту (или на 7 полутонов).
-         *
-         * При уменьшении основание тон-ти смещается в сторону бемольных тон-тей от беззнаковой тональности \code индекс
-         * \endcode раз. При этом следующая тон-ть ниже на кварту (или на 5 полутонов).
-         *
-         * К-во знаков равно модулю индекса. При этом знак индекса показывает вид знаков тон-ти (минус = бемоли, плюс =
-         * диезы). После седьмого знака последующие знаки становятся своей дублированной версией.
-         */
-        Key &operator++()
-        {
-            uint8_t current_value = data & 0b0001'1111;
-            if (current_value >= 14)
-            {
-                return *this;
-            }
-            current_value++;
-            data = ((data & ~0b0001'1111) | current_value);
-            return *this;
-        }
-
-        //        Key operator++(int);
-        //        {
-        //            Key temp = *this;
-        //            ++*this;
-        //            return temp;
-        //        }
-
-        Key &operator--()
-        {
-            uint8_t current_value = data & 0b0001'1111;
-            if (current_value == 0)
-            {
-                return *this;
-            }
-            current_value--;
-            data = ((data & ~0b0001'1111) | current_value);
-            return *this;
-        }
-
-
-        //        Key operator--(int);
-        //        {
-        //            Key temp = *this;
-        //            --*this;
-        //            return temp;
-        //        }
-
-        //----- specific functions ------
+        //----- Знаковые и нотные функции ------
 
         // tone getters
 
@@ -387,6 +321,17 @@ namespace harmony_core
          * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
          */
         vector<accidental> get_accidentals() noexcept;
+
+
+        /*!
+         * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.
+         */
+        void sharp_step();
+
+        /*!
+         * \brief Делает шаг по кварто-квинтовому кругу в сторону бемольных тон-тей.
+         */
+        void flat_step();
 
 
     private:
