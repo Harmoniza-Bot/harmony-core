@@ -65,6 +65,10 @@ void set_base(Base base) noexcept
 
 Base get_base() noexcept
 {
+    int circle_index = this->data & 0b1111;
+    Base b;
+    // преобразование с помошью круга
+    return static_cast<Base>(b);
 }
 
 void set_accidental(Accidental accidental) noexcept
