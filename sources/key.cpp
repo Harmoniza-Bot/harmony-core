@@ -59,15 +59,47 @@ uint_fast16_t Key::get_data() const noexcept
     return this->data;
 }
 
+void Key::set_main(Note note)
+{
+}
+
+Note Key::get_main()
+{
+    Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
+    int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0)));
+    Octave first_octave = Octave::_1_LINE;
+    for (int x = 0; x < 7; ++x)
+    {
+        if (circle_rotate)
+        {
+            //++Note
+            //Дописать инкремент как повышение на полтона
+            if (note.get_octave() != first_octave)
+            {
+                note.set_octave(static_cast<Octave>(--static_cast<int>(note.get_octave())));
+            }
+        }
+        else
+        {
+            //--Note
+            //Дописать декремент как понижение на полтона
+            if (note.get_octave() != first_octave)
+            {
+                note.set_octave(static_cast<Octave>(++static_cast<int>(note.get_octave())));
+            }
+        }
+    }
+}
+
 void Key::set_mode(Mode mode) noexcept
 {
 }
 
-void Key::set_specie(Specie specie) noexcept
+Mode Key::get_mode() noexcept
 {
 }
 
-Mode Key::get_mode() noexcept
+void Key::set_specie(Specie specie) noexcept
 {
 }
 
@@ -76,10 +108,6 @@ Specie Key::get_specie() noexcept
 }
 
 //--------------------------------
-
-Note Key::get_main_tone() noexcept
-{
-}
 
 Note Key::get_tone(uint8_t index) noexcept
 {

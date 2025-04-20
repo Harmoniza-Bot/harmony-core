@@ -287,12 +287,6 @@ namespace harmony_core
         // tone getters
 
         /*!
-         * \brief Возвращает главную ступень тон-ти.
-         * \return главная ступень тональности.
-         */
-        [[nodiscard]] Note get_main_tone() noexcept;
-
-        /*!
          * \brief Возвращает ступень тон-ти по индексу.
          * \return Нота, расположенная на указанном индексе
          */
