@@ -141,6 +141,35 @@ std::u8string_view Note::get_name(const NamingConvention convention) const noexc
     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
 }
 
+std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept
+{
+}
+
+void Note::enharmony_сhange(bool dir) noexcept
+{
+    uint8_t height = this->get_height();
+    if (dir)
+    {
+        uint8_t base = static_cast<uint8_t>(this->get_base());
+        this->set_base(static_cast<Base>(++base));
+        while (height != this->get_height())
+        {
+            uint8_t acc = static_cast<uint8_t>(this->get_accidental());
+            this->set_accidental(static_cast<Accidental>(--acc));
+        }
+    }
+    else
+    {
+        uint8_t base = static_cast<uint8_t>(this->get_base());
+        this->set_base(static_cast<Base>(--base));
+        while (height != this->get_height())
+        {
+            uint8_t acc = static_cast<uint8_t>(this->get_accidental());
+            this->set_accidental(static_cast<Accidental>(++acc));
+        }
+    }
+}
+
 // ------ operators --------
 
 friend Note Note::operator++()
@@ -167,8 +196,9 @@ friend Note Note::operator++()
             this->set_base(static_cast<Base>(++base));
         }
     }
+    if (this->get_accidental() == Accidental::DOUBLE_SHARP)
+        this->enharmony_сhange(1);
     return *this;
-    // дописать функцию энг. замены если знак двойной
 }
 
 friend Note Note::operator++(Note note)
@@ -202,8 +232,10 @@ friend Note Note::operator--()
             this->set_base(static_cast<Base>(--base));
         }
     }
+    if (this->get_accidental() == Accidental::DOUBLE_FLAT)
+        this->enharmony_сhange(0);
+
     return *this;
-    // дописать функцию энг. замены если знак двойной
 }
 
 friend Note Note::operator--(Note note)

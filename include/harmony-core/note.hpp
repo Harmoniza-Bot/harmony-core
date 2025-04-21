@@ -281,20 +281,11 @@ namespace harmony_core
         [[nodiscard]] std::u8string_view
         get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
-        // ...
-
-        // /*!
-        //  * \brief Делает энгармоническую замену в указанном направлении.
-        //  * \param [in] dir Направление замены.
-        //  */
-        // void enharmonyChange(bool dir) noexcept; // TODO: refactor it
-
-        // /*!
-        //  * \brief Разрешает ноту в ближайшую устойчивую ступень тональности.
-        //  * \param [in] key Тональность для разрешения.
-        //  * \param [in] dir Направление разрешения.
-        //  */
-        // void resolution(Note key, bool dir) noexcept; // TODO: refactor it
+        /*!
+         * \brief Делает энгармоническую замену в указанном направлении.
+         * \param [in] dir Направление замены.
+         */
+        void enharmony_сhange(bool dir) noexcept;
 
         // equality operators
 
