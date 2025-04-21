@@ -380,25 +380,25 @@ namespace harmony_core
             data = note.data;
             return *this;
         }
-        
+
         //---- increment and decrement -----
-        
+
         /*!
          * \brief Повышает ноту на полтона.
          */
         friend Note operator++();
-        
+
         /*!
          * \brief Повышает ноту на полтона.
-         */        
-        friend Note operator++(Note);
-        
+         */
+        friend Note operator++(Note note);
+
         /*!
          * \brief Понижает ноту на полтона.
          */
         friend Note operator--();
-        
-         /*!
+
+        /*!
          * \brief Понижает ноту на полтона.
          */
         friend Note operator--(Note);

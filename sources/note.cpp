@@ -144,28 +144,71 @@ std::u8string_view Note::get_name(const NamingConvention convention) const noexc
 // ------ operators --------
 
 friend Note Note::operator++()
+{
+    //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
+    if (this->get_accidental() != Accidental::DOUBLE_SHARP)
+    {
+        uint8_t acc = static_cast<uint8_t>(this->get_accidental());
+        this->set_accidental(static_cast<Accidental>(++acc));
+    }
+    // если нота не ми и си можно повысить ее установкой диеза и повышением основания. В противном случае просто
+    // повысить основание
+    else
+    {
+        if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
-            //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
-            if(this->get_accidental() != Accidental::DOUBLE_SHARP)
-            {
-                uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-                this->set_accidental(static_cast<Accidental>(++acc));
-            }
-            // если нота не ми и си можно повысить ее установкой диеза и повышением основания. В противном случае просто повысить основание
-            else
-            {
-                if(this->get_base() != Base::B ||this->get_base() != Base::E)
-                {
-                    this->set_accidental(Accidental::SHARP);
-                    uint8_t base = static_cast<uint8_t>(this->get_base());
-                    this->set_base(static_cast<Base>(++base));
-                }
-                else
-                {
-                    uint8_t base = static_cast<uint8_t>(this->get_base());
-                    this->set_base(static_cast<Base>(++base));
-                }
-            }
-            // дописать функцию энг. замены если знак двойной
+            this->set_accidental(Accidental::SHARP);
+            uint8_t base = static_cast<uint8_t>(this->get_base());
+            this->set_base(static_cast<Base>(++base));
         }
-        // остальные операторы
+        else
+        {
+            uint8_t base = static_cast<uint8_t>(this->get_base());
+            this->set_base(static_cast<Base>(++base));
+        }
+    }
+    return *this;
+    // дописать функцию энг. замены если знак двойной
+}
+
+friend Note Note::operator++(Note note)
+{
+    Note first_note = note;
+    ++note;
+    return *first_note;
+}
+
+friend Note Note::operator--()
+{
+    //если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
+    if (this->get_accidental() != Accidental::DOUBLE_FLAT)
+    {
+        uint8_t acc = static_cast<uint8_t>(this->get_accidental());
+        this->set_accidental(static_cast<Accidental>(--acc));
+    }
+    // если нота не фа и до можно понизить ее установкой бемоля и понижением основания. В противном случае просто
+    // понизить основание
+    else
+    {
+        if (this->get_base() != Base::B || this->get_base() != Base::E)
+        {
+            this->set_accidental(Accidental::FLAT);
+            uint8_t base = static_cast<uint8_t>(this->get_base());
+            this->set_base(static_cast<Base>(--base));
+        }
+        else
+        {
+            uint8_t base = static_cast<uint8_t>(this->get_base());
+            this->set_base(static_cast<Base>(--base));
+        }
+    }
+    return *this;
+    // дописать функцию энг. замены если знак двойной
+}
+
+friend Note Note::operator--(Note note)
+{
+    Note first_note = note;
+    ++note;
+    return *first_note;
+}
