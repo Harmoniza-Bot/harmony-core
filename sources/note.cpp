@@ -140,3 +140,32 @@ std::u8string_view Note::get_name(const NamingConvention convention) const noexc
 {
     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
 }
+
+// ------ operators --------
+
+friend Note Note::operator++()
+        {
+            //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
+            if(this->get_accidental() != Accidental::DOUBLE_SHARP)
+            {
+                uint8_t acc = static_cast<uint8_t>(this->get_accidental());
+                this->set_accidental(static_cast<Accidental>(++acc));
+            }
+            // если нота не ми и си можно повысить ее установкой диеза и повышением основания. В противном случае просто повысить основание
+            else
+            {
+                if(this->get_base() != Base::B ||this->get_base() != Base::E)
+                {
+                    this->set_accidental(Accidental::SHARP);
+                    uint8_t base = static_cast<uint8_t>(this->get_base());
+                    this->set_base(static_cast<Base>(++base));
+                }
+                else
+                {
+                    uint8_t base = static_cast<uint8_t>(this->get_base());
+                    this->set_base(static_cast<Base>(++base));
+                }
+            }
+            // дописать функцию энг. замены если знак двойной
+        }
+        // остальные операторы
