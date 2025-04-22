@@ -66,28 +66,33 @@ void Key::set_main(Note note)
 Note Key::get_main()
 {
     Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
-    int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0)));
+    
+    // извлекаем положение в квинтовом круге
+    int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0))); 
     Octave first_octave = Octave::_1_LINE;
-    for (int x = 0; x < 7; ++x)
-    {
+    
+    while(circle_rotate != 0){
+        for (int x = 0; x < 7; ++x)
+        {
         if (circle_rotate)
         {
-            //++Note
-            //Дописать инкремент как повышение на полтона
+            ++Note;
             if (note.get_octave() != first_octave)
             {
-                note.set_octave(static_cast<Octave>(--static_cast<int>(note.get_octave())));
+                note.set_octave(Octave::_1_LINE);
             }
         }
         else
         {
-            //--Note
-            //Дописать декремент как понижение на полтона
+            --Note
             if (note.get_octave() != first_octave)
             {
-                note.set_octave(static_cast<Octave>(++static_cast<int>(note.get_octave())));
+                note.set_octave(_1_LINE);
             }
         }
+        }
+        if(circle_rotate) --circle_rotate;
+        else ++circle_rotate;
     }
 }
 
