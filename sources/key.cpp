@@ -66,6 +66,20 @@ void Key::set_main(Note note)
 Note Key::get_main()
 {
     Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
+    if(this->get_mode() == Mode::IONIAN)
+    {
+        note.set_base(Base::C);
+    }
+    else if(this->get_mode() == Mode::AEOLIAN)
+    {
+        note.set_base(Base::A);
+    }
+    else if(this->get_mode() == Mode::LOCRIAN)
+    {
+        note.set_base(Base::LOCRIAN
+    }
+    //дописать для дркгих ладов такие же базовые тон-ти
+    
     
     // извлекаем положение в квинтовом круге
     int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0))); 
