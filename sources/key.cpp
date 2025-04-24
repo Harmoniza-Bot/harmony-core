@@ -76,10 +76,24 @@ Note Key::get_main()
     }
     else if(this->get_mode() == Mode::LOCRIAN)
     {
-        note.set_base(Base::LOCRIAN
+        note.set_base(Base::B);
     }
-    //дописать для дркгих ладов такие же базовые тон-ти
-    
+    else if(this->get_mode() == Mode::MIXOLYDIAN)
+    {
+        note.set_base(Base::G);
+    }
+    else if(this->get_mode() == Mode::LYDIAN)
+    {
+        note.set_base(Base::F);
+    }
+    else if(this->get_mode() == Mode::PHRYGIAN)
+    {
+        note.set_base(Base::E);
+    }
+    else if(this->get_mode() == Mode::DORIAN)
+    {
+        note.set_base(Base::D);
+    }
     
     // извлекаем положение в квинтовом круге
     int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0))); 
