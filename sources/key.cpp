@@ -1,4 +1,5 @@
 #include <harmony-core/key.hpp>
+#include <stdextept>
 
 using namespace harmony_core;
 
@@ -7,13 +8,13 @@ Key::Key() noexcept : data(0b0000000000001001)
 {
 }
 
-explicit Key::Key(Note note) noexcept : data(0b0000000000001001)
+Key::Key(Note note) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
 }
 
-explicit Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
+Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
@@ -21,7 +22,7 @@ explicit Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
 }
 
 
-explicit Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
+Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
     set_base(note.get_base());
     set_accidental(note.get_accidental());
@@ -29,7 +30,7 @@ explicit Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000
     set_specie(specie);
 }
 
-explicit Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
+Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
     this->set_base(base);
     this->set_accidental(accidental);
@@ -37,7 +38,7 @@ explicit Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) no
     this->set_specie(specie);
 }
 
-explicit Key::Key(uint_fast16_t data) noexcept
+Key::Key(uint_fast16_t data) noexcept
 {
     this->data = data;
 }
@@ -59,11 +60,60 @@ uint_fast16_t Key::get_data() const noexcept
     return this->data;
 }
 
-void Key::set_main(Note note)
+void Key::set_main(Note note) noexcept
 {
+    Note note1;
+    uint8_t flats = 0;
+    uint8_t sharps = 0;
+    while(1){
+        // первую ноту увеличиваем на кварту вторую на квинту
+        for(int x=0; x<7; ++x)
+        {
+            --note;
+            if(note.get_octave() != 5)
+            {
+                note.set_octave(Octave::_1_LINE);
+            }
+            if(x<5){
+                --note1;
+                if(note.get_octave() != 5)
+                {
+                    note.set_octave(Octave::_1_LINE);
+                }
+                if (x == 4)
+                {
+                    ++flat;
+                }
+            }
+            if(x == 6)
+            {
+                ++sharp;
+            }
+        }
+        // если одна из нот достигает до натурального - записываем расположение в квинтовом круге
+        if((note.get_accidental() == Accidental::NATURAL && note.get_base() == Base::C)) || (note1.get_accidental() == Accidental::NATURAL && note1.get_base() == Base::C))
+        {
+            if (flats >= sharps)
+            {
+                data = data & 0b1111 | flat;
+                data = data & 0b10000 | 1;
+                return;
+            }
+            else
+            {
+                data = data & 0b1111 | sharps;
+                data = data & 0b10000 | 0;
+                return;
+            }
+        }
+        
+        if(sharps > 14 || flats > 14){
+            return;
+        }
+    }
 }
 
-Note Key::get_main()
+Note Key::get_main() noexcept
 {
     Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
     if(this->get_mode() == Mode::IONIAN)
@@ -160,10 +210,10 @@ vector<Accidental> Key::get_accidentals() noexcept
 
 //--------------------------------
 
-Key::sharp_step()
+void Key::sharp_step() noexcept
 {
 }
 
-Key::flat_step()
+void Key::flat_step() noexcept
 {
 }

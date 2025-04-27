@@ -1,8 +1,10 @@
 #ifndef HARMONY_CORE_KEY_HPP
 #define HARMONY_CORE_KEY_HPP
 
+#include <harmony-core/note.hpp>
+#include <harmony-core/accidental.hpp>
+#include <harmony-core/octave.hpp>
 #include <cstdint>
-#include <harmony_core/note.hpp>
 #include <vector>
 
 namespace harmony_core
@@ -320,12 +322,12 @@ namespace harmony_core
         /*!
          * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.
          */
-        void sharp_step();
+        void sharp_step() noexcept;
 
         /*!
          * \brief Делает шаг по кварто-квинтовому кругу в сторону бемольных тон-тей.
          */
-        void flat_step();
+        void flat_step() noexcept;
 
 
     private:
@@ -338,7 +340,7 @@ namespace harmony_core
          * - Биты \code 8-10 \endcode задают вид тональности (Specie).
          */
         uint_fast16_t data;
-    }
+    };
 } // namespace harmony_core
 
 #endif // HARMONY_CORE_KEY_HPP
