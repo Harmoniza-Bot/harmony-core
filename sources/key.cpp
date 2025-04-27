@@ -176,18 +176,22 @@ Note Key::get_main() noexcept
 
 void Key::set_mode(Mode mode) noexcept
 {
+    data = data & 0b11100000 | (static_cast<uint16_t>(mode) << 3);
 }
 
 Mode Key::get_mode() noexcept
 {
+    return static_cast<Mode>(data & 0b11100000);
 }
 
 void Key::set_specie(Specie specie) noexcept
 {
+    data = data & 0b11100000000 | (static_cast<uint16_t>(specie) << 3);
 }
 
 Specie Key::get_specie() noexcept
 {
+    return static_cast<Specie>(data & 0b11100000000);
 }
 
 //--------------------------------
