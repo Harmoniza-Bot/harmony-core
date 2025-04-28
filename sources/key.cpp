@@ -214,10 +214,66 @@ vector<Accidental> Key::get_accidentals() noexcept
 
 //--------------------------------
 
-void Key::sharp_step() noexcept
+void sharp_step() noexcept
 {
+        const bool is_negative = data & 0b10000; // Извлекаем знаковый бит
+        uint8_t value = data & 0b1111; // Берём первые 4 бита как unsigned число
+        
+        if(is_negative)
+        {
+            if(value == 1) // Если достигнуто минимальное значение
+            {
+                data &= ~0b10000;
+                value = 0;       // Устанавливаем 0
+            }
+            else
+            {
+                value -= 1;      // Просто уменьшаем значение на 1
+            }
+        }
+        else
+        {
+            if(value == 14) // Если достигнут максимум
+            {
+                return;     // Ничего не делаем
+            }
+            else
+            {
+                value += 1; // Просто увеличиваем значение на 1
+            }
+        }
+        
+        data = (data & ~0b1111) | value; // Записываем обновленное значение назад
 }
 
 void Key::flat_step() noexcept
 {
+    const bool is_negative = data & 0b10000;
+    uint8_t value = data & 0b1111;
+    
+    if(!is_negative)
+    {
+        if(value == 0) // Если достигнуто минимальное значение
+        {
+            data |= 0b10000;
+            value = 1;
+        }
+        else
+        {
+            value -= 1;      // Просто уменьшаем значение на 1
+        }
+    }
+    else
+    {
+        if(value == 14) // Если достигнут максимум
+        {
+            return;     // Ничего не делаем
+        }
+        else
+        {
+            value += 1; // Просто увеличиваем значение на 1
+        }
+    }
+        
+    data = (data & ~0b1111) | value;
 }
