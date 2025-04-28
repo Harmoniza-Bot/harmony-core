@@ -202,14 +202,64 @@ Note Key::get_tone(uint8_t index) noexcept
 
 int8_t Key::get_tone_index(Note note) noexcept
 {
+    
 }
 
 Note Key::resolution(Note note) noexcept
 {
 }
 
-vector<Accidental> Key::get_accidentals() noexcept
+vector<Note> Key::get_accidentals() noexcept
 {
+    vector<Note> answer;
+    uint8_t index = 0;
+    if(((uint8_t)data & 0b1111 - index) == 0)
+    {
+        return answer;
+    }
+    Note note; // знаки одинаковы для всех ладов
+    if(data & 0b10000)
+    {
+        note.set_base(Base::B);
+        note.set_accidental(Accidental::FLAT);
+    }
+    else
+    {
+        note.set_base(Base::F);
+        note.set_accidental(Accidental::SHARP);
+    }
+    
+    for(int x=0; x<=14; ++x)
+    {
+        if(((uint8_t)data & 0b1111 - index) == 0)
+        {
+            return answer;
+        }
+        
+        for(int y=0; y<7: ++y)
+        {
+            if(data & 0b10000)
+            {
+                --note;
+            }
+            else
+            {
+                ++note;
+            }
+            
+            if(note.get_octave() != Octave:: _1_LINE)
+            {
+                note.set_octave(Octave::_1_LINE);
+            }
+            
+            if(y==6)
+            {
+                ++index;
+            }
+        }
+        answer.push_back(note.)
+    }
+    return answer;
 }
 
 //--------------------------------
