@@ -134,7 +134,7 @@ namespace harmony_core
          * \brief Создаёт тональность на основе \code data \endcode.
          * \param [in] data информация об основании, знаке, ладе и виде тон-ти.
          */
-        explicit Key(uint_fast16_t data) noexcept;
+        explicit Key(uint16_t data) noexcept;
 
         /*!
          * \brief Создаёт тональность на основе \code key \endcode.
@@ -152,13 +152,13 @@ namespace harmony_core
         /*!
          * \brief Задает информацию об основании, знаке, ладе и виде тон-ти.
          */
-        void set_data(uint_fast16_t data) noexcept;
+        void set_data(uint16_t data) noexcept;
 
         /*!
          * \brief Возвращает информацию об основании, знаке, ладе и виде тон-ти.
          * \return Информация об основании, знаке, ладе и виде этой тон-ти.
          */
-        [[nodiscard]] uint_fast16_t get_data() const noexcept;
+        [[nodiscard]] uint16_t get_data() const noexcept;
 
         // main getter & setter
 

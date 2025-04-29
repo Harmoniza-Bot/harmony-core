@@ -4,36 +4,33 @@
 using namespace harmony_core;
 
 // Устанавливает до мажор натуральный
-Key::Key() noexcept : data(0b0000000000001001)
-{
-}
+Key::Key() noexcept : data(0b0000000000001001){}
 
 Key::Key(Note note) noexcept : data(0b0000000000001001)
 {
-    set_base(note.get_base());
-    set_accidental(note.get_accidental());
+    this->set_main(note);
 }
 
 Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001)
 {
-    set_base(note.get_base());
-    set_accidental(note.get_accidental());
+    this->set_main(note);
     set_mode(mode);
 }
 
 
 Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
-    set_base(note.get_base());
-    set_accidental(note.get_accidental());
-    set_mode(mode);
-    set_specie(specie);
+    this->set_main(note);
+    this->set_mode(mode);
+    this->set_specie(specie);
 }
 
 Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : data(0b0000000000001001)
 {
-    this->set_base(base);
-    this->set_accidental(accidental);
+    Note note;
+    note.set_base(base);
+    note.set_accidental(accidental);
+    this->set_main(note);
     this->set_mode(mode);
     this->set_specie(specie);
 }
