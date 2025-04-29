@@ -247,15 +247,22 @@ Note Key::get_tone(uint8_t index) noexcept
             note set_octave(Octave::_1_LINE);
         }
     }
+    note.set_octave(Octave::_1_LINE)
+    return note;
 }
 
 int8_t Key::get_tone_index(Note note) noexcept
 {
-    
-}
-
-Note Key::resolution(Note note) noexcept
-{
+    note.set_octave(Octave::_1_LINE);
+    for(int x=0; x<7; ++x)
+    {
+        Note answer = this->get_tone(x);
+        if(answer == note)
+        {
+            return x;
+        }
+    }
+    return -1;
 }
 
 vector<Note> Key::get_accidentals() noexcept

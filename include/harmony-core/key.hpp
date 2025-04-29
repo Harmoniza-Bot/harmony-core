@@ -301,16 +301,15 @@ namespace harmony_core
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
         [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
-
-        // resolution
-
-        /*!
-         * \brief Разрешает ноту в текущей тональности в ближайшую устойчивую ступень.
-         * \param [in] note разрешаемая нота.
-         * \return Нота, в которую возможно разрешение указанной ноты.
+        
+        // resolurions
+        
+                /*!
+         * \brief Разрешает структуры в текущей тоальности.
          */
-        Note resolution(Note note) noexcept;
-
+         
+         // или поместить разрешения внуть самих структур (?)
+        
         // accidental getter
 
         /*!
