@@ -196,8 +196,17 @@ friend Note Note::operator++()
             this->set_base(static_cast<Base>(++base));
         }
     }
+    
+    if((this->get_base() == Base::B || this->get_base() == Base::E) && this->get_accidental() == Accidental::SHARP)
+    {
+        this->enharmony_change(1);
+        return *this;
+    }
     if (this->get_accidental() == Accidental::DOUBLE_SHARP)
+    {
         this->enharmony_сhange(1);
+        return *this;
+    }
     return *this;
 }
 
@@ -231,6 +240,11 @@ friend Note Note::operator--()
             uint8_t base = static_cast<uint8_t>(this->get_base());
             this->set_base(static_cast<Base>(--base));
         }
+    }
+    if((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT)
+    {
+        this->enharmony_change(0);
+        return *this;
     }
     if (this->get_accidental() == Accidental::DOUBLE_FLAT)
         this->enharmony_сhange(0);

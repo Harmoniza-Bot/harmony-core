@@ -198,6 +198,55 @@ Specie Key::get_specie() noexcept
 
 Note Key::get_tone(uint8_t index) noexcept
 {
+    Note note;
+    // ищем первый тон натуральной модификации тон-ти.
+    for(int x=0; x!=static_cast<uint8_t>(get_mode()); ++x)
+    {
+        ++note;
+        if(note.get_accidental != Accidental::NATURAL)
+        {
+            ++note;
+        }
+        if(note.get_octave() != Octave::_1_LINE)
+        {
+            note.set_octave(Octave::_1_LINE);
+        }
+    }
+    
+    // повышаем ноту до необходимого индекса
+    while(index)
+    {
+        ++note;
+        if(note.get_accidental() != Accidental::NATURAL)
+        {
+            ++note;
+        }
+        if(note.get_octave() != Octave::_1_LINE)
+        {
+            note.set_octave(Octave::_1_LINE);
+        }
+        --index;
+    }
+    
+    // перекидываем ноту на нужную тональность по кварто-квинтовому кругу
+    for(int x=0; x<(data & 0b1111); ++x)
+    {
+        for(int y=0; y<7; ++y)
+        {
+            if(data & 0b10000)
+            {
+                --note;
+            }
+            else
+            {
+                ++note;
+            }
+        }
+        if(note.get_octave() != Octave::_1_LINE)
+        {
+            note set_octave(Octave::_1_LINE);
+        }
+    }
 }
 
 int8_t Key::get_tone_index(Note note) noexcept
