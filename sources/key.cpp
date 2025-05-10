@@ -4,7 +4,9 @@
 using namespace harmony_core;
 
 // Устанавливает до мажор натуральный
-Key::Key() noexcept : data(0b0000000000001001){}
+Key::Key() noexcept : data(0b0000000000001001)
+{
+}
 
 Key::Key(Note note) noexcept : data(0b0000000000001001)
 {
@@ -62,18 +64,20 @@ void Key::set_main(Note note) noexcept
     Note note1;
     uint8_t flats = 0;
     uint8_t sharps = 0;
-    while(1){
+    while (1)
+    {
         // первую ноту увеличиваем на кварту вторую на квинту
-        for(int x=0; x<7; ++x)
+        for (int x = 0; x < 7; ++x)
         {
             --note;
-            if(static_cast<int>(note.get_octave()) != 5)
+            if (static_cast<int>(note.get_octave()) != 5)
             {
                 note.set_octave(Octave::_1_LINE);
             }
-            if(x<5){
+            if (x < 5)
+            {
                 --note1;
-                if(static_cast<int>(note.get_octave()) != 5)
+                if (static_cast<int>(note.get_octave()) != 5)
                 {
                     note.set_octave(Octave::_1_LINE);
                 }
@@ -82,13 +86,14 @@ void Key::set_main(Note note) noexcept
                     ++flats;
                 }
             }
-            if(x == 6)
+            if (x == 6)
             {
                 ++sharps;
             }
         }
         // если одна из нот достигает до натурального - записываем расположение в квинтовом круге
-        if((note.get_accidental() == Accidental::NATURAL && note.get_base() == Base::C) || (note1.get_accidental() == Accidental::NATURAL && note1.get_base() == Base::C))
+        if ((note.get_accidental() == Accidental::NATURAL && note.get_base() == Base::C) ||
+            (note1.get_accidental() == Accidental::NATURAL && note1.get_base() == Base::C))
         {
             if (flats >= sharps)
             {
@@ -103,8 +108,9 @@ void Key::set_main(Note note) noexcept
                 return;
             }
         }
-        
-        if(sharps > 14 || flats > 14){
+
+        if (sharps > 14 || flats > 14)
+        {
             return;
         }
     }
@@ -113,61 +119,64 @@ void Key::set_main(Note note) noexcept
 Note Key::get_main() noexcept
 {
     Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
-    if(this->get_mode() == Mode::IONIAN)
+    if (this->get_mode() == Mode::IONIAN)
     {
         note.set_base(Base::C);
     }
-    else if(this->get_mode() == Mode::AEOLIAN)
+    else if (this->get_mode() == Mode::AEOLIAN)
     {
         note.set_base(Base::A);
     }
-    else if(this->get_mode() == Mode::LOCRIAN)
+    else if (this->get_mode() == Mode::LOCRIAN)
     {
         note.set_base(Base::B);
     }
-    else if(this->get_mode() == Mode::MIXOLYDIAN)
+    else if (this->get_mode() == Mode::MIXOLYDIAN)
     {
         note.set_base(Base::G);
     }
-    else if(this->get_mode() == Mode::LYDIAN)
+    else if (this->get_mode() == Mode::LYDIAN)
     {
         note.set_base(Base::F);
     }
-    else if(this->get_mode() == Mode::PHRYGIAN)
+    else if (this->get_mode() == Mode::PHRYGIAN)
     {
         note.set_base(Base::E);
     }
-    else if(this->get_mode() == Mode::DORIAN)
+    else if (this->get_mode() == Mode::DORIAN)
     {
         note.set_base(Base::D);
     }
-    
+
     // извлекаем положение в квинтовом круге
-    int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0))); 
+    int8_t circle_rotate = static_cast<int8_t>((this->data & 0b111) ^ (-((this->data & 0b1000) != 0)));
     Octave first_octave = Octave::_1_LINE;
-    
-    while(circle_rotate != 0){
+
+    while (circle_rotate != 0)
+    {
         for (int x = 0; x < 7; ++x)
         {
+            if (circle_rotate)
+            {
+                ++note;
+                if (note.get_octave() != first_octave)
+                {
+                    note.set_octave(Octave::_1_LINE);
+                }
+            }
+            else
+            {
+                --note;
+                if (note.get_octave() != first_octave)
+                {
+                    note.set_octave(harmony_core::Octave::_1_LINE);
+                }
+            }
+        }
         if (circle_rotate)
-        {
-            ++note;
-            if (note.get_octave() != first_octave)
-            {
-                note.set_octave(Octave::_1_LINE);
-            }
-        }
+            --circle_rotate;
         else
-        {
-            --note;
-            if (note.get_octave() != first_octave)
-            {
-                note.set_octave(harmony_core::Octave::_1_LINE);
-            }
-        }
-        }
-        if(circle_rotate) --circle_rotate;
-        else ++circle_rotate;
+            ++circle_rotate;
     }
 }
 
@@ -197,40 +206,40 @@ Note Key::get_tone(uint8_t index) noexcept
 {
     Note note;
     // ищем первый тон натуральной модификации тон-ти.
-    for(int x=0; x!=static_cast<uint8_t>(get_mode()); ++x)
+    for (int x = 0; x != static_cast<uint8_t>(get_mode()); ++x)
     {
         ++note;
-        if(note.get_accidental() != Accidental::NATURAL)
+        if (note.get_accidental() != Accidental::NATURAL)
         {
             ++note;
         }
-        if(note.get_octave() != Octave::_1_LINE)
+        if (note.get_octave() != Octave::_1_LINE)
         {
             note.set_octave(Octave::_1_LINE);
         }
     }
-    
+
     // повышаем ноту до необходимого индекса
-    while(index)
+    while (index)
     {
         ++note;
-        if(note.get_accidental() != Accidental::NATURAL)
+        if (note.get_accidental() != Accidental::NATURAL)
         {
             ++note;
         }
-        if(note.get_octave() != Octave::_1_LINE)
+        if (note.get_octave() != Octave::_1_LINE)
         {
             note.set_octave(Octave::_1_LINE);
         }
         --index;
     }
-    
+
     // перекидываем ноту на нужную тональность по кварто-квинтовому кругу
-    for(int x=0; x<(data & 0b1111); ++x)
+    for (int x = 0; x < (data & 0b1111); ++x)
     {
-        for(int y=0; y<7; ++y)
+        for (int y = 0; y < 7; ++y)
         {
-            if(data & 0b10000)
+            if (data & 0b10000)
             {
                 --note;
             }
@@ -239,7 +248,7 @@ Note Key::get_tone(uint8_t index) noexcept
                 ++note;
             }
         }
-        if(note.get_octave() != Octave::_1_LINE)
+        if (note.get_octave() != Octave::_1_LINE)
         {
             note.set_octave(Octave::_1_LINE);
         }
@@ -251,10 +260,10 @@ Note Key::get_tone(uint8_t index) noexcept
 int8_t Key::get_tone_index(Note note) noexcept
 {
     note.set_octave(Octave::_1_LINE);
-    for(int x=0; x<7; ++x)
+    for (int x = 0; x < 7; ++x)
     {
         Note answer = this->get_tone(x);
-        if(answer == note)
+        if (answer == note)
         {
             return x;
         }
@@ -266,12 +275,12 @@ std::vector<Note> Key::get_accidentals() noexcept
 {
     std::vector<Note> answer;
     uint8_t index = 0;
-    if(((uint8_t)data & 0b1111 - index) == 0)
+    if (((uint8_t) data & 0b1111 - index) == 0)
     {
         return answer;
     }
     Note note; // знаки одинаковы для всех ладов
-    if(data & 0b10000)
+    if (data & 0b10000)
     {
         note.set_base(Base::B);
         note.set_key_accidental(Accidental::FLAT);
@@ -281,17 +290,17 @@ std::vector<Note> Key::get_accidentals() noexcept
         note.set_base(Base::F);
         note.set_key_accidental(Accidental::SHARP);
     }
-    
-    for(int x=0; x<=14; ++x)
+
+    for (int x = 0; x <= 14; ++x)
     {
-        if(((uint8_t)data & 0b1111 - index) == 0)
+        if (((uint8_t) data & 0b1111 - index) == 0)
         {
             return answer;
         }
-        
-        for(int y=0; y<7; ++y)
+
+        for (int y = 0; y < 7; ++y)
         {
-            if(data & 0b10000)
+            if (data & 0b10000)
             {
                 --note;
             }
@@ -299,13 +308,13 @@ std::vector<Note> Key::get_accidentals() noexcept
             {
                 ++note;
             }
-            
-            if(note.get_octave() != Octave:: _1_LINE)
+
+            if (note.get_octave() != Octave::_1_LINE)
             {
                 note.set_octave(Octave::_1_LINE);
             }
-            
-            if(y==6)
+
+            if (y == 6)
             {
                 ++index;
             }
@@ -319,64 +328,64 @@ std::vector<Note> Key::get_accidentals() noexcept
 
 void Key::sharp_step() noexcept
 {
-        const bool is_negative = data & 0b10000; // Извлекаем знаковый бит
-        uint8_t value = data & 0b1111; // Берём первые 4 бита как unsigned число
-        
-        if(is_negative)
-        {
-            if(value == 1) // Если достигнуто минимальное значение
-            {
-                data &= ~0b10000;
-                value = 0;       // Устанавливаем 0
-            }
-            else
-            {
-                value -= 1;      // Просто уменьшаем значение на 1
-            }
-        }
-        else
-        {
-            if(value == 14) // Если достигнут максимум
-            {
-                return;     // Ничего не делаем
-            }
-            else
-            {
-                value += 1; // Просто увеличиваем значение на 1
-            }
-        }
-        
-        data = (data & ~0b1111) | value; // Записываем обновленное значение назад
-}
+    const bool is_negative = data & 0b10000; // Извлекаем знаковый бит
+    uint8_t value = data & 0b1111; // Берём первые 4 бита как unsigned число
 
-void Key::flat_step() noexcept
-{
-    const bool is_negative = data & 0b10000;
-    uint8_t value = data & 0b1111;
-    
-    if(!is_negative)
+    if (is_negative)
     {
-        if(value == 0) // Если достигнуто минимальное значение
+        if (value == 1) // Если достигнуто минимальное значение
         {
-            data |= 0b10000;
-            value = 1;
+            data &= ~0b10000;
+            value = 0; // Устанавливаем 0
         }
         else
         {
-            value -= 1;      // Просто уменьшаем значение на 1
+            value -= 1; // Просто уменьшаем значение на 1
         }
     }
     else
     {
-        if(value == 14) // Если достигнут максимум
+        if (value == 14) // Если достигнут максимум
         {
-            return;     // Ничего не делаем
+            return; // Ничего не делаем
         }
         else
         {
             value += 1; // Просто увеличиваем значение на 1
         }
     }
-        
+
+    data = (data & ~0b1111) | value; // Записываем обновленное значение назад
+}
+
+void Key::flat_step() noexcept
+{
+    const bool is_negative = data & 0b10000;
+    uint8_t value = data & 0b1111;
+
+    if (!is_negative)
+    {
+        if (value == 0) // Если достигнуто минимальное значение
+        {
+            data |= 0b10000;
+            value = 1;
+        }
+        else
+        {
+            value -= 1; // Просто уменьшаем значение на 1
+        }
+    }
+    else
+    {
+        if (value == 14) // Если достигнут максимум
+        {
+            return; // Ничего не делаем
+        }
+        else
+        {
+            value += 1; // Просто увеличиваем значение на 1
+        }
+    }
+
     data = (data & ~0b1111) | value;
 }

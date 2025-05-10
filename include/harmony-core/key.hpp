@@ -1,10 +1,10 @@
 #ifndef HARMONY_CORE_KEY_HPP
 #define HARMONY_CORE_KEY_HPP
 
-#include <harmony-core/note.hpp>
-#include <harmony-core/accidental.hpp>
-#include <harmony-core/octave.hpp>
 #include <cstdint>
+#include <harmony-core/accidental.hpp>
+#include <harmony-core/note.hpp>
+#include <harmony-core/octave.hpp>
 #include <vector>
 
 namespace harmony_core
@@ -12,7 +12,8 @@ namespace harmony_core
     /*!
      * \brief Представляет собой соглашение об именовании лада тональности.
      * Каждый лад является своеобразным ключом, точкой отсчета нот для тональности.
-     * Каждый лад имеет свое соотношение тонов и полутонов, не меняющееся по мере продвижения тональности по квинтовому кругу.
+     * Каждый лад имеет свое соотношение тонов и полутонов, не меняющееся по мере продвижения тональности по квинтовому
+     * кругу.
      */
     enum class Mode
     {
@@ -22,14 +23,14 @@ namespace harmony_core
          * Соотношения тонов и полутонов: whole-half-whole-whole-half-whole
          */
         AEOLIAN = 0b110,
-        
+
         /*!
          * \brief Представляет локрийский лад.
          * Лад ноты си.
          * Соотношения тонов и полутонов: half-whole-whole-half-whole-whole
          */
         LOCRIAN = 0b111,
-        
+
         /*!
          * \brief Представляет ионийский (мажорный) лад.
          * Лад ноты ля.
@@ -301,15 +302,15 @@ namespace harmony_core
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
         [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
-        
+
         // resolurions
-        
-                /*!
+
+        /*!
          * \brief Разрешает структуры в текущей тоальности.
          */
-         
-         // или поместить разрешения внуть самих структур (?)
-        
+
+        // или поместить разрешения внуть самих структур (?)
+
         // accidental getter
 
         /*!

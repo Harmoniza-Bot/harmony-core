@@ -377,7 +377,7 @@ namespace harmony_core
         /*!
          * \brief Повышает ноту на полтона.
          */
-        Note& operator++();
+        Note &operator++();
 
         /*!
          * \brief Повышает ноту на полтона.
@@ -387,7 +387,7 @@ namespace harmony_core
         /*!
          * \brief Понижает ноту на полтона.
          */
-        Note& operator--();
+        Note &operator--();
 
         /*!
          * \brief Понижает ноту на полтона.

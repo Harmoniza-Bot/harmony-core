@@ -172,7 +172,7 @@ void Note::enharmony_сhange(bool dir) noexcept
 
 // ------ operators --------
 
-Note& Note::operator++()
+Note &Note::operator++()
 {
     //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
     if (this->get_accidental() != Accidental::DOUBLE_SHARP)
@@ -196,8 +196,8 @@ Note& Note::operator++()
             this->set_base(static_cast<Base>(++base));
         }
     }
-    
-    if((this->get_base() == Base::B || this->get_base() == Base::E) && this->get_accidental() == Accidental::SHARP)
+
+    if ((this->get_base() == Base::B || this->get_base() == Base::E) && this->get_accidental() == Accidental::SHARP)
     {
         this->enharmony_сhange(1);
         return *this;
@@ -217,7 +217,7 @@ Note& Note::operator++()
 //     return *first_note;
 // }
 
-Note& Note::operator--()
+Note &Note::operator--()
 {
     //если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
     if (this->get_accidental() != Accidental::DOUBLE_FLAT)
@@ -241,7 +241,7 @@ Note& Note::operator--()
             this->set_base(static_cast<Base>(--base));
         }
     }
-    if((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT)
+    if ((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT)
     {
         this->enharmony_сhange(0);
         return *this;
