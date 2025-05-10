@@ -136,14 +136,14 @@ Accidental Note::get_accidental() const noexcept
     return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
 }
 
-std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
-{
-    return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
-}
-
-std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept
-{
-}
+// std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
+// {
+//     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
+// }
+//
+// std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept
+// {
+// }
 
 void Note::enharmony_сhange(bool dir) noexcept
 {
@@ -155,7 +155,7 @@ void Note::enharmony_сhange(bool dir) noexcept
         while (height != this->get_height())
         {
             uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-            this->set_accidental(static_cast<Accidental>(--acc));
+            this->set_key_accidental(static_cast<Accidental>(--acc));
         }
     }
     else
@@ -165,20 +165,20 @@ void Note::enharmony_сhange(bool dir) noexcept
         while (height != this->get_height())
         {
             uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-            this->set_accidental(static_cast<Accidental>(++acc));
+            this->set_key_accidental(static_cast<Accidental>(++acc));
         }
     }
 }
 
 // ------ operators --------
 
-friend Note Note::operator++()
+Note& Note::operator++()
 {
     //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
     if (this->get_accidental() != Accidental::DOUBLE_SHARP)
     {
         uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-        this->set_accidental(static_cast<Accidental>(++acc));
+        this->set_key_accidental(static_cast<Accidental>(++acc));
     }
     // если нота не ми и си можно повысить ее установкой диеза и повышением основания. В противном случае просто
     // повысить основание
@@ -186,7 +186,7 @@ friend Note Note::operator++()
     {
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
-            this->set_accidental(Accidental::SHARP);
+            this->set_key_accidental(Accidental::SHARP);
             uint8_t base = static_cast<uint8_t>(this->get_base());
             this->set_base(static_cast<Base>(++base));
         }
@@ -199,7 +199,7 @@ friend Note Note::operator++()
     
     if((this->get_base() == Base::B || this->get_base() == Base::E) && this->get_accidental() == Accidental::SHARP)
     {
-        this->enharmony_change(1);
+        this->enharmony_сhange(1);
         return *this;
     }
     if (this->get_accidental() == Accidental::DOUBLE_SHARP)
@@ -210,20 +210,20 @@ friend Note Note::operator++()
     return *this;
 }
 
-friend Note Note::operator++(Note note)
-{
-    Note first_note = note;
-    ++note;
-    return *first_note;
-}
+// Note Note::operator++(int i)
+// {
+//     Note first_note = this->note;
+//     ++note;
+//     return *first_note;
+// }
 
-friend Note Note::operator--()
+Note& Note::operator--()
 {
     //если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
     if (this->get_accidental() != Accidental::DOUBLE_FLAT)
     {
         uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-        this->set_accidental(static_cast<Accidental>(--acc));
+        this->set_key_accidental(static_cast<Accidental>(--acc));
     }
     // если нота не фа и до можно понизить ее установкой бемоля и понижением основания. В противном случае просто
     // понизить основание
@@ -231,7 +231,7 @@ friend Note Note::operator--()
     {
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
-            this->set_accidental(Accidental::FLAT);
+            this->set_key_accidental(Accidental::FLAT);
             uint8_t base = static_cast<uint8_t>(this->get_base());
             this->set_base(static_cast<Base>(--base));
         }
@@ -243,7 +243,7 @@ friend Note Note::operator--()
     }
     if((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT)
     {
-        this->enharmony_change(0);
+        this->enharmony_сhange(0);
         return *this;
     }
     if (this->get_accidental() == Accidental::DOUBLE_FLAT)
@@ -252,9 +252,9 @@ friend Note Note::operator--()
     return *this;
 }
 
-friend Note Note::operator--(Note note)
-{
-    Note first_note = note;
-    ++note;
-    return *first_note;
-}
+// Note Note::operator--(int i)
+// {
+//     Note first_note = note;
+//     ++note;
+//     return *first_note;
+// }

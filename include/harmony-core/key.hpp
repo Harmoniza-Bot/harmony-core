@@ -60,7 +60,7 @@ namespace harmony_core
          * Соотношения тонов и полутонов: whole-whole-half-whole-whole-half
          */
         MIXOLYDIAN = 0b101
-    }
+    };
 
     /*!
      * \brief Представляет собой соглашение об именовании вида тональности.
@@ -92,7 +92,7 @@ namespace harmony_core
          * Соотношения тонов и полутонов: n-n-one&half-n-n-one&half
          */
         DOUBLE_HARMONIC = 0b100,
-    }
+    };
 
     class Key final
     {
@@ -134,7 +134,7 @@ namespace harmony_core
          * \brief Создаёт тональность на основе \code data \endcode.
          * \param [in] data информация об основании, знаке, ладе и виде тон-ти.
          */
-        explicit Key(uint16_t data) noexcept;
+        explicit Key(uint_fast16_t data) noexcept;
 
         /*!
          * \brief Создаёт тональность на основе \code key \endcode.
@@ -152,13 +152,13 @@ namespace harmony_core
         /*!
          * \brief Задает информацию об основании, знаке, ладе и виде тон-ти.
          */
-        void set_data(uint16_t data) noexcept;
+        void set_data(uint_fast16_t data) noexcept;
 
         /*!
          * \brief Возвращает информацию об основании, знаке, ладе и виде тон-ти.
          * \return Информация об основании, знаке, ладе и виде этой тон-ти.
          */
-        [[nodiscard]] uint16_t get_data() const noexcept;
+        [[nodiscard]] uint_fast16_t get_data() const noexcept;
 
         // main getter & setter
 
@@ -277,7 +277,7 @@ namespace harmony_core
          * \param key другая тон-ть.
          * \return Эту тональность.
          */
-        Key &operator=(const key &key)
+        Key &operator=(const Key &key)
         {
             if (this == &key)
                 return *this;
@@ -316,7 +316,7 @@ namespace harmony_core
          * \brief Вычисляет знаки тональности.
          * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
          */
-        vector<accidental> get_accidentals() noexcept;
+        std::vector<Note> get_accidentals() noexcept;
 
 
         /*!

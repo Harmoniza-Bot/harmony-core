@@ -278,8 +278,8 @@ namespace harmony_core
          * \param [in] convention соглашение об именовании нот.
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
-        [[nodiscard]] std::u8string_view
-        get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+        // [[nodiscard]] std::u8string_view
+        // get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.
@@ -377,22 +377,22 @@ namespace harmony_core
         /*!
          * \brief Повышает ноту на полтона.
          */
-        friend Note operator++();
+        Note& operator++();
 
         /*!
          * \brief Повышает ноту на полтона.
          */
-        friend Note operator++(Note note);
+        Note operator++(int);
 
         /*!
          * \brief Понижает ноту на полтона.
          */
-        friend Note operator--();
+        Note& operator--();
 
         /*!
          * \brief Понижает ноту на полтона.
          */
-        friend Note operator--(Note);
+        Note operator--(int);
 
     private:
         /**

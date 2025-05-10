@@ -1,5 +1,5 @@
 #include <harmony-core/key.hpp>
-#include <stdextept>
+#include <stdexcept>
 
 using namespace harmony_core;
 
@@ -29,7 +29,7 @@ Key::Key(Base base, Accidental accidental, Mode mode, Specie specie) noexcept : 
 {
     Note note;
     note.set_base(base);
-    note.set_accidental(accidental);
+    note.set_key_accidental(accidental);
     this->set_main(note);
     this->set_mode(mode);
     this->set_specie(specie);
@@ -67,32 +67,32 @@ void Key::set_main(Note note) noexcept
         for(int x=0; x<7; ++x)
         {
             --note;
-            if(note.get_octave() != 5)
+            if(static_cast<int>(note.get_octave()) != 5)
             {
                 note.set_octave(Octave::_1_LINE);
             }
             if(x<5){
                 --note1;
-                if(note.get_octave() != 5)
+                if(static_cast<int>(note.get_octave()) != 5)
                 {
                     note.set_octave(Octave::_1_LINE);
                 }
                 if (x == 4)
                 {
-                    ++flat;
+                    ++flats;
                 }
             }
             if(x == 6)
             {
-                ++sharp;
+                ++sharps;
             }
         }
         // если одна из нот достигает до натурального - записываем расположение в квинтовом круге
-        if((note.get_accidental() == Accidental::NATURAL && note.get_base() == Base::C)) || (note1.get_accidental() == Accidental::NATURAL && note1.get_base() == Base::C))
+        if((note.get_accidental() == Accidental::NATURAL && note.get_base() == Base::C) || (note1.get_accidental() == Accidental::NATURAL && note1.get_base() == Base::C))
         {
             if (flats >= sharps)
             {
-                data = data & 0b1111 | flat;
+                data = data & 0b1111 | flats;
                 data = data & 0b10000 | 1;
                 return;
             }
@@ -151,7 +151,7 @@ Note Key::get_main() noexcept
         {
         if (circle_rotate)
         {
-            ++Note;
+            ++note;
             if (note.get_octave() != first_octave)
             {
                 note.set_octave(Octave::_1_LINE);
@@ -159,10 +159,10 @@ Note Key::get_main() noexcept
         }
         else
         {
-            --Note
+            --note;
             if (note.get_octave() != first_octave)
             {
-                note.set_octave(_1_LINE);
+                note.set_octave(harmony_core::Octave::_1_LINE);
             }
         }
         }
@@ -200,7 +200,7 @@ Note Key::get_tone(uint8_t index) noexcept
     for(int x=0; x!=static_cast<uint8_t>(get_mode()); ++x)
     {
         ++note;
-        if(note.get_accidental != Accidental::NATURAL)
+        if(note.get_accidental() != Accidental::NATURAL)
         {
             ++note;
         }
@@ -241,10 +241,10 @@ Note Key::get_tone(uint8_t index) noexcept
         }
         if(note.get_octave() != Octave::_1_LINE)
         {
-            note set_octave(Octave::_1_LINE);
+            note.set_octave(Octave::_1_LINE);
         }
     }
-    note.set_octave(Octave::_1_LINE)
+    note.set_octave(Octave::_1_LINE);
     return note;
 }
 
@@ -262,9 +262,9 @@ int8_t Key::get_tone_index(Note note) noexcept
     return -1;
 }
 
-vector<Note> Key::get_accidentals() noexcept
+std::vector<Note> Key::get_accidentals() noexcept
 {
-    vector<Note> answer;
+    std::vector<Note> answer;
     uint8_t index = 0;
     if(((uint8_t)data & 0b1111 - index) == 0)
     {
@@ -274,12 +274,12 @@ vector<Note> Key::get_accidentals() noexcept
     if(data & 0b10000)
     {
         note.set_base(Base::B);
-        note.set_accidental(Accidental::FLAT);
+        note.set_key_accidental(Accidental::FLAT);
     }
     else
     {
         note.set_base(Base::F);
-        note.set_accidental(Accidental::SHARP);
+        note.set_key_accidental(Accidental::SHARP);
     }
     
     for(int x=0; x<=14; ++x)
@@ -289,7 +289,7 @@ vector<Note> Key::get_accidentals() noexcept
             return answer;
         }
         
-        for(int y=0; y<7: ++y)
+        for(int y=0; y<7; ++y)
         {
             if(data & 0b10000)
             {
@@ -310,14 +310,14 @@ vector<Note> Key::get_accidentals() noexcept
                 ++index;
             }
         }
-        answer.push_back(note.)
+        answer.push_back(note);
     }
     return answer;
 }
 
 //--------------------------------
 
-void sharp_step() noexcept
+void Key::sharp_step() noexcept
 {
         const bool is_negative = data & 0b10000; // Извлекаем знаковый бит
         uint8_t value = data & 0b1111; // Берём первые 4 бита как unsigned число
