@@ -8,7 +8,6 @@ sources/CMakeFiles/harmony-core.dir/accidental.cpp.o: /home/tima/gitForks/harmon
 sources/CMakeFiles/harmony-core.dir/key.cpp.o: /home/tima/gitForks/harmony-core/sources/key.cpp \
   /usr/include/stdc-predef.h \
   /home/tima/gitForks/harmony-core/include/harmony-core/key.hpp \
-  /home/tima/gitForks/harmony-core/include/harmony-core/note.hpp \
   /usr/include/c++/12/cstdint \
   /usr/include/x86_64-linux-gnu/c++/12/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/12/bits/os_defines.h \
@@ -32,6 +31,7 @@ sources/CMakeFiles/harmony-core.dir/key.cpp.o: /home/tima/gitForks/harmony-core/
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /home/tima/gitForks/harmony-core/include/harmony-core/accidental.hpp \
+  /home/tima/gitForks/harmony-core/include/harmony-core/note.hpp \
   /home/tima/gitForks/harmony-core/include/harmony-core/octave.hpp \
   /usr/include/c++/12/vector \
   /usr/include/c++/12/bits/stl_algobase.h \
@@ -392,6 +392,22 @@ sources/CMakeFiles/harmony-core.dir/octave.cpp.o: /home/tima/gitForks/harmony-co
 
 /usr/include/c++/12/bits/exception_defines.h:
 
+/usr/include/c++/12/bits/memoryfwd.h:
+
+/usr/include/c++/12/bits/std_abs.h:
+
+/usr/include/c++/12/debug/assertions.h:
+
+/usr/include/c++/12/exception:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/c++/12/typeinfo:
+
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/c++/12/bits/hash_bytes.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
@@ -434,36 +450,6 @@ sources/CMakeFiles/harmony-core.dir/octave.cpp.o: /home/tima/gitForks/harmony-co
 
 /usr/include/c++/12/bits/max_size_type.h:
 
-/usr/include/c++/12/bits/stl_algobase.h:
-
-/usr/include/ctype.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
-
-/usr/include/c++/12/vector:
-
-/usr/include/c++/12/bits/stl_construct.h:
-
-/usr/include/c++/12/cerrno:
-
-/usr/include/x86_64-linux-gnu/bits/select.h:
-
-/usr/include/c++/12/bits/refwrap.h:
-
-/home/tima/gitForks/harmony-core/include/harmony-core/octave.hpp:
-
-/usr/include/c++/12/bits/new_allocator.h:
-
-/usr/include/c++/12/concepts:
-
-/usr/include/c++/12/initializer_list:
-
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
-/usr/include/c++/12/string:
-
 /home/tima/gitForks/harmony-core/include/harmony-core/key.hpp:
 
 /usr/include/c++/12/bits/localefwd.h:
@@ -490,23 +476,19 @@ sources/CMakeFiles/harmony-core.dir/octave.cpp.o: /home/tima/gitForks/harmony-co
 
 /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h:
 
+/usr/include/c++/12/bits/new_allocator.h:
+
+/usr/include/c++/12/concepts:
+
+/home/tima/gitForks/harmony-core/include/harmony-core/octave.hpp:
+
+/usr/include/c++/12/initializer_list:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+
+/usr/include/c++/12/string:
+
 /usr/include/features.h:
-
-/usr/include/c++/12/bits/memoryfwd.h:
-
-/usr/include/c++/12/bits/std_abs.h:
-
-/usr/include/c++/12/debug/assertions.h:
-
-/usr/include/c++/12/exception:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/c++/12/typeinfo:
-
-/usr/include/x86_64-linux-gnu/bits/time64.h:
-
-/usr/include/c++/12/bits/hash_bytes.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
@@ -545,6 +527,24 @@ sources/CMakeFiles/harmony-core.dir/octave.cpp.o: /home/tima/gitForks/harmony-co
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/c++/12/bits/stl_algobase.h:
+
+/usr/include/ctype.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+
+/usr/include/c++/12/vector:
+
+/usr/include/c++/12/bits/stl_construct.h:
+
+/usr/include/c++/12/cerrno:
+
+/usr/include/x86_64-linux-gnu/bits/select.h:
+
+/usr/include/c++/12/bits/refwrap.h:
 
 /usr/include/c++/12/bits/stl_uninitialized.h:
 

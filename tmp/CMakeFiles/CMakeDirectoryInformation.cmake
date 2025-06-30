@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/tima/gitForks/harmony-core")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/tima/gitForks/harmony-core/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/tima/gitForks/harmony-core/tmp")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

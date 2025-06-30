@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/tima/gitForks/harmony-core
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tima/gitForks/harmony-core/build
+CMAKE_BINARY_DIR = /home/tima/gitForks/harmony-core/tmp
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tima/gitForks/harmony-core/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/tima/gitForks/harmony-core/build/CMakeFiles /home/tima/gitForks/harmony-core/build/sources//CMakeFiles/progress.marks
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tima/gitForks/harmony-core/build/CMakeFiles 0
+	cd /home/tima/gitForks/harmony-core/tmp && $(CMAKE_COMMAND) -E cmake_progress_start /home/tima/gitForks/harmony-core/tmp/CMakeFiles /home/tima/gitForks/harmony-core/tmp/sources//CMakeFiles/progress.marks
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tima/gitForks/harmony-core/tmp/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/clean
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/preinstall
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/preinstall
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/tima/gitForks/harmony-core/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/tima/gitForks/harmony-core/tmp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 sources/CMakeFiles/harmony-core.dir/rule:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/CMakeFiles/harmony-core.dir/rule
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sources/CMakeFiles/harmony-core.dir/rule
 .PHONY : sources/CMakeFiles/harmony-core.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ harmony-core: sources/CMakeFiles/harmony-core.dir/rule
 
 # fast build rule for target.
 harmony-core/fast:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/build
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/build
 .PHONY : harmony-core/fast
 
 accidental.o: accidental.cpp.o
@@ -135,7 +135,7 @@ accidental.o: accidental.cpp.o
 
 # target to build an object file
 accidental.cpp.o:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.o
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.o
 .PHONY : accidental.cpp.o
 
 accidental.i: accidental.cpp.i
@@ -143,7 +143,7 @@ accidental.i: accidental.cpp.i
 
 # target to preprocess a source file
 accidental.cpp.i:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.i
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.i
 .PHONY : accidental.cpp.i
 
 accidental.s: accidental.cpp.s
@@ -151,7 +151,7 @@ accidental.s: accidental.cpp.s
 
 # target to generate assembly for a file
 accidental.cpp.s:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.s
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/accidental.cpp.s
 .PHONY : accidental.cpp.s
 
 key.o: key.cpp.o
@@ -159,7 +159,7 @@ key.o: key.cpp.o
 
 # target to build an object file
 key.cpp.o:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.o
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.o
 .PHONY : key.cpp.o
 
 key.i: key.cpp.i
@@ -167,7 +167,7 @@ key.i: key.cpp.i
 
 # target to preprocess a source file
 key.cpp.i:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.i
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.i
 .PHONY : key.cpp.i
 
 key.s: key.cpp.s
@@ -175,7 +175,7 @@ key.s: key.cpp.s
 
 # target to generate assembly for a file
 key.cpp.s:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.s
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/key.cpp.s
 .PHONY : key.cpp.s
 
 note.o: note.cpp.o
@@ -183,7 +183,7 @@ note.o: note.cpp.o
 
 # target to build an object file
 note.cpp.o:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.o
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.o
 .PHONY : note.cpp.o
 
 note.i: note.cpp.i
@@ -191,7 +191,7 @@ note.i: note.cpp.i
 
 # target to preprocess a source file
 note.cpp.i:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.i
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.i
 .PHONY : note.cpp.i
 
 note.s: note.cpp.s
@@ -199,7 +199,7 @@ note.s: note.cpp.s
 
 # target to generate assembly for a file
 note.cpp.s:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.s
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/note.cpp.s
 .PHONY : note.cpp.s
 
 octave.o: octave.cpp.o
@@ -207,7 +207,7 @@ octave.o: octave.cpp.o
 
 # target to build an object file
 octave.cpp.o:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.o
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.o
 .PHONY : octave.cpp.o
 
 octave.i: octave.cpp.i
@@ -215,7 +215,7 @@ octave.i: octave.cpp.i
 
 # target to preprocess a source file
 octave.cpp.i:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.i
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.i
 .PHONY : octave.cpp.i
 
 octave.s: octave.cpp.s
@@ -223,7 +223,7 @@ octave.s: octave.cpp.s
 
 # target to generate assembly for a file
 octave.cpp.s:
-	cd /home/tima/gitForks/harmony-core/build && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.s
+	cd /home/tima/gitForks/harmony-core/tmp && $(MAKE) $(MAKESILENT) -f sources/CMakeFiles/harmony-core.dir/build.make sources/CMakeFiles/harmony-core.dir/octave.cpp.s
 .PHONY : octave.cpp.s
 
 # Help Target
@@ -258,6 +258,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/tima/gitForks/harmony-core/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/tima/gitForks/harmony-core/tmp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

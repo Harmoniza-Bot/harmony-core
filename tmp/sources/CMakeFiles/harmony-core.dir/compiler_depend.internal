@@ -10,7 +10,6 @@ sources/CMakeFiles/harmony-core.dir/key.cpp.o
  /home/tima/gitForks/harmony-core/sources/key.cpp
  /usr/include/stdc-predef.h
  /home/tima/gitForks/harmony-core/include/harmony-core/key.hpp
- /home/tima/gitForks/harmony-core/include/harmony-core/note.hpp
  /usr/include/c++/12/cstdint
  /usr/include/x86_64-linux-gnu/c++/12/bits/c++config.h
  /usr/include/x86_64-linux-gnu/c++/12/bits/os_defines.h
@@ -34,6 +33,7 @@ sources/CMakeFiles/harmony-core.dir/key.cpp.o
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
  /home/tima/gitForks/harmony-core/include/harmony-core/accidental.hpp
+ /home/tima/gitForks/harmony-core/include/harmony-core/note.hpp
  /home/tima/gitForks/harmony-core/include/harmony-core/octave.hpp
  /usr/include/c++/12/vector
  /usr/include/c++/12/bits/stl_algobase.h

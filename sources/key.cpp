@@ -178,6 +178,7 @@ Note Key::get_main() noexcept
         else
             ++circle_rotate;
     }
+    return note;
 }
 
 void Key::set_mode(Mode mode) noexcept

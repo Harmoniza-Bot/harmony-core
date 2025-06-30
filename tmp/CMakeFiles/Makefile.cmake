@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/home/tima/gitForks/harmony-core/CMakeLists.txt"
+  "/home/tima/gitForks/harmony-core/sources/CMakeLists.txt"
   "CMakeFiles/3.25.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.1/CMakeSystem.cmake"
-  "/home/tima/gitForks/harmony-core/sources/CMakeLists.txt"
   "/usr/share/cmake-3.25/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake"
   "/usr/share/cmake-3.25/Modules/CMakeGenericSystem.cmake"
