@@ -1,5 +1,0 @@
-/home/tima/gitForks/harmony-core/tmp/CMakeFiles/edit_cache.dir
-/home/tima/gitForks/harmony-core/tmp/CMakeFiles/rebuild_cache.dir
-/home/tima/gitForks/harmony-core/tmp/sources/CMakeFiles/harmony-core.dir
-/home/tima/gitForks/harmony-core/tmp/sources/CMakeFiles/edit_cache.dir
-/home/tima/gitForks/harmony-core/tmp/sources/CMakeFiles/rebuild_cache.dir
