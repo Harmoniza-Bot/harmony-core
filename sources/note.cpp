@@ -212,9 +212,9 @@ Note &Note::operator++()
 
 Note Note::operator++(int i)
 {
-     Note first_note(this->get_data());
-     ++*this;
-     return first_note;
+    Note first_note(this->get_data());
+    ++*this;
+    return first_note;
 }
 
 Note &Note::operator--()
