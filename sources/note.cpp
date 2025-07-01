@@ -210,12 +210,12 @@ Note &Note::operator++()
     return *this;
 }
 
-// Note Note::operator++(int i)
-// {
-//     Note first_note = this->note;
-//     ++note;
-//     return *first_note;
-// }
+Note Note::operator++(int i)
+{
+     Note first_note(this->get_data());
+     ++*this;
+     return first_note;
+}
 
 Note &Note::operator--()
 {
@@ -252,9 +252,9 @@ Note &Note::operator--()
     return *this;
 }
 
-// Note Note::operator--(int i)
-// {
-//     Note first_note = note;
-//     ++note;
-//     return *first_note;
-// }
+Note Note::operator--(int i)
+{
+    Note first_note(this->get_data());
+    --*this;
+    return first_note;
+}
