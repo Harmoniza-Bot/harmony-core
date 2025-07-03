@@ -1,2 +1,0 @@
-/usr/bin/ar qc libharmony-core.a "CMakeFiles/harmony-core.dir/note.cpp.o" "CMakeFiles/harmony-core.dir/accidental.cpp.o" "CMakeFiles/harmony-core.dir/octave.cpp.o" "CMakeFiles/harmony-core.dir/key.cpp.o"
-/usr/bin/ranlib libharmony-core.a
