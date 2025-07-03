@@ -1,5 +1,6 @@
 #include <harmony-core/note.hpp>
 #include <stdexcept>
+#include <string>
 
 using namespace harmony_core;
 

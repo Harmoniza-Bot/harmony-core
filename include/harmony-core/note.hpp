@@ -2,6 +2,7 @@
 #define HARMONY_CORE_NOTE_HPP
 
 #include <cstdint>
+#include <string>
 #include <harmony-core/accidental.hpp>
 #include <harmony-core/octave.hpp>
 
@@ -278,8 +279,7 @@ namespace harmony_core
          * \param [in] convention соглашение об именовании нот.
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
-        // [[nodiscard]] std::u8string_view
-        // get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+        // [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.
