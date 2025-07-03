@@ -8,6 +8,4 @@ project(harmony-core
 
 set(CMAKE_CXX_STANDARD 20)
 
-target_include_directories(harmony-core PUBLIC ${PROJECT_SOURCE_DIR}/sources/include)
-
 add_subdirectory(sources)
