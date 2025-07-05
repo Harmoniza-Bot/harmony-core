@@ -146,7 +146,7 @@ namespace harmony_core
         // data setter & getter
 
         /*!
-         * \brief Задает информацию об основании, знаке, ладе и виде тон-ти.
+         * \brief Задает информацию об основании, знаке, ладе и виде тон-ти на основе \code data \endcode.
          */
         void set_data(uint_fast16_t data) noexcept;
 
@@ -198,6 +198,60 @@ namespace harmony_core
          */
         [[nodiscard]] Specie get_specie() noexcept;
 
+        //----- Знаковые и нотные функции ------
+
+        // tone getters
+
+        /*!
+         * \brief Возвращает ступень тон-ти по индексу.
+         * \return Нота, расположенная на указанном индексе
+         */
+        [[nodiscard]] Note get_tone(uint8_t index) noexcept;
+
+        /*!
+         * \brief Ищет указанную ноту в текущей тон-ти.
+         * \param [in] note нота для поиска
+         * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
+         */
+        [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
+
+        // resolurions
+
+        /*!
+         * \brief Разрешает структуры в текущей тоальности.
+         */
+
+        // или поместить разрешения внуть самих структур (?)
+
+        // accidental getter
+
+        /*!
+         * \brief Вычисляет знаки тональности.
+         * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
+         */
+        std::vector<Note> get_accidentals() noexcept;
+
+
+        /*!
+         * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.
+         */
+        void sharp_step() noexcept;
+
+        /*!
+         * \brief Делает шаг по кварто-квинтовому кругу в сторону бемольных тон-тей.
+         */
+        void flat_step() noexcept;
+
+        /*!
+         * \brief Задает количество шагов в кварто-квинтовом круге
+         */
+        void set_step(int8_t) noexcept;
+
+        /*!
+         * \brief Возвращает количество шагов по кварто-квинтовому кругу
+         */
+        int8_t get_step() noexcept;
+
         //---- equality operator --------
 
         /*!
@@ -232,7 +286,7 @@ namespace harmony_core
          */
         friend bool operator<(const Key &lhs, const Key &rhs)
         {
-            return 0; // дописать!!!
+            return 0;
         }
 
         /*!
@@ -284,51 +338,6 @@ namespace harmony_core
             data = key.data;
             return *this;
         }
-
-        //----- Знаковые и нотные функции ------
-
-        // tone getters
-
-        /*!
-         * \brief Возвращает ступень тон-ти по индексу.
-         * \return Нота, расположенная на указанном индексе
-         */
-        [[nodiscard]] Note get_tone(uint8_t index) noexcept;
-
-        /*!
-         * \brief Ищет указанную ноту в текущей тон-ти.
-         * \param [in] note нота для поиска
-         * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
-         */
-        [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
-
-        // resolurions
-
-        /*!
-         * \brief Разрешает структуры в текущей тоальности.
-         */
-
-        // или поместить разрешения внуть самих структур (?)
-
-        // accidental getter
-
-        /*!
-         * \brief Вычисляет знаки тональности.
-         * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
-         */
-        std::vector<Note> get_accidentals() noexcept;
-
-
-        /*!
-         * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.
-         */
-        void sharp_step() noexcept;
-
-        /*!
-         * \brief Делает шаг по кварто-квинтовому кругу в сторону бемольных тон-тей.
-         */
-        void flat_step() noexcept;
-
 
     private:
         /**

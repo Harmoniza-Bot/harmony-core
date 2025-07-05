@@ -390,3 +390,39 @@ void Key::flat_step() noexcept
 
     data = (data & ~0b1111) | value;
 }
+
+void Key::set_step(int8_t step)
+{
+    if (step > 0)
+    {
+        data &= ~0b10000;
+    }
+    else
+    {
+        data |= 0b10000;
+    }
+
+    if (data < 0)
+    {
+        data = -data;
+    }
+
+    if (step > 14 || step < -14)
+        return;
+    data = data & 0b1111 | (static_cast<uint16_t>(step));
+}
+
+int8_t Key::get_step()
+{
+    int8_t answer;
+    answer = data & 0b1111;
+
+    if (data & 0b10000)
+    {
+        return 0 - answer;
+    }
+    else
+    {
+        return answer;
+    }
+}
