@@ -419,7 +419,7 @@ int8_t Key::get_step()
 
     if (data & 0b10000)
     {
-        return 0 - answer;
+        return answer-;
     }
     else
     {

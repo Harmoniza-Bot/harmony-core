@@ -286,7 +286,7 @@ namespace harmony_core
          */
         friend bool operator<(const Key &lhs, const Key &rhs)
         {
-            return 0;
+            return lhs->get_step() < rhs->get_step();
         }
 
         /*!
@@ -298,7 +298,7 @@ namespace harmony_core
          */
         friend bool operator<=(const Key &lhs, const Key &rhs)
         {
-            return 0; // дописать!!!
+            return lhs->get_step() <= rhs->get_step();
         }
 
         /*!
@@ -309,7 +309,7 @@ namespace harmony_core
          */
         friend bool operator>(const Key &lhs, const Key &rhs)
         {
-            return 0; // дописать!!!
+            return lhs->get_step() > rhs->get_step();
         }
 
         /*!
@@ -321,7 +321,7 @@ namespace harmony_core
          */
         friend bool operator>=(const Key &lhs, const Key &rhs)
         {
-            return 0; // дописать!!!
+            return lhs->get_step() >= rhs->get_step();
         }
 
         // copy operator
