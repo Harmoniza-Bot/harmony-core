@@ -137,14 +137,12 @@ Accidental Note::get_accidental() const noexcept
     return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
 }
 
-// std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
-// {
-//     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
-// }
-//
-// std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept
-// {
-// }
+std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
+{
+    return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
+}
+
+std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
 void Note::enharmony_сhange(bool dir) noexcept
 {
