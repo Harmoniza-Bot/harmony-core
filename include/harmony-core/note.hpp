@@ -279,12 +279,8 @@ namespace harmony_core
          * \param [in] convention соглашение об именовании нот.
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
-<<<<<<< HEAD
-        // [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const
-        // noexcept;
-=======
+
         [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
->>>>>>> 79c4cb01e3d17d86199209b8565c0d4b945212e2
 
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.
