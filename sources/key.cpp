@@ -391,7 +391,7 @@ void Key::flat_step() noexcept
     data = (data & ~0b1111) | value;
 }
 
-void Key::set_step(int8_t step)
+void Key::set_step(int8_t step) noexcept
 {
     if (step > 0)
     {
@@ -412,14 +412,14 @@ void Key::set_step(int8_t step)
     data = data & 0b1111 | (static_cast<uint16_t>(step));
 }
 
-int8_t Key::get_step()
+int8_t Key::get_step() const noexcept
 {
     int8_t answer;
     answer = data & 0b1111;
 
     if (data & 0b10000)
     {
-        return answer-;
+        return -answer;
     }
     else
     {

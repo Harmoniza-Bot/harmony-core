@@ -8,32 +8,32 @@
 
 namespace harmony_core
 {
-    /*!
-     * \brief Представляет собой соглашение об именовании нот.
-     */
-    enum class NamingConvention
-    {
-        /*!
-         * \brief Представляет собой английское соглашение об именовании нот.
-         */
-        ENGLISH,
-        /*!
-         * \brief Представляет собой немецкое соглашение об именовании нот.
-         */
-        GERMAN,
-        /*!
-         * \brief Представляет собой голландское соглашение об именовании нот.
-         */
-        DUTCH,
-        /*!
-         * \brief Представляет собой византийское соглашение об именовании нот.
-         */
-        BYZANTINE,
-        /*!
-         * \brief Представляет собой японское соглашение об именовании нот.
-         */
-        JAPANESE
-    };
+    // /*!
+    //  * \brief Представляет собой соглашение об именовании нот.
+    //  */
+    // enum class NamingConvention
+    // {
+    //     /*!
+    //      * \brief Представляет собой английское соглашение об именовании нот.
+    //      */
+    //     ENGLISH,
+    //     /*!
+    //      * \brief Представляет собой немецкое соглашение об именовании нот.
+    //      */
+    //     GERMAN,
+    //     /*!
+    //      * \brief Представляет собой голландское соглашение об именовании нот.
+    //      */
+    //     DUTCH,
+    //     /*!
+    //      * \brief Представляет собой византийское соглашение об именовании нот.
+    //      */
+    //     BYZANTINE,
+    //     /*!
+    //      * \brief Представляет собой японское соглашение об именовании нот.
+    //      */
+    //     JAPANESE
+    // };
 
     /*!
      * \brief Представляет собой основание ноты.
@@ -43,31 +43,31 @@ namespace harmony_core
         /*!
          * \brief Представляет собой ноту \code До\endcode.
          */
-        C = 0b001,
+        A = 0b001,
         /*!
          * \brief Представляет собой ноту \code Ре\endcode.
          */
-        D = 0b010,
+        B = 0b010,
         /*!
          * \brief Представляет собой ноту \code Ми\endcode.
          */
-        E = 0b011,
+        C = 0b011,
         /*!
          * \brief Представляет собой ноту \code Фа\endcode.
          */
-        F = 0b100,
+        D = 0b100,
         /*!
          * \brief Представляет собой ноту \code Соль\endcode.
          */
-        G = 0b101,
+        E = 0b101,
         /*!
          * \brief Представляет собой ноту \code Ля\endcode.
          */
-        A = 0b110,
+        F = 0b110,
         /*!
          * \brief Представляет собой ноту \code Си\endcode.
          */
-        B = 0b111
+        G = 0b111
     };
 
     /*!
@@ -280,7 +280,17 @@ namespace harmony_core
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
 
-        [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+        // [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+        //TODO КАК ЖЕ Я ЗА*БАЛСЯ...
+
+        /*!
+         * \brief Возвращает полное название этой ноты по общепринятому стандаргу
+         * \return Полное название этой ноты согласно \code convention\endcode.
+         */
+
+        std::string get_name() const noexcept;
+
+        //---------------
 
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.

@@ -1,14 +1,14 @@
 #include <harmony-core/note.hpp>
 #include <stdexcept>
 #include <string>
-
+#include <iostream>
 using namespace harmony_core;
 
-static const char8_t *NOTE_NAMES[sizeof(NamingConvention)][9 * 7 * 3] = {
-    // TODO: use correct size instead of 9 * 7 * 3
-    {
-        u8"" // TODO: make it completely
-    }};
+// static const char8_t *NOTE_NAMES[sizeof(NamingConvention)][9 * 7 * 3] = {
+//     // TODO: use correct size instead of 9 * 7 * 3
+//     {
+//         u8"" // TODO: make it completely
+//     }};
 
 Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED, Accidental::UNDEFINED, Duration::WHOLE)
 {
@@ -137,12 +137,41 @@ Accidental Note::get_accidental() const noexcept
     return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
 }
 
-std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
-{
-    return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
-}
 
-std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+
+
+// std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
+// {
+//     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
+// }
+
+//std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+
+std::string Note::get_name() const noexcept {
+    std::string name {(char)64 + static_cast<char>(get_base())};
+    switch(static_cast<uint8_t>(get_accidental())){
+        case 1 : {
+            if(name == "A" || name == "E") {name += "ses";}
+            else {name += "eses";}
+            break;
+        }
+        case 2 : {
+            if(name == "A" || name == "E") {name += "s";}
+            else {name += "es";}
+            break;
+        }
+        case 4 : {
+            name += "is";
+            break;
+        }
+        case 5 : {
+            if(name == "A" || name == "E") {name += "sis";}
+            else {name += "isis";}
+            break;
+        }
+    };
+    return name;
+}
 
 void Note::enharmony_сhange(bool dir) noexcept
 {
