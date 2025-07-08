@@ -2,9 +2,9 @@
 #define HARMONY_CORE_KEY_HPP
 
 #include <cstdint>
-#include <vector>
-#include <harmony-core/note.hpp>
 #include <harmony-core/enums.hpp>
+#include <harmony-core/note.hpp>
+#include <vector>
 
 namespace harmony_core
 {

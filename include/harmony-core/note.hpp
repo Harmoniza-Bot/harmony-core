@@ -2,8 +2,8 @@
 #define HARMONY_CORE_NOTE_HPP
 
 #include <cstdint>
-#include <string>
 #include <harmony-core/enums.hpp>
+#include <string>
 
 namespace harmony_core
 {
@@ -157,15 +157,15 @@ namespace harmony_core
         // height getter & setter
 
         /*!
-         * \brief Задаёт высоту этой ноты в полутонах от ноты \code До₂\endcode равной \code height\endcode.
-         * \param [in] height новая высота этой ноты в полутонах от ноты \code До₂\endcode.
+         * \brief Задаёт высоту этой ноты в полутонах от ноты \code Ля1 \endcode равной \code height\endcode.
+         * \param [in] height новая высота этой ноты в полутонах от ноты \code Ля1 \endcode.
          * \throw invalid_exception \code height\endcode должна быть меньше \code 126\endcode.
          */
         void set_height(uint_fast8_t height);
 
         /*!
-         * \brief Возвращает высоту этой ноты в полутонах от ноты \code До₂\endcode.
-         * \return Высота этой ноты в полутонах от ноты \code До₂\endcode.
+         * \brief Возвращает высоту этой ноты в полутонах от ноты \code Ля₂\endcode.
+         * \return Высота этой ноты в полутонах от ноты \code Ля1\endcode.
          */
         [[nodiscard]] uint_fast8_t get_height() const noexcept;
 

@@ -117,7 +117,23 @@ void Note::set_height(const uint_fast8_t height)
 
 uint_fast8_t Note::get_height() const noexcept
 {
-    uint_fast8_t result = static_cast<uint_fast8_t>(get_octave()) * 7 + static_cast<uint_fast8_t>(get_base());
+    uint_fast8_t result = static_cast<uint_fast8_t>(get_octave()) * 12;
+    for (int x = 1; x < 7; ++x)
+    {
+        if (this->get_base() == static_cast<Base>(x))
+        {
+            break;
+        }
+        if (x == 2 || x == 5)
+        {
+            result += 1;
+        }
+        else
+        {
+            result += 2;
+        }
+    }
+
     switch (get_accidental())
     {
         case Accidental::DOUBLE_FLAT:
@@ -149,6 +165,10 @@ uint_fast8_t Note::get_height() const noexcept
 std::string Note::get_name() const noexcept
 {
     std::string name{(char) 64 + static_cast<char>(get_base())};
+    if (name == "B")
+    {
+        name = "H";
+    }
     switch (static_cast<uint8_t>(get_accidental()))
     {
         case 1:
@@ -193,30 +213,63 @@ std::string Note::get_name() const noexcept
             break;
         }
     };
+    if (name == "Hes")
+    {
+        name = "B";
+    }
     return name;
 }
 
 void Note::enharmony_сhange(bool dir) noexcept
 {
-    uint8_t height = this->get_height();
+    Accidental first_a = get_random_accidental();
+    uint8_t height = (uint8_t) this->get_height();
     if (dir)
     {
         uint8_t base = static_cast<uint8_t>(this->get_base());
         this->set_base(static_cast<Base>(++base));
-        while (height != this->get_height())
+
+        this->set_random_accidental(Accidental::SHARP);
+        if (height != (int) this->get_height())
         {
-            uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-            this->set_key_accidental(static_cast<Accidental>(--acc));
+            this->set_random_accidental(Accidental::NATURAL);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(Accidental::FLAT);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(Accidental::DOUBLE_FLAT);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(first_a);
+            throw "Не получилось сделать замену, тк целевая нота слишком далеко от исходной";
         }
     }
     else
     {
         uint8_t base = static_cast<uint8_t>(this->get_base());
         this->set_base(static_cast<Base>(--base));
-        while (height != this->get_height())
+
+        this->set_random_accidental(Accidental::FLAT);
+        if (height != (int) this->get_height())
         {
-            uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-            this->set_key_accidental(static_cast<Accidental>(++acc));
+            this->set_random_accidental(Accidental::NATURAL);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(Accidental::SHARP);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(Accidental::DOUBLE_SHARP);
+        }
+        if (height != (int) this->get_height())
+        {
+            this->set_random_accidental(first_a);
+            throw "Не получилось сделать замену, тк целевая нота слишком далеко от исходной";
         }
     }
 }

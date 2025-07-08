@@ -34,7 +34,7 @@ namespace harmony_core
     //     JAPANESE
     // };
 
-      /*!
+    /*!
      * \brief Представляет собой основание ноты.
      */
     enum class Base
@@ -184,7 +184,7 @@ namespace harmony_core
 
     // Части тональности
 
-     /*!
+    /*!
      * \brief Представляет собой соглашение об именовании лада тональности.
      * Каждый лад является своеобразным ключом, точкой отсчета нот для тональности.
      * Каждый лад имеет свое соотношение тонов и полутонов,
@@ -263,6 +263,6 @@ namespace harmony_core
          */
         DOUBLE_HARMONYC = 0b11
     };
-}
+} // namespace harmony_core
 
 #endif // HARMONY_CORE_ENUMS
