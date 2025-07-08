@@ -279,8 +279,9 @@ namespace harmony_core
          * \return Полное название этой ноты согласно \code convention\endcode.
          */
 
-        // [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
-        //TODO КАК ЖЕ Я ЗА*БАЛСЯ...
+        // [[nodiscard]] std::u8string_view get_name(NamingConvention convention = NamingConvention::ENGLISH) const
+        // noexcept;
+        // TODO КАК ЖЕ Я ЗА*БАЛСЯ...
 
         /*!
          * \brief Возвращает полное название этой ноты по общепринятому стандаргу

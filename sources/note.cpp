@@ -1,7 +1,7 @@
 #include <harmony-core/note.hpp>
+#include <iostream>
 #include <stdexcept>
 #include <string>
-#include <iostream>
 using namespace harmony_core;
 
 // static const char8_t *NOTE_NAMES[sizeof(NamingConvention)][9 * 7 * 3] = {
@@ -144,28 +144,52 @@ uint_fast8_t Note::get_height() const noexcept
 //     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
 // }
 
-//std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
+// std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
-std::string Note::get_name() const noexcept {
-    std::string name {(char)64 + static_cast<char>(get_base())};
-    switch(static_cast<uint8_t>(get_accidental())){
-        case 1 : {
-            if(name == "A" || name == "E") {name += "ses";}
-            else {name += "eses";}
+std::string Note::get_name() const noexcept
+{
+    std::string name{(char) 64 + static_cast<char>(get_base())};
+    switch (static_cast<uint8_t>(get_accidental()))
+    {
+        case 1:
+        {
+            if (name == "A" || name == "E")
+            {
+                name += "ses";
+            }
+            else
+            {
+                name += "eses";
+            }
             break;
         }
-        case 2 : {
-            if(name == "A" || name == "E") {name += "s";}
-            else {name += "es";}
+        case 2:
+        {
+            if (name == "A" || name == "E")
+            {
+                name += "s";
+            }
+            else
+            {
+                name += "es";
+            }
             break;
         }
-        case 4 : {
+        case 4:
+        {
             name += "is";
             break;
         }
-        case 5 : {
-            if(name == "A" || name == "E") {name += "sis";}
-            else {name += "isis";}
+        case 5:
+        {
+            if (name == "A" || name == "E")
+            {
+                name += "sis";
+            }
+            else
+            {
+                name += "isis";
+            }
             break;
         }
     };
