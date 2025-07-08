@@ -83,6 +83,13 @@ Accidental Note::get_random_accidental() const noexcept
     return static_cast<Accidental>((data & 0x1C00) >> 10);
 }
 
+Accidental Note::get_accidental() const noexcept
+{
+    const Accidental random_accidental = get_random_accidental();
+    return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
+}
+
+
 void Note::set_duration(Duration duration) noexcept
 {
     data = data & 0x1FFF | (static_cast<uint_fast16_t>(duration) << 13);
@@ -130,14 +137,6 @@ uint_fast8_t Note::get_height() const noexcept
     }
     return result;
 }
-
-Accidental Note::get_accidental() const noexcept
-{
-    const Accidental random_accidental = get_random_accidental();
-    return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
-}
-
-
 
 
 // std::u8string_view Note::get_name(const NamingConvention convention) const noexcept

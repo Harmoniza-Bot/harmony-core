@@ -235,6 +235,13 @@ namespace harmony_core
          */
         [[nodiscard]] Accidental get_random_accidental() const noexcept;
 
+        /*!
+         * \brief Возвращает общий знак альтерации этой ноты.
+         * \return Сумма двух видов знаков альтерации (максимальный знак - двойной).
+         * Возвращает реально используемый знак альтерации этой ноты.
+         */
+        [[nodiscard]] Accidental get_accidental() const noexcept;
+
         // duration getter & setter
 
         /*!
@@ -263,14 +270,6 @@ namespace harmony_core
          * \return Высота этой ноты в полутонах от ноты \code До₂\endcode.
          */
         [[nodiscard]] uint_fast8_t get_height() const noexcept;
-
-        // accidental getter
-
-        /*!
-         * \brief Возвращает используемый знак альтерации этой ноты.
-         * \return Используемый знак альтерации этой ноты.
-         */
-        [[nodiscard]] Accidental get_accidental() const noexcept;
 
         // name getter
 
