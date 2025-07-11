@@ -131,15 +131,22 @@ namespace harmony_core
          * \param [in] note нота для поиска
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
-        [[nodiscard]] int8_t get_tone_index(Note note) noexcept;
+        [[nodiscard]] int8_t search_tone(Note note) noexcept;
 
-        // resolurions
+        //interval functions
+        /*!
+         * \brief Возвращает интервал тон-ти по индексу первой ноты и расстоянию в полутонах до следующей ноты.
+         * \return 
+         */
+        [[nodiscard]] Note get_interval(uint8_t index) noexcept;
 
         /*!
-         * \brief Разрешает структуры в текущей тоальности.
+         * \brief Ищет указанный интервал в текущей тон-ти.
+         * \param [in] first первая нота в интервале
+         * \param [in] second вторая нота в интервале
+         * \return Индекс первой ноты интервала в звукоряде тон-ти или -1 если интервала нет.
          */
-
-        // или поместить разрешения внуть самих структур (?)
+        [[nodiscard]] search_interval(Note first, Note second) noexcept;
 
         // accidental getter
 

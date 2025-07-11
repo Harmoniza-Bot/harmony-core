@@ -258,7 +258,7 @@ Note Key::get_tone(uint8_t index) noexcept
     return note;
 }
 
-int8_t Key::get_tone_index(Note note) noexcept
+int8_t Key::search_tone(Note note) noexcept
 {
     note.set_octave(Octave::_1_LINE);
     for (int x = 0; x < 7; ++x)
