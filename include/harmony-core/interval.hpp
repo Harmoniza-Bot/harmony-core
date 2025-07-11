@@ -35,12 +35,11 @@ namespace harmony_core
         explicit Interval(uint_fast8_t) noexcept;
         
         /*!
-         * \brief Создаёт интервал на основе двух нот и направления.
+         * \brief Создаёт интервал на основе двух нот. 
          * \param [in] Note первая нота.
          * \param [in] Note вторая нота.
-         * \param [in] bool расчтояние. 
          */
-        explicit Interval(Note, Note, bool) noexcept;
+        explicit Interval(Note, Note) noexcept;
 
         ~Interval() noexcept = default;
 
