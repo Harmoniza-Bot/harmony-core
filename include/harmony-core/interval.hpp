@@ -1,15 +1,14 @@
 #ifndef HARMONY_CORE_INTERVAL_HPP
 #define HARMONY_CORE_INTERVAL_HPP
-#include <string>
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
+#include <string>
 namespace harmony_core
 {
     class Interval final
     {
-        public:
-
-         /*!
+    public:
+        /*!
          * \brief Создаёт интервал, равный чистой приме
          */
         Interval() noexcept;
@@ -33,9 +32,9 @@ namespace harmony_core
          * \param [in] uint8_t данные другого интервала.
          */
         explicit Interval(uint_fast8_t) noexcept;
-        
+
         /*!
-         * \brief Создаёт интервал на основе двух нот. 
+         * \brief Создаёт интервал на основе двух нот.
          * \param [in] Note первая нота.
          * \param [in] Note вторая нота.
          */
@@ -95,14 +94,14 @@ namespace harmony_core
          */
         [[nodiscard]] string get_name() const noexcept;
 
-        private: 
+    private:
         /**
          * \brief Представляет информацию об интервале.
          * - Биты \code 0-3 \endcode задают расстояние интервала
          * - Биты \code 4-6 \endcode задают вид интервала
-         * - Бит \code 7 \endcode задаёт направление интервала 
+         * - Бит \code 7 \endcode задаёт направление интервала
          */
         uint_fast8_t data;
     }
-}
-#endif //HARMONY_CORE_INTERVAL_HPP
+} // namespace harmony_core
+#endif // HARMONY_CORE_INTERVAL_HPP

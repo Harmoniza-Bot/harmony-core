@@ -133,10 +133,10 @@ namespace harmony_core
          */
         [[nodiscard]] int8_t search_tone(Note note) noexcept;
 
-        //interval functions
+        // interval functions
         /*!
          * \brief Возвращает интервал тон-ти по индексу первой ноты и расстоянию в полутонах до следующей ноты.
-         * \return 
+         * \return
          */
         [[nodiscard]] Note get_interval(uint8_t index) noexcept;
 

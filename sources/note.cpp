@@ -15,8 +15,7 @@ Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED,
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
-           const Duration duration) noexcept :
-    data(0)
+           const Duration duration) noexcept : data(0)
 {
     set_base(base);
     set_octave(octave);
@@ -278,7 +277,7 @@ void Note::enharmony_сhange(bool dir) noexcept
 
 Note &Note::operator++()
 {
-    //если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
+    // если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
     if (this->get_accidental() != Accidental::DOUBLE_SHARP)
     {
         uint8_t acc = static_cast<uint8_t>(this->get_accidental());
@@ -323,7 +322,7 @@ Note Note::operator++(int i)
 
 Note &Note::operator--()
 {
-    //если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
+    // если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
     if (this->get_accidental() != Accidental::DOUBLE_FLAT)
     {
         uint8_t acc = static_cast<uint8_t>(this->get_accidental());
