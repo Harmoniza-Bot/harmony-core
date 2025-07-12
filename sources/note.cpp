@@ -336,7 +336,7 @@ Note &Note::operator--()
     if (this->get_accidental() != Accidental::DOUBLE_FLAT)
     {
         uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-        this->set_key_accidental(static_cast<Accidental>(--acc));
+        this->set_random_accidental(static_cast<Accidental>(--acc));
     }
     // если нота не фа и до можно понизить ее установкой бемоля и понижением основания. В противном случае просто
     // понизить основание
@@ -344,7 +344,7 @@ Note &Note::operator--()
     {
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
-            this->set_key_accidental(Accidental::FLAT);
+            this->set_random_accidental(Accidental::FLAT);
             uint8_t base = static_cast<uint8_t>(this->get_base());
             this->set_base(static_cast<Base>(--base));
         }
