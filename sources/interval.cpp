@@ -13,7 +13,7 @@ Interval::Interval(uint8_t di, Quality q, bool d) noexcept
     if (d)
         this->data | 0b10000000;
     else
-        this->data & 01111111;
+        this->data & 0b01111111;
 
     this->data = data | (static_cast<uint8_t>(q) << 4);
 
@@ -31,10 +31,10 @@ Interval::Interval(uint_fast8_t data)
 {
     this->data = data;
 }
-// WRITING THIS!!!
+
 Interval::Interval(Note n1, Note n2)
 {
-    if (n1.get_height() >= n2.get_height())
+    if (n1.get_height() <= n2.get_height())
     {
         this->set_ditection(1);
     }
@@ -45,6 +45,13 @@ Interval::Interval(Note n1, Note n2)
         n1 = n2;
         n2 = n3;
     }
+
+    if (n1.get_height() - n2.get_height() > 24)
+    {
+        this->data = Interval()->get_data();
+        return;
+    }
+
     this->set_distance(0);
     while (1)
     {
@@ -61,7 +68,121 @@ Interval::Interval(Note n1, Note n2)
         }
         this->set_distance(++this->get_distance());
     }
-    switch (n2.get_height() - n1.get_height())
+
+    // определяем тип интервала
+    uint8_t oct_step = 0;
+    bool rev_q = 0;
+    while (this->get_distance() >= 8)
     {
+        this->set_distance(this->get_distance() - 8);
+        ++oct_step;
+    }
+    // this->set_distance(this->get_distance() + 8  * oct_step());
+
+    if (this->get_distance() >= 4)
+    {
+        if (n2.get_octave() == 0)
+        {
+            n1.set_octave(static_cast<Octave>(++static_cast<int>(n1.get_octave())));
+            n2.set_octave(static_cast<Octave>(++static_cast<int>(n2.get_octave())));
+        }
+        if (n2.get_octave() == 8)
+        {
+            n1.set_octave(static_cast<Octave>(--static_cast<int>(n1.get_octave())));
+            n2.set_octave(static_cast<Octave>(--static_cast<int>(n2.get_octave())));
+        }
+        n2.set_octave(static_cast<Octave>(++static_cast<int>(n2.get_octave())));
+        Note n3 = n1;
+        n1 = n2;
+        n2 = n3;
+
+        rev_q = 1;
+    }
+
+    int8_t base_dist = this->get_distance();
+    while (base_dist >= 8)
+    {
+        base_dist -= 8;
+    }
+    if (base >= 4)
+        base_dist = 7 - base_dist;
+
+    switch (base_dist)
+    {
+        case 0:
+        {
+            switch (n1.get_height() - n2.get_height())
+            {
+                case 0:
+                    this->set_quality(Quality::PERFECT);
+                case 1:
+                    this->set_quality(Quality::AUG);
+                case 2:
+                    this->set_quality(Quality::DOUBLY_AUG);
+            }
+        }
+        case 1:
+        {
+            switch (n1.get_height() - n2.get_height())
+            {
+                case 0:
+                    this->set_quality(Quality::DIM);
+                case 1:
+                    this->set_quality(Quality::MINOR);
+                case 2:
+                    this->set_quality(Quality::MAJOR);
+                case 3:
+                    this->set_quality(Quality::AUG);
+                case 4:
+                    this->set_quality(Quality::DOUBLY_AUG);
+            }
+        }
+        case 2:
+        {
+            switch (n1.get_height() - n2.get_height())
+            {
+                case 1:
+                    this->set_quality(Quality::DOUBLY_DIM);
+                case 2:
+                    this->set_quality(Quality::DIM);
+                case 3:
+                    this->set_quality(Quality::MINOR);
+                case 4:
+                    this->set_quality(Quality::MAJOR);
+                case 5:
+                    this->set_quality(Quality::AUG);
+                case 6:
+                    this->set_quality(Quality::DOUBLY_AUG);
+            }
+        }
+        case 3:
+        {
+            switch (n1.get_height() - n2.get_height())
+            {
+                case 3:
+                    this->set_quality(Quality::DOUBLY_DIM);
+                case 4:
+                    this->set_quality(Quality::DIM);
+                case 5:
+                    this->set_quality(Quality::PERFECT);
+                case 6:
+                    this->set_quality(Quality::AUG);
+                case 7:
+                    this->set_quality(Quality::DOUBLY_AUG);
+            }
+        }
+    }
+
+    if (rev_q)
+    {
+        switch (this->get_quality())
+        {
+            case(Quality::MAJOR) this->set_quality(Quality::MINOR);
+            case(Quality::MINOR) this->set_quality(Quality::MAJOR);
+            case(Quality::AUG) this->set_quality(Quality::DIM);
+            case(Quality::DIM) this->set_quality(Quality::AUG);
+            case(Quality::DOUBLY_AUG) this->set_quality(Quality::DOUBLY_DIM);
+            case(Quality::DOUBLY_DIM) this->set_quality(Quality::DOUBLY_AUG);
+        }
     }
 }
