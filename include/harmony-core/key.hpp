@@ -146,7 +146,7 @@ namespace harmony_core
          * \param [in] second вторая нота в интервале
          * \return Индекс первой ноты интервала в звукоряде тон-ти или -1 если интервала нет.
          */
-        [[nodiscard]] search_interval(Note first, Note second) noexcept;
+        [[nodiscard]] uint8_t search_interval(Note first, Note second) noexcept;
 
         // accidental getter
 
