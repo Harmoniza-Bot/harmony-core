@@ -277,7 +277,7 @@ void Note::enharmony_сhange(bool dir) noexcept
 
 Note &Note::operator++()
 {
-    if(this->get_accidental() == Accidental::UNDEFINED) 
+    if(this->get_accidental() == Accidental::UNDEFINED)
     {
         this->set_random_accidental(Accidental::NATURAL);
     }
@@ -292,16 +292,20 @@ Note &Note::operator++()
     // повысить основание
     else
     {
+        uint8_t base = static_cast<uint8_t>(this->get_base());
+        ++base;
+        if(base > 7)
+        {
+            base = 1;
+        }
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
             this->set_random_accidental(Accidental::SHARP);
-            uint8_t base = static_cast<uint8_t>(this->get_base());
-            this->set_base(static_cast<Base>(++base));
+            this->set_base(static_cast<Base>(base));
         }
         else
         {
-            uint8_t base = static_cast<uint8_t>(this->get_base());
-            this->set_base(static_cast<Base>(++base));
+            this->set_base(static_cast<Base>(base));
         }
     }
 
@@ -342,16 +346,20 @@ Note &Note::operator--()
     // понизить основание
     else
     {
+        uint8_t base = static_cast<uint8_t>(this->get_base());
+        --base;
+        if(base == 0) 
+        {
+            base = 7;
+        }
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
             this->set_random_accidental(Accidental::FLAT);
-            uint8_t base = static_cast<uint8_t>(this->get_base());
-            this->set_base(static_cast<Base>(--base));
+            this->set_base(static_cast<Base>(base));
         }
         else
         {
-            uint8_t base = static_cast<uint8_t>(this->get_base());
-            this->set_base(static_cast<Base>(--base));
+            this->set_base(static_cast<Base>(base));
         }
     }
     if ((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT)
