@@ -297,6 +297,11 @@ Note &Note::operator++()
         if(base > 7)
         {
             base = 1;
+            if(this->get_octave() == Octave::_5_LINE)
+            {
+                throw "this note very high";
+            }
+            this->set_octave(static_cast<Octave>(++static_cast<int>(this->get_octave())));
         }
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
@@ -351,6 +356,11 @@ Note &Note::operator--()
         if(base == 0) 
         {
             base = 7;
+            if(htis->get_octave() == Octave::SUB_CONTRA)
+            {
+                throw "this note very low";
+            }
+            this->set_octave(static_cast<Octave>(--static_cast<int>(this->get_octave())));
         }
         if (this->get_base() != Base::B || this->get_base() != Base::E)
         {
