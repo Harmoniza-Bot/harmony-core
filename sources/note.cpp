@@ -277,6 +277,11 @@ void Note::enharmony_сhange(bool dir) noexcept
 
 Note &Note::operator++()
 {
+    if(this->get_accidental() == Accidental::UNDEFINED) 
+    {
+        this->set_random_accidental(Accidental::NATURAL);
+    }
+
     // если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
     if (this->get_accidental() != Accidental::DOUBLE_SHARP)
     {
@@ -322,6 +327,11 @@ Note Note::operator++(int i)
 
 Note &Note::operator--()
 {
+    if(this->get_accidental() == Accidental::UNDEFINED) 
+    {
+        this->set_random_accidental(Accidental::NATURAL);
+    }
+
     // если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
     if (this->get_accidental() != Accidental::DOUBLE_FLAT)
     {
