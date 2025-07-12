@@ -11,20 +11,28 @@ Interval::Interval() noexcept
 Interval::Interval(uint8_t di, Quality q, bool d) noexcept
 {
     if (d)
-        this->data | 0b10000000;
+    {
+        this->data |= 0b10000000;
+    }
     else
-        this->data & 0b01111111;
+    {
+        this->data &= ~0b10000000;
+    }
 
-    this->data = data | (static_cast<uint8_t>(q) << 4);
+    this->data &= ~0b1110000;
+    this->data |= (static_cast<uint8_t>(q) << 4);
 
     if (di > 15)
+    {
         di = 15;
-    data | di;
+    }
+    data &= ~0xF;
+    data |= di;
 }
 
 Interval::Interval(Interval in)
 {
-    this->data = in->get_data();
+    this->data = in.get_data();
 }
 
 Interval::Interval(uint_fast8_t data)
@@ -186,3 +194,80 @@ Interval::Interval(Note n1, Note n2)
         }
     }
 }
+
+void Interval::set_data(uint_fast8_t data) noexcept
+{
+    this->data = data;
+}
+
+uint_fast8_t Interval::get_data() const noexcept
+{
+    return this->data;
+}
+
+void Interval::set_distance(uint8_t d) noexcept
+{
+    if(d > 15) 
+    {
+        d = 15;
+    }
+    this->data &= ~0b1111;
+    this->data | d;
+}
+
+uint8_t Interval::get_distance() const noexcept
+{
+    return this->data >> 4;
+}
+
+void Interval::set_quality(Quality q) noexcept
+{
+    this->data &= ~0b0111000;
+    this->data |= (static_cast<uint8_t>(q) << 4);
+}
+
+Quality Interval::get_quality() const noexcept
+{
+    return static_cast<Quality>((this->data & 0b01110000) >> 4);
+}
+
+void Interval::set_direction(bool d) noexcept
+{
+    if (d)
+    {
+        this->data |= 0b10000000;
+    }
+    else
+    {
+        this->data &= ~0b10000000;
+    }
+}
+
+bool get_direction() const noexcept
+{
+    return this->data >> 7;
+}
+
+std::string Interval::get_name() const noexcept
+{
+    std::string name;
+    switch(this->get_quality())
+    {
+        case Quality::PERFECT :
+                name += "per";
+            case Quality::MINOR:
+                name += "min";
+            case Quality::MAJOR:
+                name += "maj";
+            case Quality::AUG:
+                name += "aug";
+            case Quality::DIM:
+                name += "dim";
+            case Quality::DOUBLY_AUG:
+                name += "2xdim";
+            case Quality::DOUBLY_DIM:
+                name += "2xdim";
+        }
+
+        return name += to_string(this->get_distance());
+    }
