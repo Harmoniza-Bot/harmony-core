@@ -102,7 +102,7 @@ Duration Note::get_duration() const noexcept
 void Note::set_height(const uint_fast8_t height)
 {
     if (height >= 9 * 7 * 2)
-        throw std::invalid_argument("height must be less than 126");
+        throw std::string("height must be less than 126");
     set_octave(static_cast<Octave>(height / (7 * 2)));
     set_base(static_cast<Base>(height % 9 / 2));
     if (height % (9 * 7 * 2) > 0)
@@ -244,7 +244,7 @@ void Note::enharmony_сhange(bool dir) noexcept
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(first_a);
-            throw "Не получилось сделать замену, тк целевая нота слишком далеко от исходной";
+            throw std::string{"Не получилось сделать замену, тк целевая нота слишком далеко от исходной"};
         }
     }
     else
@@ -268,7 +268,7 @@ void Note::enharmony_сhange(bool dir) noexcept
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(first_a);
-            throw "Не получилось сделать замену, тк целевая нота слишком далеко от исходной";
+            throw std::string{"Не получилось сделать замену, тк целевая нота слишком далеко от исходной"};
         }
     }
 }
@@ -299,7 +299,7 @@ Note &Note::operator++()
             base = 1;
             if(this->get_octave() == Octave::_5_LINE)
             {
-                throw "this note very high";
+                throw std::string{"Эта нота слишком высокая"};
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
         }
@@ -358,7 +358,7 @@ Note &Note::operator--()
             base = 7;
             if(this->get_octave() == Octave::SUB_CONTRA)
             {
-                throw "this note very low";
+                throw std::string{"Эта нота очень низкая"};
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
         }
