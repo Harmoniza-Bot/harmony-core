@@ -228,7 +228,19 @@ void Note::enharmony_сhange(bool dir) noexcept
     if (dir)
     {
         uint8_t base = static_cast<uint8_t>(this->get_base());
-        this->set_base(static_cast<Base>(++base));
+        ++base;
+        if(base > 7)
+        {
+            base = 1;
+            if(this->get_octave() == Octave::_5_LINE)
+            {
+                std::cerr << "(en_ch) Эта нота слишком высокая" << std::endl;
+                this->set_key_accidental(first_a);
+                return;
+            }
+            this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
+        }
+        this->set_base(static_cast<Base>(base));
 
         this->set_random_accidental(Accidental::SHARP);
         if (height != (int) this->get_height())
@@ -253,7 +265,17 @@ void Note::enharmony_сhange(bool dir) noexcept
     else
     {
         uint8_t base = static_cast<uint8_t>(this->get_base());
-        this->set_base(static_cast<Base>(--base));
+        --base;
+        if(base < 1)
+        {
+            base = 7;
+            if(this->get_octave() == Octave::SUB_CONTRA)
+            {
+                std::cerr << "(en_ch) Эта нота слишком низкая" << std::endl;
+                this->set_key_accidental(first_a);
+                return;
+            }
+            this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
 
         this->set_random_accidental(Accidental::FLAT);
         if (height != (int) this->get_height())
