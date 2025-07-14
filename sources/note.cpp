@@ -280,6 +280,8 @@ void Note::enharmony_сhange(bool dir) noexcept
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
         }
+        this->set_base(static_cast<Base>(base));
+
         this->set_random_accidental(Accidental::FLAT);
         if (height != (int) this->get_height())
         {
