@@ -304,7 +304,7 @@ Note &Note::operator++()
             if(this->get_octave() == Octave::_5_LINE)
             {
                 std::cerr << "Эта нота слишком высокая" << std::endl;
-                return;
+                return *this;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
         }
@@ -364,7 +364,7 @@ Note &Note::operator--()
             if(this->get_octave() == Octave::SUB_CONTRA)
             {
                 std::cerr << "Эта нота очень низкая" << std::endl;
-                return;
+                return *this;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
         }
