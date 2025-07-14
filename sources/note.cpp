@@ -235,7 +235,7 @@ void Note::enharmony_сhange(bool dir) noexcept
             if(this->get_octave() == Octave::_5_LINE)
             {
                 std::cerr << "(en_ch) Эта нота слишком высокая" << std::endl;
-                this->set_key_accidental(first_a);
+                this->set_random_accidental(first_a);
                 return;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
@@ -272,11 +272,11 @@ void Note::enharmony_сhange(bool dir) noexcept
             if(this->get_octave() == Octave::SUB_CONTRA)
             {
                 std::cerr << "(en_ch) Эта нота слишком низкая" << std::endl;
-                this->set_key_accidental(first_a);
+                this->set_random_accidental(first_a);
                 return;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
-
+        }
         this->set_random_accidental(Accidental::FLAT);
         if (height != (int) this->get_height())
         {
