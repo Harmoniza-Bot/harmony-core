@@ -246,14 +246,17 @@ void Note::enharmony_сhange(bool dir) noexcept
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::NATURAL);
+            return;
         }
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::FLAT);
+            return;
         }
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::DOUBLE_FLAT);
+            return;
         }
         if (height != (int) this->get_height())
         {
@@ -281,14 +284,17 @@ void Note::enharmony_сhange(bool dir) noexcept
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::NATURAL);
+            return;
         }
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::SHARP);
+            return;
         }
         if (height != (int) this->get_height())
         {
             this->set_random_accidental(Accidental::DOUBLE_SHARP);
+            return;
         }
         if (height != (int) this->get_height())
         {
