@@ -272,6 +272,18 @@ int8_t Key::search_tone(Note note) noexcept
     return -1;
 }
 
+Note get_interval(uint8_t index) noexcept
+{
+    
+}
+
+uint8_t search_interval(Note first, Note second) noexcept
+{
+    
+}
+
+
+
 std::vector<Note> Key::get_accidentals() noexcept
 {
     std::vector<Note> answer;
