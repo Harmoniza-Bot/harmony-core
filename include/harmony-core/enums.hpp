@@ -399,7 +399,6 @@ namespace harmony_core
         */
         G_CLEF = 0b11
     };
-
 } // namespace harmony_core
 
 #endif // HARMONY_CORE_ENUMS
