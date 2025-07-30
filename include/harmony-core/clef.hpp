@@ -2,6 +2,8 @@
 #define HARMONY_CORE_CLEF
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
+#include <stdexcept>
+
 namespace harmony_core{
     /*! 
     * Класс представляет ключ.
@@ -30,11 +32,65 @@ namespace harmony_core{
             this->data |=(static_cast<uint8_t>(n));
         }
         
+        /*!
+        * Создает ключ по информации о ключе
+        */
+        explicit clef(uint8_t data)
+        {
+            this->data = data;
+        }
+        
         // getters & setters
         
         /*!
-        * 
+        * Задает всю информацию
         */
+        void set_data(uint_fast8_t d)
+        {
+            this->data = d;
+        }
+        
+        /*!
+        * Возвращает информацию о ключе
+        */
+        [[nodiscard]] uint8_t get_data()
+        {
+            return this->data;
+        }
+        
+        /*!
+        * Задает тип ключа
+        */
+        void set_type(Clef_type t)
+        {
+            this->data &= ~0b00110000;
+            this->data |= (static_cast<uint8_t>(t) << 4);
+        }
+        
+        /*!
+        * Возвращает тип ключа
+        */
+        [[nodiscard]] Clef_type get_type()
+        {
+            return static_cast<Clef_type>((this->data & 0b00110000) >> 4);
+        }
+        
+        /*!
+        * Задает имя ключа
+        */
+        void set_name(Clef_name n)
+        {
+            this->data &= ~0b00001111;
+            this->data |= static_cast<uint8_t>(n);
+        }
+        
+        /*!
+        * Возвращает имя ключа
+        */
+        [[nodiscard]] Clef_name get_name()
+        {
+            return static_cast<Clef_type>(this->data & 0b00001111);
+        }
         
         //functions
         
@@ -53,10 +109,7 @@ namespace harmony_core{
         * добавочные ввкрх 
         * (если ключ не табулатурный).
         */
-        float get_place(Note)
-        {
-            
-        }
+        float get_place(Note);
         
         private:
         /*!
