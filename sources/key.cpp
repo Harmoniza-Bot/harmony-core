@@ -288,7 +288,7 @@ std::vector<Note> Key::get_accidentals() noexcept
 {
     std::vector<Note> answer;
     uint8_t index = 0;
-    if (((uint8_t) data & 0b1111 - index) == 0)
+    if ((static_cast<uint8_t> (data & 0b1111 - index)) == 0)
     {
         return answer;
     }
@@ -306,7 +306,7 @@ std::vector<Note> Key::get_accidentals() noexcept
 
     for (int x = 0; x <= 14; ++x)
     {
-        if (((uint8_t) data & 0b1111 - index) == 0)
+        if ((static_cast<uint8_t> (data & 0b1111 - index)) == 0)
         {
             return answer;
         }

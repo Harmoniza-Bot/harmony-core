@@ -224,7 +224,7 @@ std::string Note::get_name() const noexcept
 void Note::enharmony_сhange(bool dir) noexcept
 {
     Accidental first_a = get_random_accidental();
-    uint8_t height = (uint8_t) this->get_height();
+    uint8_t height = static_cast<uint8_t> (this->get_height());
     if (dir)
     {
         uint8_t base = static_cast<uint8_t>(this->get_base());
@@ -243,22 +243,22 @@ void Note::enharmony_сhange(bool dir) noexcept
         this->set_base(static_cast<Base>(base));
 
         this->set_random_accidental(Accidental::SHARP);
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::NATURAL);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::FLAT);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::DOUBLE_FLAT);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(first_a);
             std::cerr << "Не получилось сделать замену, тк целевая нота слишком далеко от исходной" << std::endl;
@@ -283,22 +283,22 @@ void Note::enharmony_сhange(bool dir) noexcept
         this->set_base(static_cast<Base>(base));
 
         this->set_random_accidental(Accidental::FLAT);
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::NATURAL);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::SHARP);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(Accidental::DOUBLE_SHARP);
             return;
         }
-        if (height != (int) this->get_height())
+        if (height != static_cast<int> (this->get_height()))
         {
             this->set_random_accidental(first_a);
             std::cerr << "Не получилось сделать замену, тк целевая нота слишком далеко от исходной" << std::endl;
