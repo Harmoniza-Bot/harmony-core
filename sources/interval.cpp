@@ -30,17 +30,17 @@ Interval::Interval(uint8_t di, Quality q, bool d) noexcept
     data |= di;
 }
 
-Interval::Interval(Interval in)
+Interval::Interval(Interval in) noexcept
 {
     this->data = in.get_data();
 }
 
-Interval::Interval(uint_fast8_t data)
+Interval::Interval(uint_fast8_t data) noexcept
 {
     this->data = data;
 }
 
-Interval::Interval(Note n1, Note n2)
+Interval::Interval(Note n1, Note n2) noexcept
 {
     if (n1.get_height() <= n2.get_height())
     {
@@ -259,19 +259,21 @@ std::string Interval::get_name() const noexcept
     {
         case Quality::PERFECT :
                 name += "per";
-            case Quality::MINOR:
-                name += "min";
-            case Quality::MAJOR:
-                name += "maj";
-            case Quality::AUG:
-                name += "aug";
-            case Quality::DIM:
-                name += "dim";
-            case Quality::DOUBLY_AUG:
-                name += "2xdim";
-            case Quality::DOUBLY_DIM:
-                name += "2xdim";
-        }
-
-        return name += to_string(this->get_distance());
+        case Quality::MINOR:
+            name += "min";
+        case Quality::MAJOR:
+            name += "maj";
+        case Quality::AUG:
+            name += "aug";
+        case Quality::DIM:
+            name += "dim";
+        case Quality::DOUBLY_AUG:
+            name += "2xdim";
+        case Quality::DOUBLY_DIM:
+            name += "2xdim";
     }
+
+    name += to_string(this->get_distance());
+
+    return name;
+}
