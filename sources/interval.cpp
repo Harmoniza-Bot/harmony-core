@@ -30,11 +30,6 @@ Interval::Interval(uint8_t di, Quality q, bool d) noexcept
     data |= di;
 }
 
-Interval::Interval(Interval in) noexcept
-{
-    this->data = in.get_data();
-}
-
 Interval::Interval(uint_fast8_t data) noexcept
 {
     this->data = data;
@@ -103,7 +98,7 @@ Interval::Interval(Note n1, Note n2) noexcept
             n1.set_octave(static_cast<Octave>(static_cast<int>(n1.get_octave()) - 1));
             n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave()) - 1));
         }
-        n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave())) + 1);
+        n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave()) + 1));
         Note n3 = n1;
         n1 = n2;
         n2 = n3;
@@ -116,7 +111,7 @@ Interval::Interval(Note n1, Note n2) noexcept
     {
         base_dist -= 8;
     }
-    if (base >= 4)
+    if (base_dist >= 4)
         base_dist = 7 - base_dist;
 
     switch (base_dist)
@@ -273,7 +268,7 @@ std::string Interval::get_name() const noexcept
             name += "2xdim";
     }
 
-    name += to_string(this->get_distance());
+    name += std::to_string(this->get_distance());
 
     return name;
 }

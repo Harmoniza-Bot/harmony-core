@@ -24,12 +24,6 @@ namespace harmony_core
         explicit Interval(uint8_t, Quality, bool) noexcept;
 
         /*!
-         * \brief Создаёт интервал на основе другого интервала
-         * \param [in] Interval другой интервал.
-         */
-        explicit Interval(Interval) noexcept;
-
-        /*!
          * \brief Создаёт интервал на основе данных другого интервала
          * \param [in] uint8_t данные другого интервала.
          */
