@@ -17,7 +17,7 @@ namespace harmony_core{
         /*!
         * \brief Создает скрипичный ключ
         */
-        clef() noexcept
+        Clef() noexcept
         {
             this->data = 0b00110011;
         }
@@ -25,7 +25,7 @@ namespace harmony_core{
         /*!
         * \brief Создает ключ по типу и имени ключа
         */
-        clef(Clef_name n, Clef_type t) noexcept
+        Clef(Clef_name n, Clef_type t) noexcept
         {
             this->data &= ~0b00111111;
             this->data |=(static_cast<uint8_t>(t) << 4);
@@ -35,7 +35,7 @@ namespace harmony_core{
         /*!
         * \brief Создает ключ по информации о ключе
         */
-        clef(uint8_t data) noexcept
+        Clef(uint8_t data) noexcept
         {
             this->data = data;
         }
