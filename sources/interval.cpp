@@ -52,7 +52,7 @@ Interval::Interval(Note n1, Note n2) noexcept
     if (n1.get_height() - n2.get_height() > 24)
     {
         Interval i;
-        this->data = i->get_data();
+        this->data = i.get_data();
         return;
     }
 
