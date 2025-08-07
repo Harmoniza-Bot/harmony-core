@@ -94,7 +94,7 @@ namespace harmony_core
          * \brief Возвращает имя интервала на английском.
          * \return Полное имя интервала.
          */
-        [[nodiscard]] string get_name() const noexcept;
+        [[nodiscard]] std::string get_name() const noexcept;
 
     private:
         /**
@@ -104,6 +104,6 @@ namespace harmony_core
          * - Бит \code 7 \endcode задаёт направление интервала
          */
         uint_fast8_t data;
-    }
+    };
 } // namespace harmony_core
 #endif // HARMONY_CORE_INTERVAL_HPP

@@ -44,7 +44,7 @@ Interval::Interval(Note n1, Note n2)
 {
     if (n1.get_height() <= n2.get_height())
     {
-        this->set_ditection(1);
+        this->set_direction(1);
     }
     else
     {
@@ -56,7 +56,8 @@ Interval::Interval(Note n1, Note n2)
 
     if (n1.get_height() - n2.get_height() > 24)
     {
-        this->data = Interval()->get_data();
+        Interval i;
+        this->data = i->get_data();
         return;
     }
 
@@ -69,12 +70,15 @@ Interval::Interval(Note n1, Note n2)
         {
             note_base = 1;
         }
+
+        uint8_t d = this->get_distance();
+
         if (static_cast<Base>(note_base) == n2.get_base())
         {
-            this->set_distance(++this->get_distance());
+            this->set_distance(++d);
             break;
         }
-        this->set_distance(++this->get_distance());
+        this->set_distance(++d);
     }
 
     // определяем тип интервала
@@ -89,17 +93,17 @@ Interval::Interval(Note n1, Note n2)
 
     if (this->get_distance() >= 4)
     {
-        if (n2.get_octave() == 0)
+        if (static_cast<int>(n2.get_octave()) == 0)
         {
-            n1.set_octave(static_cast<Octave>(++static_cast<int>(n1.get_octave())));
-            n2.set_octave(static_cast<Octave>(++static_cast<int>(n2.get_octave())));
+            n1.set_octave(static_cast<Octave>(static_cast<int>(n1.get_octave()) + 1));
+            n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave()) + 1));
         }
-        if (n2.get_octave() == 8)
+        if (static_cast<int>(n2.get_octave()) == 8)
         {
-            n1.set_octave(static_cast<Octave>(--static_cast<int>(n1.get_octave())));
-            n2.set_octave(static_cast<Octave>(--static_cast<int>(n2.get_octave())));
+            n1.set_octave(static_cast<Octave>(static_cast<int>(n1.get_octave()) - 1));
+            n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave()) - 1));
         }
-        n2.set_octave(static_cast<Octave>(++static_cast<int>(n2.get_octave())));
+        n2.set_octave(static_cast<Octave>(static_cast<int>(n2.get_octave())) + 1);
         Note n3 = n1;
         n1 = n2;
         n2 = n3;
@@ -185,12 +189,12 @@ Interval::Interval(Note n1, Note n2)
     {
         switch (this->get_quality())
         {
-            case(Quality::MAJOR) this->set_quality(Quality::MINOR);
-            case(Quality::MINOR) this->set_quality(Quality::MAJOR);
-            case(Quality::AUG) this->set_quality(Quality::DIM);
-            case(Quality::DIM) this->set_quality(Quality::AUG);
-            case(Quality::DOUBLY_AUG) this->set_quality(Quality::DOUBLY_DIM);
-            case(Quality::DOUBLY_DIM) this->set_quality(Quality::DOUBLY_AUG);
+            case(Quality::MAJOR) : this->set_quality(Quality::MINOR);
+            case(Quality::MINOR) : this->set_quality(Quality::MAJOR);
+            case(Quality::AUG) : this->set_quality(Quality::DIM);
+            case(Quality::DIM) : this->set_quality(Quality::AUG);
+            case(Quality::DOUBLY_AUG) : this->set_quality(Quality::DOUBLY_DIM);
+            case(Quality::DOUBLY_DIM) : this->set_quality(Quality::DOUBLY_AUG);
         }
     }
 }
@@ -243,7 +247,7 @@ void Interval::set_direction(bool d) noexcept
     }
 }
 
-bool get_direction() const noexcept
+bool Interval::get_direction() const noexcept
 {
     return this->data >> 7;
 }
