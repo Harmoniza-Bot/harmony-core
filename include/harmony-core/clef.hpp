@@ -10,14 +10,14 @@ namespace harmony_core{
     * Ключ необходим для определения линейки в нотном стане от ноты и определения ноты от линейки.
     * Также с помощью ключа можно изменить ноту, указав начальный и конечный ключ (ключевая альтерация).  
     */
-    class Clef
+    class Clef final
     {
         public:
         
         /*!
         * \brief Создает скрипичный ключ
         */
-        explicit clef() noexcept
+        clef() noexcept
         {
             this->data = 0b00110011;
         }
@@ -25,7 +25,7 @@ namespace harmony_core{
         /*!
         * \brief Создает ключ по типу и имени ключа
         */
-        explicit clef(Clef_name n, Clef_type t) noexcept
+        clef(Clef_name n, Clef_type t) noexcept
         {
             this->data &= ~0b00111111;
             this->data |=(static_cast<uint8_t>(t) << 4);
@@ -35,7 +35,7 @@ namespace harmony_core{
         /*!
         * \brief Создает ключ по информации о ключе
         */
-        explicit clef(uint8_t data) noexcept
+        clef(uint8_t data) noexcept
         {
             this->data = data;
         }
@@ -89,7 +89,7 @@ namespace harmony_core{
         */
         [[nodiscard]] Clef_name get_name() noexcept
         {
-            return static_cast<Clef_type>(this->data & 0b00001111);
+            return static_cast<Clef_name>(this->data & 0b00001111);
         }
         
         //functions
@@ -131,6 +131,6 @@ namespace harmony_core{
         * Биты 4-5 обозначают тип ключа
         */
         uint8_t data;
-    }
+    };
 }
 #endif //HARMONY_CORE_CLEF
