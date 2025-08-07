@@ -1,8 +1,10 @@
 #ifndef HARMONY_CORE_INTERVAL_HPP
 #define HARMONY_CORE_INTERVAL_HPP
+
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
 #include <string>
+
 namespace harmony_core
 {
     class Interval final

@@ -6,27 +6,26 @@
 #include <stdexcept>
 
 namespace harmony_core{
-    /*! 
-    * Класс представляет ключ.
-    * Главная функция - определить,
-    * На какой линейке расположена нота.
+    /*! \brief Данный класс представляет музыкальный ключ.
+    * Ключ необходим для определения линейки в нотном стане от ноты и определения ноты от линейки.
+    * Также с помощью ключа можно изменить ноту, указав начальный и конечный ключ (ключевая альтерация).  
     */
     class Clef
     {
         public:
         
         /*!
-        * Создает скрипичный ключ
+        * \brief Создает скрипичный ключ
         */
-        explicit clef()
+        explicit clef() noexcept
         {
             this->data = 0b00110011;
         }
         
         /*!
-        * Создает ключ по типу и имени ключа
+        * \brief Создает ключ по типу и имени ключа
         */
-        explicit clef(Clef_name n, Clef_type t)
+        explicit clef(Clef_name n, Clef_type t) noexcept
         {
             this->data &= ~0b00111111;
             this->data |=(static_cast<uint8_t>(t) << 4);
@@ -34,9 +33,9 @@ namespace harmony_core{
         }
         
         /*!
-        * Создает ключ по информации о ключе
+        * \brief Создает ключ по информации о ключе
         */
-        explicit clef(uint8_t data)
+        explicit clef(uint8_t data) noexcept
         {
             this->data = data;
         }
@@ -44,51 +43,51 @@ namespace harmony_core{
         // getters & setters
         
         /*!
-        * Задает всю информацию
+        * \brief Задает всю информацию
         */
-        void set_data(uint_fast8_t d)
+        void set_data(uint_fast8_t d) noexcept
         {
             this->data = d;
         }
         
         /*!
-        * Возвращает информацию о ключе
+        * \brief Возвращает информацию о ключе
         */
-        [[nodiscard]] uint8_t get_data()
+        [[nodiscard]] uint8_t get_data() noexcept
         {
             return this->data;
         }
         
         /*!
-        * Задает тип ключа
+        * \brief Задает тип ключа
         */
-        void set_type(Clef_type t)
+        void set_type(Clef_type t) noexcept
         {
             this->data &= ~0b00110000;
             this->data |= (static_cast<uint8_t>(t) << 4);
         }
         
         /*!
-        * Возвращает тип ключа
+        * \brief Возвращает тип ключа
         */
-        [[nodiscard]] Clef_type get_type()
+        [[nodiscard]] Clef_type get_type() noexcept
         {
             return static_cast<Clef_type>((this->data & 0b00110000) >> 4);
         }
         
         /*!
-        * Задает имя ключа
+        * \brief Задает имя ключа
         */
-        void set_name(Clef_name n)
+        void set_name(Clef_name n) noexcept
         {
             this->data &= ~0b00001111;
             this->data |= static_cast<uint8_t>(n);
         }
         
         /*!
-        * Возвращает имя ключа
+        * \brief Возвращает имя ключа
         */
-        [[nodiscard]] Clef_name get_name()
+        [[nodiscard]] Clef_name get_name() noexcept
         {
             return static_cast<Clef_type>(this->data & 0b00001111);
         }
@@ -96,21 +95,35 @@ namespace harmony_core{
         //functions
         
         /*!
-        * Данная функция возвращает расположение
-        * ноты на нотном стане от линии снизу.
+        * \brief Данная функция возвращает расположение ноты на нотном стане от 0-й линии снизу.
         *
-        * Целые числа - нота на нотной палке.
-        * Дробные числа - нота между палками.
+        * Целые числа - нота на нотной линейке.
+        * Дробные числа - нота между линейками.
         * 
         * Отрицательное число - 
         * колличество добавочных линеек вниз.
         *
-        * положительное число больше пяти - 
-        * колличество основных линеек + 
-        * добавочные ввкрх 
-        * (если ключ не табулатурный).
+        * положительное число больше пяти - колличество основных линеек (5-ти) + добавочные линейки вверх 
         */
-        float get_place(Note);
+        [[nodiscard]] float get_place(Note) const noexcept;
+
+        /*!
+        * \brief Данная функция возвращает ноту, насположенную на указанной линейке текущего ключа.
+        * Линейки считаются от 0-й линейки снизу.
+        * Например, get_place(0) от скрипичного ключа вернет \code Ми 1 октавы \endcode
+        * \param [in] float Линейка для определения ноты (целое число - на линейке, дробное - между линейками)
+        * \return \code Note \endcode 
+        */
+        [[nodiscard]] Note get_note(float) const noexcept;
+
+        /*!
+        * \brief Данная функция делает ключевую альтерацию, используя новый ключ.
+        * Вначале определяется линейка ноты в текущем ключе. 
+        * Потом нота изменяется на ноту, насположенную на той же линейке в целевом ключе.
+        * \param [in] Note Нота для альтерации.
+        * \param [in] Clef Целевой ключ.
+        */
+        void clef_alteration(Note&, Clef) noexcept; 
         
         private:
         /*!
