@@ -1,5 +1,6 @@
 #ifndef HARMONY_CORE_CLEF
 #define HARMONY_CORE_CLEF
+
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
 #include <stdexcept>

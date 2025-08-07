@@ -1,14 +1,7 @@
 #include <harmony-core/note.hpp>
-#include <iostream>
 #include <stdexcept>
 #include <string>
 using namespace harmony_core;
-
-// static const char8_t *NOTE_NAMES[sizeof(NamingConvention)][9 * 7 * 3] = {
-//     // TODO: use correct size instead of 9 * 7 * 3
-//     {
-//         u8"" // TODO: make it completely
-//     }};
 
 Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED, Accidental::UNDEFINED, Duration::WHOLE)
 {
@@ -154,14 +147,6 @@ uint_fast8_t Note::get_height() const noexcept
     }
     return result;
 }
-
-
-// std::u8string_view Note::get_name(const NamingConvention convention) const noexcept
-// {
-//     return NOTE_NAMES[static_cast<size_t>(convention)][static_cast<size_t>(this->data)];
-// }
-
-// std::u8string_view Note::get_name(NamingConvention convention = NamingConvention::ENGLISH) const noexcept;
 
 std::string Note::get_name() const noexcept
 {
