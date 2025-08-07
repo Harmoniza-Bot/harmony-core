@@ -1,6 +1,7 @@
 #include <harmony-core/note.hpp>
 #include <stdexcept>
 #include <string>
+#include <iostream>
 using namespace harmony_core;
 
 Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED, Accidental::UNDEFINED, Duration::WHOLE)
