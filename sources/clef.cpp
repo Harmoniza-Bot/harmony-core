@@ -1,4 +1,5 @@
 #include <stdexcept>
+
 #include <harmony-core/clef.hpp>
 #include <harmony-core/note.hpp>
 
@@ -59,6 +60,7 @@ float Clef::get_place(const Note note&) const noexcept
     }
 
     int8_t number_note_line = static_cast<int>(note.get_octave()) * 4;
+    number_note_line += static_cast<int>(note.get_base()) - static_cast<int>(Base::A);
 
     return (static_cast<float>(note.get_height()) / 2) - static_cast<float>(clef_zero_point);
 }
@@ -69,6 +71,11 @@ Note Clef::get_note(float line) const noexcept
 }
 
 void Clef::clef_alteration(Note& note, Clef clef) noexcept
+{
+
+}
+
+std::string Clef::get_name()
 {
 
 }

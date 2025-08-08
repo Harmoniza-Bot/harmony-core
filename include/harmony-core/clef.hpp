@@ -85,14 +85,17 @@ namespace harmony_core{
         }
         
         /*!
-        * \brief Возвращает имя ключа
+        * \brief Возвращает имя ключа в формате Clef_name.
         */
-        [[nodiscard]] Clef_name get_name() noexcept
+        [[nodiscard]] Clef_name get_clef_name() noexcept
         {
             return static_cast<Clef_name>(this->data & 0b00001111);
         }
-        
-        //functions
+
+        /*!
+        * \brief Возвращает имя ключа в строковом формате.
+        */
+        [[nodiscard]] std::string get_name() noexcept;
         
         /*!
         * \brief Данная функция возвращает расположение ноты на нотном стане от 0-й линии снизу.
