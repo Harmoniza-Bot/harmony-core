@@ -4,6 +4,7 @@
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
 #include <stdexcept>
+#include <string>
 
 namespace harmony_core{
     /*! \brief Данный класс представляет музыкальный ключ.
@@ -108,7 +109,7 @@ namespace harmony_core{
         *
         * положительное число больше пяти - колличество основных линеек (5-ти) + добавочные линейки вверх 
         */
-        [[nodiscard]] float get_place(Note&) const noexcept;
+        [[nodiscard]] float get_place(const Note&) const noexcept;
 
         /*!
         * \brief Данная функция возвращает ноту, насположенную на указанной линейке текущего ключа.
