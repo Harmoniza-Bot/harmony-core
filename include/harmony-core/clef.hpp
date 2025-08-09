@@ -94,11 +94,6 @@ namespace harmony_core{
         }
 
         /*!
-        * \brief Возвращает имя ключа в строковом формате.
-        */
-        [[nodiscard]] std::string get_name() noexcept;
-        
-        /*!
         * \brief Данная функция возвращает расположение ноты на нотном стане от 0-й линии снизу.
         *
         * Целые числа - нота на нотной линейке.
@@ -109,7 +104,7 @@ namespace harmony_core{
         *
         * положительное число больше пяти - колличество основных линеек (5-ти) + добавочные линейки вверх 
         */
-        [[nodiscard]] float get_place(const Note&) const noexcept;
+        [[nodiscard]] float get_place(Note) const noexcept;
 
         /*!
         * \brief Данная функция возвращает ноту, насположенную на указанной линейке текущего ключа.
@@ -129,6 +124,12 @@ namespace harmony_core{
         */
         void clef_alteration(Note&, Clef) noexcept; 
         
+        /*!
+        * \brief Возвращает имя ключа в строковом формате.
+        */
+        [[nodiscard]] std::string get_name() noexcept;
+        
+
         private:
         /*!
         * Биты 0-3 обозначают имя ключа
