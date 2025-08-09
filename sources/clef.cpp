@@ -1,10 +1,8 @@
+#include <string>
 #include <stdexcept>
 
 #include <harmony-core/clef.hpp>
 #include <harmony-core/note.hpp>
-
-#include <string>
-#include <stdexcept>
 
 using namespace harmony_core;
 
