@@ -155,6 +155,11 @@ namespace harmony_core
          * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
          */
         std::vector<Note> get_accidentals() noexcept;
+        
+        /*!
+        \brief Определяет тяготение ноты согласно правилам тяготения.
+        */
+        Note get_resolution(const Note&) const noexcept;
 
 
         /*!

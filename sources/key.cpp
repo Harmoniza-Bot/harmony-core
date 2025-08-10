@@ -337,6 +337,11 @@ std::vector<Note> Key::get_accidentals() noexcept
     return answer;
 }
 
+Note Key::get_resolution(const Note& note) const noexcept
+{
+    
+}
+
 //--------------------------------
 
 void Key::sharp_step() noexcept
