@@ -135,10 +135,13 @@ namespace harmony_core
 
         // interval functions
         /*!
-         * \brief Возвращает интервал тон-ти по индексу первой ноты и названию.
-         * \return Интервал
+         * \brief Возвращает интервал тон-ти по индексу первой ноты и второй ноты.
+         * \param [in] uint8_t индекс первой ноты интервала
+         * \param [in] uint8_t вторая нота интервала
+         * \return Interval Интервал 
          */
-        [[nodiscard]] Note get_interval(uint8_t index) noexcept;
+        [[nodiscard]] Interval get_interval(uint8_t, uint8_t) noexcept;
+        
 
         /*!
          * \brief Ищет указанный интервал в текущей тон-ти.
@@ -162,6 +165,11 @@ namespace harmony_core
         Это индекс разрешения: 1 - вверх, 0 - вниз
         */
         Note get_resolution(const Note, bool) const noexcept;
+        
+        /*!
+        \brief Разрешает интервал в тональности
+        */
+        Interval get_resolution(const Interval) const noexcept;
 
 
         /*!

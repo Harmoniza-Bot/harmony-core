@@ -272,9 +272,10 @@ int8_t Key::search_tone(Note note) noexcept
     return -1;
 }
 
-Note get_interval(uint8_t index) noexcept
+Interval get_interval(uint8_t first, uint8_t second) noexcept
 {
-    
+    Interval i(this->get_tone(first), this->get_tone(second));
+    return i;
 }
 
 uint8_t search_interval(Note first, Note second) noexcept
@@ -335,11 +336,6 @@ std::vector<Note> Key::get_accidentals() noexcept
         answer.push_back(note);
     }
     return answer;
-}
-
-Note Key::get_resolution(const Note& note) const noexcept
-{
-    
 }
 
 //--------------------------------
@@ -518,18 +514,15 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
         note.set_octave(Octave::_1_LINE);
         return note;
     }
-    else
+    
+    if(note_index == 5 && note_index == 6)
     {
-        if(note_index == 5 && note_index == 6)
-        {
-            note = scale[4];
-            note.set_octave(Octave::_1_LINE);
-            return note;
-        }
-
-        note = scale[note_index - 1];
+        note = scale[4];
         note.set_octave(Octave::_1_LINE);
         return note;
     }
 
+    note = scale[note_index - 1];
+    note.set_octave(Octave::_1_LINE);
+    return note;
 }

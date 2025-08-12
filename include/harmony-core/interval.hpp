@@ -7,6 +7,10 @@
 
 namespace harmony_core
 {
+    /*
+    \brief Данный класс представляет интервал.
+    * Доступны функции изменения звуков интервала, получения названия, расстояния между звуками, извлечения и поиска интервала из звукоряда тональности и тд.
+    */
     class Interval final
     {
     public:
@@ -42,17 +46,19 @@ namespace harmony_core
 
         /*!
          * \brief Задает информацию об объекте на основе \code data \endcode.
+         \param [in] uint_fast8_t информация об интервале согласно соглашению о коодировке.
          */
         void set_data(uint_fast8_t data) noexcept;
 
         /*!
-         * \brief Возвращает информацию об расстоянии, виде и направлении интервала.
-         * \return Информация об объекте.
+         * \brief Возвращает информацию о расстоянии, виде и направлении интервала.
+         * \return uint_fast8_t Информация об объекте.
          */
         [[nodiscard]] uint_fast8_t get_data() const noexcept;
 
         /*!
-         * \brief Задает расстояние интервала.
+         * \brief Задает расстояние интервала (по натуральному звукоряду).
+         \param [in] uint8_t расстояние между нот интервала.
          */
         void set_distance(uint8_t) noexcept;
 
@@ -64,29 +70,31 @@ namespace harmony_core
 
         /*!
          * \brief Задает вид интервала.
+         param [in] Quality вид интервала
          */
         void set_quality(Quality) noexcept;
 
         /*!
          * \brief Возвращает вид интервала.
-         * \return Вид интервала.
+         * \return Quality Вид интервала.
          */
         [[nodiscard]] Quality get_quality() const noexcept;
 
         /*!
          * \brief Задает направление интервала.
+         \param [in] bool направление интервала (1 - вверх, 0 - вниз)
          */
         void set_direction(bool) noexcept;
 
         /*!
          * \brief Возвращает направление интервала.
-         * \return Направление интервала.
+         * \return bool Направление интервала.
          */
         [[nodiscard]] bool get_direction() const noexcept;
 
         /*!
          * \brief Возвращает имя интервала на английском.
-         * \return Полное имя интервала.
+         * \return std::string Полное имя интервала.
          */
         [[nodiscard]] std::string get_name() const noexcept;
 
