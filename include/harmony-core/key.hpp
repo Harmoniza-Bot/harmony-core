@@ -135,8 +135,8 @@ namespace harmony_core
 
         // interval functions
         /*!
-         * \brief Возвращает интервал тон-ти по индексу первой ноты и расстоянию в полутонах до следующей ноты.
-         * \return
+         * \brief Возвращает интервал тон-ти по индексу первой ноты и названию.
+         * \return Интервал
          */
         [[nodiscard]] Note get_interval(uint8_t index) noexcept;
 
@@ -157,9 +157,11 @@ namespace harmony_core
         std::vector<Note> get_accidentals() noexcept;
         
         /*!
-        \brief Определяет тяготение ноты согласно правилам тяготения.
+        \brief Разрешает ноту согласно правилам разрешения.
+        Нота может разрешиться двумя способами (вверх и вниз). bool переменная управляет выбором разрешения
+        Это индекс разрешения: 1 - вверх, 0 - вниз
         */
-        Note get_resolution(const Note&) const noexcept;
+        Note get_resolution(const Note, bool) const noexcept;
 
 
         /*!

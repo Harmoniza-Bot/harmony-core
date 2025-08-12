@@ -443,3 +443,40 @@ int8_t Key::get_step() const noexcept
         return answer;
     }
 }
+
+Note Key::Note get_resolution (const Note note, bool dir) const noexcept
+{
+    //гамма тональности
+    std::vector<Note> scale;
+
+    //необходимо для проверки перехода через октаву
+    bool octave_trig = 0;
+
+    //получаем гамму
+    for(int x=0; x<7; ++x)
+    {
+        scale.push_back(this->get_tone(x));
+        scale[x].set_octave(Octave::_1_LINE);
+
+        //если итераций больше одной и наткнулись на ля - переход между октав
+        if(x>0 && scale[x].get_base() == Base::A)
+        {
+            octave_trig = 1;
+        }
+
+        //если произошел переход через октаву - + октава
+        if(octave_trig)
+        {
+            scale[x].set_octave(Octave::_2_LINE);
+        }
+
+        //если наткнулись на ноту из параметра - устанавливаем ей нужную октаву
+        if(scale[x].get_base() == note.get_base())
+        {
+            note.set_octave(scale[x].get_octave());
+        }
+
+    }
+    //имеем гамму и привеленную к одной с гаммой октаве ноту. Необходимо найти ближайшую к ней ноту
+
+}
