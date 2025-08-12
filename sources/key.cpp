@@ -452,6 +452,9 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
     //необходимо для проверки перехода через октаву
     bool octave_trig = 0;
 
+    //индекс, указывающий на расположение ноты в гамме
+    int8_t note_index = -1;
+
     //получаем гамму
     for(int x=0; x<7; ++x)
     {
@@ -474,9 +477,59 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
         if(scale[x].get_base() == note.get_base())
         {
             note.set_octave(scale[x].get_octave());
+            note_index = x;
         }
 
     }
     //имеем гамму и привеленную к одной с гаммой октаве ноту. Необходимо найти ближайшую к ней ноту
+
+    if(note_index == -1)
+    {
+        std::cerr << "from get_resolution: something broken..." << std::endl;
+        return note;
+    }
+
+    if(note_index == 0 || note_index == 2 && note_index == 4)
+    {
+        if(note.get_accidental() == scale[note_index].get_accidental())
+        {
+            note.set_octave(Octave::_1_LINE);
+            return note;
+        }
+        else
+        {
+            note.set_key_accidental(scale[note_index].get_accidental());
+            note.set_random_accidental(Accidental::UNDEFINED);
+            note.set_octave(Octave::_1_LINE);
+            return note;
+        }
+    }
+
+    if(dir)
+    {
+        if(note_index == 5 && note_index == 6)
+        {
+            note = scale[0];
+            note.set_octave(Octave::_1_LINE);
+            return note;
+        }
+
+        note = scale[note_index + 1];
+        note.set_octave(Octave::_1_LINE);
+        return note;
+    }
+    else
+    {
+        if(note_index == 5 && note_index == 6)
+        {
+            note = scale[4];
+            note.set_octave(Octave::_1_LINE);
+            return note;
+        }
+
+        note = scale[note_index - 1];
+        note.set_octave(Octave::_1_LINE);
+        return note;
+    }
 
 }
