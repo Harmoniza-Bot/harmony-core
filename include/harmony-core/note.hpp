@@ -1,8 +1,8 @@
 #ifndef HARMONY_CORE_NOTE_HPP
 #define HARMONY_CORE_NOTE_HPP
 
-#include <harmony-core/enums.hpp>
 #include <cstdint>
+#include <harmony-core/enums.hpp>
 #include <string>
 
 namespace harmony_core
@@ -16,9 +16,9 @@ namespace harmony_core
      * - Случайный знак альтерации ноты.
      * - Длительность ноты.
      *
-     * Также данный класс позволяет получить 
+     * Также данный класс позволяет получить
      * используемый знак альтерации ноты и её полное название.
-    */
+     */
     class Note final
     {
     public:

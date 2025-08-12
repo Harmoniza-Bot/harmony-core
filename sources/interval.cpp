@@ -184,12 +184,18 @@ Interval::Interval(Note n1, Note n2) noexcept
     {
         switch (this->get_quality())
         {
-            case(Quality::MAJOR) : this->set_quality(Quality::MINOR);
-            case(Quality::MINOR) : this->set_quality(Quality::MAJOR);
-            case(Quality::AUG) : this->set_quality(Quality::DIM);
-            case(Quality::DIM) : this->set_quality(Quality::AUG);
-            case(Quality::DOUBLY_AUG) : this->set_quality(Quality::DOUBLY_DIM);
-            case(Quality::DOUBLY_DIM) : this->set_quality(Quality::DOUBLY_AUG);
+            case (Quality::MAJOR):
+                this->set_quality(Quality::MINOR);
+            case (Quality::MINOR):
+                this->set_quality(Quality::MAJOR);
+            case (Quality::AUG):
+                this->set_quality(Quality::DIM);
+            case (Quality::DIM):
+                this->set_quality(Quality::AUG);
+            case (Quality::DOUBLY_AUG):
+                this->set_quality(Quality::DOUBLY_DIM);
+            case (Quality::DOUBLY_DIM):
+                this->set_quality(Quality::DOUBLY_AUG);
         }
     }
 }
@@ -206,7 +212,7 @@ uint_fast8_t Interval::get_data() const noexcept
 
 void Interval::set_distance(uint8_t d) noexcept
 {
-    if(d > 15) 
+    if (d > 15)
     {
         d = 15;
     }
@@ -250,10 +256,10 @@ bool Interval::get_direction() const noexcept
 std::string Interval::get_name() const noexcept
 {
     std::string name;
-    switch(this->get_quality())
+    switch (this->get_quality())
     {
-        case Quality::PERFECT :
-                name += "per";
+        case Quality::PERFECT:
+            name += "per";
         case Quality::MINOR:
             name += "min";
         case Quality::MAJOR:

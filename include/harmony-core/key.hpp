@@ -135,21 +135,20 @@ namespace harmony_core
 
         // interval functions
         /*!
-         * \brief Возвращает интервал тон-ти по индексу первой ноты и второй ноты.
+         * \brief Возвращает интервал тон-ти по индексу первой ноты и второй ноты в звукоряде тональности.
          * \param [in] uint8_t индекс первой ноты интервала
          * \param [in] uint8_t вторая нота интервала
-         * \return Interval Интервал 
+         * \return Interval Интервал
          */
         [[nodiscard]] Interval get_interval(uint8_t, uint8_t) noexcept;
-        
+
 
         /*!
          * \brief Ищет указанный интервал в текущей тон-ти.
-         * \param [in] first первая нота в интервале
-         * \param [in] second вторая нота в интервале
-         * \return Индекс первой ноты интервала в звукоряде тон-ти или -1 если интервала нет.
+         * \param [in] Interval интервал для поиска.
+         * \return std::vector Вектор из первых нот введенного интервала для данной тональности.
          */
-        [[nodiscard]] uint8_t search_interval(Note first, Note second) noexcept;
+        [[nodiscard]] std::vector<Note> search_interval(Interval) noexcept;
 
         // accidental getter
 
@@ -158,19 +157,25 @@ namespace harmony_core
          * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
          */
         std::vector<Note> get_accidentals() noexcept;
-        
+
         /*!
         \brief Разрешает ноту согласно правилам разрешения.
         Нота может разрешиться двумя способами (вверх и вниз). bool переменная управляет выбором разрешения
         Это индекс разрешения: 1 - вверх, 0 - вниз
         */
         Note get_resolution(const Note, bool) const noexcept;
-        
+
         /*!
         \brief Разрешает интервал в тональности
         */
         Interval get_resolution(const Interval) const noexcept;
 
+
+        /*!
+         * \brief Возвращает вектор из семи нот - гаммы данной тональности в первой - второй октаве
+         * \return std::vector<Note> Вектор из нот, образующий гамму.
+         */
+        std::vector<Note> get_scale() noexcept;
 
         /*!
          * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.

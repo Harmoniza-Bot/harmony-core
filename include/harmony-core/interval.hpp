@@ -9,7 +9,8 @@ namespace harmony_core
 {
     /*
     \brief Данный класс представляет интервал.
-    * Доступны функции изменения звуков интервала, получения названия, расстояния между звуками, извлечения и поиска интервала из звукоряда тональности и тд.
+    * Доступны функции изменения звуков интервала, получения названия, расстояния между звуками, извлечения и поиска
+    интервала из звукоряда тональности и тд.
     */
     class Interval final
     {
@@ -97,6 +98,11 @@ namespace harmony_core
          * \return std::string Полное имя интервала.
          */
         [[nodiscard]] std::string get_name() const noexcept;
+
+        friend bool operator==(const Interval &lhs, const Interval &rhs)
+        {
+            return lhs.data == rhs.data;
+        }
 
     private:
         /**

@@ -278,18 +278,53 @@ Interval get_interval(uint8_t first, uint8_t second) noexcept
     return i;
 }
 
-uint8_t search_interval(Note first, Note second) noexcept
+std::vector<Note> search_interval(Interval interval) noexcept
 {
-    
-}
+    std::vector<Note> interval_base_list;
 
+    std::vector<Note> scale = this->get_scale();
+    for (int x = 0; x < 14; ++x)
+    {
+        scale += scale[x];
+        scale[7 + x].set_octave(static_cast<Octave>(static_cast<int>(scale[x].get_octave() + 1)));
+    }
+
+    if (interval.get_direction())
+    {
+        for (int x = 0; x < 7; ++x)
+        {
+            Interval i = this->get_interval(x, x + interval.get_distance());
+            if (interval == i)
+            {
+                interval_base_list += i;
+            }
+        }
+    }
+    else
+    {
+        for (int x = 21; x > 14; --x)
+        {
+            Interval i = this->get_interval(x, x - interval.get_distance());
+            if (interval == i)
+            {
+                interval_base_list += i;
+            }
+        }
+    }
+
+    // Сейчас она работает только для натуральных интервалов.
+    // Необходимо дописать поиск хроматических интервалов
+    // То есть тех, для получения которых необходимо повысить/понизить ступень
+
+    return interval_base_list;
+}
 
 
 std::vector<Note> Key::get_accidentals() noexcept
 {
     std::vector<Note> answer;
     uint8_t index = 0;
-    if ((static_cast<uint8_t> (data & 0b1111 - index)) == 0)
+    if ((static_cast<uint8_t>(data & 0b1111 - index)) == 0)
     {
         return answer;
     }
@@ -307,7 +342,7 @@ std::vector<Note> Key::get_accidentals() noexcept
 
     for (int x = 0; x <= 14; ++x)
     {
-        if ((static_cast<uint8_t> (data & 0b1111 - index)) == 0)
+        if ((static_cast<uint8_t>(data & 0b1111 - index)) == 0)
         {
             return answer;
         }
@@ -440,54 +475,53 @@ int8_t Key::get_step() const noexcept
     }
 }
 
-Note Key::Note get_resolution (const Note note, bool dir) const noexcept
+Note Key::Note get_resolution(const Note note, bool dir) const noexcept
 {
-    //гамма тональности
+    // гамма тональности
     std::vector<Note> scale;
 
-    //необходимо для проверки перехода через октаву
+    // необходимо для проверки перехода через октаву
     bool octave_trig = 0;
 
-    //индекс, указывающий на расположение ноты в гамме
+    // индекс, указывающий на расположение ноты в гамме
     int8_t note_index = -1;
 
-    //получаем гамму
-    for(int x=0; x<7; ++x)
+    // получаем гамму
+    for (int x = 0; x < 7; ++x)
     {
         scale.push_back(this->get_tone(x));
         scale[x].set_octave(Octave::_1_LINE);
 
-        //если итераций больше одной и наткнулись на ля - переход между октав
-        if(x>0 && scale[x].get_base() == Base::A)
+        // если итераций больше одной и наткнулись на ля - переход между октав
+        if (x > 0 && scale[x].get_base() == Base::A)
         {
             octave_trig = 1;
         }
 
-        //если произошел переход через октаву - + октава
-        if(octave_trig)
+        // если произошел переход через октаву - + октава
+        if (octave_trig)
         {
             scale[x].set_octave(Octave::_2_LINE);
         }
 
-        //если наткнулись на ноту из параметра - устанавливаем ей нужную октаву
-        if(scale[x].get_base() == note.get_base())
+        // если наткнулись на ноту из параметра - устанавливаем ей нужную октаву
+        if (scale[x].get_base() == note.get_base())
         {
             note.set_octave(scale[x].get_octave());
             note_index = x;
         }
-
     }
-    //имеем гамму и привеленную к одной с гаммой октаве ноту. Необходимо найти ближайшую к ней ноту
+    // имеем гамму и привеленную к одной с гаммой октаве ноту. Необходимо найти ближайшую к ней ноту
 
-    if(note_index == -1)
+    if (note_index == -1)
     {
         std::cerr << "from get_resolution: something broken..." << std::endl;
         return note;
     }
 
-    if(note_index == 0 || note_index == 2 && note_index == 4)
+    if (note_index == 0 || note_index == 2 && note_index == 4)
     {
-        if(note.get_accidental() == scale[note_index].get_accidental())
+        if (note.get_accidental() == scale[note_index].get_accidental())
         {
             note.set_octave(Octave::_1_LINE);
             return note;
@@ -501,9 +535,9 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
         }
     }
 
-    if(dir)
+    if (dir)
     {
-        if(note_index == 5 && note_index == 6)
+        if (note_index == 5 && note_index == 6)
         {
             note = scale[0];
             note.set_octave(Octave::_1_LINE);
@@ -514,8 +548,8 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
         note.set_octave(Octave::_1_LINE);
         return note;
     }
-    
-    if(note_index == 5 && note_index == 6)
+
+    if (note_index == 5 && note_index == 6)
     {
         note = scale[4];
         note.set_octave(Octave::_1_LINE);
@@ -525,4 +559,27 @@ Note Key::Note get_resolution (const Note note, bool dir) const noexcept
     note = scale[note_index - 1];
     note.set_octave(Octave::_1_LINE);
     return note;
+}
+
+std::vector<Note> Key::get_scale() noexcept
+{
+    bool octave_trig = 0;
+    std::vector<Note> scale;
+    for (int x = 0; x < 7; ++x)
+    {
+        scale.push_back(this->get_tone(x));
+        scale[x].set_octave(Octave::_1_LINE);
+
+        // если итераций больше одной и наткнулись на ля - переход между октав
+        if (x > 0 && scale[x].get_base() == Base::A)
+        {
+            octave_trig = 1;
+        }
+
+        // если произошел переход через октаву - + октава
+        if (octave_trig)
+        {
+            scale[x].set_octave(Octave::_2_LINE);
+        }
+    }
 }
