@@ -6,10 +6,8 @@
 #include <harmony-core/note.hpp>
 #include <vector>
 
-namespace harmony_core
-{
-    class Key final
-    {
+namespace harmony_core {
+    class Key final {
     public:
         /*!
          * \brief Создаёт тональность \code C IONIAN NAIURAL \endcode.
@@ -205,8 +203,7 @@ namespace harmony_core
          * \param rhs правая тон-то.
          * \return Если левая и правая тон-ти равны, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator==(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator==(const Key &lhs, const Key &rhs) {
             return lhs.data == rhs.data;
         }
 
@@ -216,8 +213,7 @@ namespace harmony_core
          * \param rhs правая тон-то.
          * \return Если левая и правая тон-ти равны, то \code false \endcode, иначе \code true \endcode.
          */
-        friend bool operator!=(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator!=(const Key &lhs, const Key &rhs) {
             return lhs.data != rhs.data;
         }
 
@@ -229,8 +225,7 @@ namespace harmony_core
          * \param rhs правая тон-ть.
          * \return Если индекс квинтового круга правой тон-ти больше, то \code true\endcode, иначе \code false \endcode.
          */
-        friend bool operator<(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator<(const Key &lhs, const Key &rhs) {
             return lhs.get_step() < rhs.get_step();
         }
 
@@ -241,8 +236,7 @@ namespace harmony_core
          * \return Если индекс квинтового круга правой тон-ти больше или равен, то \code true\endcode, иначе \code false
          * \endcode.
          */
-        friend bool operator<=(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator<=(const Key &lhs, const Key &rhs) {
             return lhs.get_step() <= rhs.get_step();
         }
 
@@ -252,8 +246,7 @@ namespace harmony_core
          * \param rhs правая тон-ть.
          * \return Если индекс квинтового круга левой тон-ти больше, то \code true\endcode, иначе \code false\endcode.
          */
-        friend bool operator>(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator>(const Key &lhs, const Key &rhs) {
             return lhs.get_step() > rhs.get_step();
         }
 
@@ -264,8 +257,7 @@ namespace harmony_core
          * \return Если индекс квинтового круга левой тон-ти больше или равен, то \code true\endcode, иначе \code
          * false\endcode.
          */
-        friend bool operator>=(const Key &lhs, const Key &rhs)
-        {
+        friend bool operator>=(const Key &lhs, const Key &rhs) {
             return lhs.get_step() >= rhs.get_step();
         }
 
@@ -276,8 +268,7 @@ namespace harmony_core
          * \param key другая тон-ть.
          * \return Эту тональность.
          */
-        Key &operator=(const Key &key)
-        {
+        Key &operator=(const Key &key) {
             if (this == &key)
                 return *this;
             data = key.data;

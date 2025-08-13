@@ -5,15 +5,13 @@
 #include <harmony-core/note.hpp>
 #include <string>
 
-namespace harmony_core
-{
+namespace harmony_core {
     /*
     \brief Данный класс представляет интервал.
     * Доступны функции изменения звуков интервала, получения названия, расстояния между звуками, извлечения и поиска
     интервала из звукоряда тональности и тд.
     */
-    class Interval final
-    {
+    class Interval final {
     public:
         /*!
          * \brief Создаёт интервал, равный чистой приме
@@ -99,8 +97,7 @@ namespace harmony_core
          */
         [[nodiscard]] std::string get_name() const noexcept;
 
-        friend bool operator==(const Interval &lhs, const Interval &rhs)
-        {
+        friend bool operator==(const Interval &lhs, const Interval &rhs) {
             return lhs.data == rhs.data;
         }
 

@@ -1,16 +1,14 @@
 #ifndef HARMONY_CORE_ENUMS
 #define HARMONY_CORE_ENUMS
 
-namespace harmony_core
-{
+namespace harmony_core {
     // Здесь хранятся вспомогательные конструкции для класса Note, Key и Clef.
 
     //--------- Части ноты -----------
     /*!
      * \brief Представляет собой основание ноты.
      */
-    enum class Base
-    {
+    enum class Base {
         /*!
          * \brief Представляет собой ноту \code До \endcode.
          */
@@ -44,8 +42,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой знак альтерации.
      */
-    enum class Accidental
-    {
+    enum class Accidental {
         /*!
          * \brief Представляет собой неопределённый знак альтерации.
          */
@@ -75,8 +72,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой октаву.
      */
-    enum class Octave
-    {
+    enum class Octave {
         /*!
          * \brief Представляет собой субконтроктаву.
          */
@@ -118,8 +114,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой длительность ноты.
      */
-    enum class Duration
-    {
+    enum class Duration {
         /*!
          * \brief Представляет собой двойную длительность целой ноты.
          */
@@ -162,8 +157,7 @@ namespace harmony_core
      * Каждый лад имеет свое соотношение тонов и полутонов,
      * не меняющееся по мере продвижения тональности по квинтовому кругу.
      */
-    enum class Mode
-    {
+    enum class Mode {
         /*!
          * \brief Представляет эолийский (минорный) лад.
          * Лад ноты ля.
@@ -211,8 +205,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой соглашение об именовании спецификации (вида) тональности.
      */
-    enum class Specie
-    {
+    enum class Specie {
         /*!
          * Представляет натуральный вид.
          */
@@ -239,8 +232,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой соглашение об именовании видов интервала.
      */
-    enum class Quality
-    {
+    enum class Quality {
         /*!
          * Представляет чистый вид.
          */
@@ -280,8 +272,7 @@ namespace harmony_core
     /*!
      * \brief Представляет собой соглашение об именовании видов ключей.
      */
-    enum class Clef_name
-    {
+    enum class Clef_name {
         /*!
          * \brief Представляет Отсутствие ключа.
          */
@@ -348,8 +339,7 @@ namespace harmony_core
      * представляет соглашение имен
      * для типов ключей
      */
-    enum class Clef_type
-    {
+    enum class Clef_type {
         /*!
          * Тип ключа не определен
          */
@@ -373,8 +363,7 @@ namespace harmony_core
     /*!
      * Представляет соглашение имен функции нот, интервалов и аккордов.
      */
-    enum class Function
-    {
+    enum class Function {
         /*!
         Представляет неопределенную гармонию
         */

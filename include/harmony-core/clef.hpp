@@ -6,28 +6,24 @@
 #include <stdexcept>
 #include <string>
 
-namespace harmony_core
-{
+namespace harmony_core {
     /*! \brief Данный класс представляет музыкальный ключ.
      * Ключ необходим для определения линейки в нотном стане от ноты и определения ноты от линейки.
      * Также с помощью ключа можно изменить ноту, указав начальный и конечный ключ (ключевая альтерация).
      */
-    class Clef final
-    {
+    class Clef final {
     public:
         /*!
          * \brief Создает скрипичный ключ
          */
-        Clef() noexcept
-        {
+        Clef() noexcept {
             this->data = 0b00110011;
         }
 
         /*!
          * \brief Создает ключ по типу и имени ключа
          */
-        Clef(Clef_name n, Clef_type t) noexcept
-        {
+        Clef(Clef_name n, Clef_type t) noexcept {
             this->data &= ~0b00111111;
             this->data |= (static_cast<uint8_t>(t) << 4);
             this->data |= (static_cast<uint8_t>(n));
@@ -36,8 +32,7 @@ namespace harmony_core
         /*!
          * \brief Создает ключ по информации о ключе
          */
-        Clef(uint8_t data) noexcept
-        {
+        Clef(uint8_t data) noexcept {
             this->data = data;
         }
 
@@ -46,24 +41,21 @@ namespace harmony_core
         /*!
          * \brief Задает всю информацию
          */
-        void set_data(uint_fast8_t d) noexcept
-        {
+        void set_data(uint_fast8_t d) noexcept {
             this->data = d;
         }
 
         /*!
          * \brief Возвращает информацию о ключе
          */
-        [[nodiscard]] uint8_t get_data() noexcept
-        {
+        [[nodiscard]] uint8_t get_data() noexcept {
             return this->data;
         }
 
         /*!
          * \brief Задает тип ключа
          */
-        void set_type(Clef_type t) noexcept
-        {
+        void set_type(Clef_type t) noexcept {
             this->data &= ~0b00110000;
             this->data |= (static_cast<uint8_t>(t) << 4);
         }
@@ -71,16 +63,14 @@ namespace harmony_core
         /*!
          * \brief Возвращает тип ключа
          */
-        [[nodiscard]] Clef_type get_type() noexcept
-        {
+        [[nodiscard]] Clef_type get_type() noexcept {
             return static_cast<Clef_type>((this->data & 0b00110000) >> 4);
         }
 
         /*!
          * \brief Задает имя ключа
          */
-        void set_name(Clef_name n) noexcept
-        {
+        void set_name(Clef_name n) noexcept {
             this->data &= ~0b00001111;
             this->data |= static_cast<uint8_t>(n);
         }
@@ -88,8 +78,7 @@ namespace harmony_core
         /*!
          * \brief Возвращает имя ключа в формате Clef_name.
          */
-        [[nodiscard]] Clef_name get_clef_name() noexcept
-        {
+        [[nodiscard]] Clef_name get_clef_name() noexcept {
             return static_cast<Clef_name>(this->data & 0b00001111);
         }
 

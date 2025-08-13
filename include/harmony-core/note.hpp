@@ -5,8 +5,7 @@
 #include <harmony-core/enums.hpp>
 #include <string>
 
-namespace harmony_core
-{
+namespace harmony_core {
     /*! \brief Представляет собой ноту.
      *
      * Данный класс позволяет как получить информацию о ноте, так и изменить её:
@@ -19,8 +18,7 @@ namespace harmony_core
      * Также данный класс позволяет получить
      * используемый знак альтерации ноты и её полное название.
      */
-    class Note final
-    {
+    class Note final {
     public:
         // constructors & destructor
 
@@ -193,8 +191,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая и правая ноты равны, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator==(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator==(const Note &lhs, const Note &rhs) {
             return lhs.data == rhs.data;
         }
 
@@ -204,8 +201,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая и правая ноты неравны, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator!=(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator!=(const Note &lhs, const Note &rhs) {
             return lhs.data != rhs.data;
         }
 
@@ -217,8 +213,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая нота ниже правой, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator<(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator<(const Note &lhs, const Note &rhs) {
             return lhs.get_height() < rhs.get_height();
         }
 
@@ -228,8 +223,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая нота ниже или равна правой, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator<=(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator<=(const Note &lhs, const Note &rhs) {
             return lhs.get_height() <= rhs.get_height();
         }
 
@@ -239,8 +233,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая нота выше правой, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator>(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator>(const Note &lhs, const Note &rhs) {
             return lhs.get_height() > rhs.get_height();
         }
 
@@ -250,8 +243,7 @@ namespace harmony_core
          * \param rhs правая нота.
          * \return Если левая нота выше или равна правой, то \code true \endcode, иначе \code false \endcode.
          */
-        friend bool operator>=(const Note &lhs, const Note &rhs)
-        {
+        friend bool operator>=(const Note &lhs, const Note &rhs) {
             return lhs.get_height() >= rhs.get_height();
         }
 
@@ -262,8 +254,7 @@ namespace harmony_core
          * \param note другая нота.
          * \return Эту ноту.
          */
-        Note &operator=(const Note &note)
-        {
+        Note &operator=(const Note &note) {
             if (this == &note)
                 return *this;
             data = note.data;
