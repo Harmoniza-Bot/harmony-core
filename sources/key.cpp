@@ -209,12 +209,12 @@ int8_t Key::search_tone(const Note &note) noexcept {
     return -1;
 }
 
-Interval get_interval(uint8_t first, uint8_t second) noexcept {
+Interval Key::get_interval(uint8_t first, uint8_t second) noexcept {
     Interval i(this->get_tone(first), this->get_tone(second));
     return i;
 }
 
-std::vector<Note> search_interval(const Interval &interval) const noexcept {
+std::vector<Note> Key::search_interval(const Interval &interval) noexcept {
     std::vector<Note> interval_base_list;
 
     std::vector<Note> scale = this->get_scale();
@@ -364,7 +364,7 @@ int8_t Key::get_step() const noexcept {
     }
 }
 
-Note Key::Note get_resolution(const Note &note, bool dir) const noexcept {
+Note Key::get_resolution(const Note &note, bool dir) const noexcept {
     // гамма тональности
     std::vector<Note> scale;
 
