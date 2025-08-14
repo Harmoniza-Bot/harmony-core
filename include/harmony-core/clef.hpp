@@ -16,71 +16,49 @@ namespace harmony_core {
         /*!
          * \brief Создает скрипичный ключ
          */
-        Clef() noexcept {
-            this->data = 0b00110011;
-        }
+        Clef() noexcept;
 
         /*!
          * \brief Создает ключ по типу и имени ключа
          */
-        Clef(Clef_name n, Clef_type t) noexcept {
-            this->data &= ~0b00111111;
-            this->data |= (static_cast<uint8_t>(t) << 4);
-            this->data |= (static_cast<uint8_t>(n));
-        }
+        Clef(Clef_name n, Clef_type t) noexcept;
 
         /*!
          * \brief Создает ключ по информации о ключе
          */
-        Clef(uint8_t data) noexcept {
-            this->data = data;
-        }
+        Clef(uint8_t data) noexcept;
 
         // getters & setters
 
         /*!
          * \brief Задает всю информацию
          */
-        void set_data(uint_fast8_t d) noexcept {
-            this->data = d;
-        }
+        void set_data(uint_fast8_t d) noexcept;
 
         /*!
          * \brief Возвращает информацию о ключе
          */
-        [[nodiscard]] uint8_t get_data() noexcept {
-            return this->data;
-        }
+        [[nodiscard]] uint8_t get_data() noexcept;
 
         /*!
          * \brief Задает тип ключа
          */
-        void set_type(Clef_type t) noexcept {
-            this->data &= ~0b00110000;
-            this->data |= (static_cast<uint8_t>(t) << 4);
-        }
+        void set_type(Clef_type t) noexcept;
 
         /*!
          * \brief Возвращает тип ключа
          */
-        [[nodiscard]] Clef_type get_type() noexcept {
-            return static_cast<Clef_type>((this->data & 0b00110000) >> 4);
-        }
+        [[nodiscard]] Clef_type get_type() noexcept;
 
         /*!
          * \brief Задает имя ключа
          */
-        void set_name(Clef_name n) noexcept {
-            this->data &= ~0b00001111;
-            this->data |= static_cast<uint8_t>(n);
-        }
+        void set_name(Clef_name n) noexcept;
 
         /*!
          * \brief Возвращает имя ключа в формате Clef_name.
          */
-        [[nodiscard]] Clef_name get_clef_name() noexcept {
-            return static_cast<Clef_name>(this->data & 0b00001111);
-        }
+        [[nodiscard]] Clef_name get_clef_name() noexcept;
 
         /*!
          * \brief Данная функция возвращает расположение ноты на нотном стане от 0-й линии снизу.
@@ -93,7 +71,7 @@ namespace harmony_core {
          *
          * положительное число больше пяти - колличество основных линеек (5-ти) + добавочные линейки вверх
          */
-        [[nodiscard]] float get_place(Note) const noexcept;
+        [[nodiscard]] float get_place(const Note note&) const noexcept;
 
         /*!
          * \brief Данная функция возвращает ноту, насположенную на указанной линейке текущего ключа.
