@@ -18,14 +18,14 @@ namespace harmony_core {
          * \brief Создает \code IONIAN NATURAL \endcode тональность на основе \code Note \endcode.
          * \param [in] note тоника тон-ти.
          */
-        explicit Key(Note note) noexcept;
+        explicit Key(const Note &note) noexcept;
 
         /*!
          * \brief Создает тональность \code NATURAL \endcode на основе \code Note \endcode и \code Mode \endcode.
          * \param [in] note тоника тон-ти.
          * \param [in] mode лад тон-ти.
          */
-        explicit Key(Note note, Mode mode) noexcept;
+        explicit Key(const Note &note, Mode mode) noexcept;
 
         /*!
          * \brief Создает тональность на основе \code Note \endcode, \code Mode \endcode и \code Specie \endcode.
@@ -33,7 +33,7 @@ namespace harmony_core {
          * \param [in] mode лад тон-ти.
          * \param [in] specie вид тон-ти.
          */
-        explicit Key(Note note, Mode mode, Specie specie) noexcept;
+        explicit Key(const Note &note, Mode mode, Specie specie) noexcept;
 
         /*!
          * \brief Создает тональность на основе \code Base \endcode, \code Accidental \endcode, \code Mode \endcode и
@@ -78,7 +78,7 @@ namespace harmony_core {
          * \brief Задает тонику тон-ти.
          * \param [in] note новая тоника тональности
          */
-        void set_main(Note note) noexcept;
+        void set_main(const Note &note) noexcept;
 
         /*!
          * \brief Возвращает тонику тон-ти.
@@ -129,7 +129,7 @@ namespace harmony_core {
          * \param [in] note нота для поиска
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
-        [[nodiscard]] int8_t search_tone(Note note) noexcept;
+        [[nodiscard]] int8_t search_tone(const Note &note) noexcept;
 
         // interval functions
         /*!
@@ -146,7 +146,7 @@ namespace harmony_core {
          * \param [in] Interval интервал для поиска.
          * \return std::vector Вектор из первых нот введенного интервала для данной тональности.
          */
-        [[nodiscard]] std::vector<Note> search_interval(Interval) noexcept;
+        [[nodiscard]] std::vector<Note> search_interval(const Interval &interval) noexcept;
 
         // accidental getter
 
@@ -158,15 +158,19 @@ namespace harmony_core {
 
         /*!
         \brief Разрешает ноту согласно правилам разрешения.
-        Нота может разрешиться двумя способами (вверх и вниз). bool переменная управляет выбором разрешения
-        Это индекс разрешения: 1 - вверх, 0 - вниз
+        * Нота может разрешиться двумя способами (вверх и вниз).
+        * bool переменная управляет выбором разрешения: 1 - вверх, 0 - вниз
+        * Если нота устойчивая - возвращается эта же нота.
+        * \return Нота, в которую разрешается исходная нота.
         */
-        Note get_resolution(const Note, bool) const noexcept;
+        Note get_resolution(const Note &note, bool) const noexcept;
 
         /*!
         \brief Разрешает интервал в тональности
+        * \param [in] Interval интервал для разрешения.
+        * Если интервал устойчивый - возвращается исходный интервал.
         */
-        Interval get_resolution(const Interval) const noexcept;
+        Interval get_resolution(const Interval &interval) const noexcept;
 
 
         /*!

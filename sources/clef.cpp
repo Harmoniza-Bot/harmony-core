@@ -6,7 +6,7 @@
 
 using namespace harmony_core;
 
-float Clef::get_place(Note note) const noexcept {
+float Clef::get_place(const Note &note) const noexcept {
 }
 
 Note Clef::get_note(float line) const noexcept {

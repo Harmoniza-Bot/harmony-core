@@ -28,7 +28,7 @@ Interval::Interval(uint_fast8_t data) noexcept {
     this->data = data;
 }
 
-Interval::Interval(Note n1, Note n2) noexcept {
+Interval::Interval(const Note &n1, const Note n2) noexcept {
     if (n1.get_height() <= n2.get_height()) {
         this->set_direction(1);
     } else {
