@@ -469,4 +469,5 @@ std::vector<Note> Key::get_scale() noexcept {
             scale[x].set_octave(Octave::_2_LINE);
         }
     }
+    return scale;
 }

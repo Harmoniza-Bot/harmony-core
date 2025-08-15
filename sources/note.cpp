@@ -5,7 +5,7 @@
 using namespace harmony_core;
 
 Note::Note() noexcept :
-    Note(Base::A, Octave::SUB_CONTRA, Accidental::UNDEFINED, Accidental::UNDEFINED, Duration::WHOLE) {
+    Note(Base::A, Octave::SUB_CONTRA, Accidental::NATURAL, Accidental::UNDEFINED, Duration::WHOLE) {
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
@@ -64,8 +64,10 @@ Accidental Note::get_random_accidental() const noexcept {
 }
 
 Accidental Note::get_accidental() const noexcept {
-    const Accidental random_accidental = get_random_accidental();
-    return random_accidental != Accidental::UNDEFINED ? random_accidental : get_key_accidental();
+    if(this->get_random_accidental() == Accidental::UNDEFINED){
+        return this->get_key_accidental();
+    }
+    return this->get_random_accidental();
 }
 
 
@@ -125,7 +127,8 @@ uint_fast8_t Note::get_height() const noexcept {
 }
 
 std::string Note::get_name() const noexcept {
-    std::string name{(char) 64 + static_cast<char>(get_base())};
+    std::string name{static_cast<char>(64 + static_cast<int>(get_base()))};
+
     if (name == "B") {
         name = "H";
     }
@@ -166,7 +169,9 @@ std::string Note::get_name() const noexcept {
 }
 
 void Note::enharmony_сhange(bool dir) noexcept {
-    Accidental first_a = get_random_accidental();
+    Accidental first_a = this->get_random_accidental();
+    Base first_b = this->get_base();
+    Octave first_o = this->get_octave();
     uint8_t height = static_cast<uint8_t>(this->get_height());
     if (dir) {
         uint8_t base = static_cast<uint8_t>(this->get_base());
@@ -176,6 +181,8 @@ void Note::enharmony_сhange(bool dir) noexcept {
             if (this->get_octave() == Octave::_5_LINE) {
                 std::cerr << "(en_ch) Эта нота слишком высокая" << std::endl;
                 this->set_random_accidental(first_a);
+                this->set_base(first_b);
+                this->set_octave(first_o);
                 return;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
@@ -183,21 +190,20 @@ void Note::enharmony_сhange(bool dir) noexcept {
         this->set_base(static_cast<Base>(base));
 
         this->set_random_accidental(Accidental::SHARP);
-        if (height != static_cast<int>(this->get_height())) {
+        if (height != static_cast<uint8_t>(this->get_height())) {
             this->set_random_accidental(Accidental::NATURAL);
-            return;
         }
-        if (height != static_cast<int>(this->get_height())) {
+        if (height != static_cast<uint8_t>(this->get_height())) {
             this->set_random_accidental(Accidental::FLAT);
-            return;
         }
-        if (height != static_cast<int>(this->get_height())) {
+        if (height != static_cast<uint8_t>(this->get_height())) {
             this->set_random_accidental(Accidental::DOUBLE_FLAT);
-            return;
         }
-        if (height != static_cast<int>(this->get_height())) {
+        if (height != static_cast<uint8_t>(this->get_height())) {
             this->set_random_accidental(first_a);
-            std::cerr << "Не получилось сделать замену, тк целевая нота слишком далеко от исходной" << std::endl;
+            this->set_base(first_b);
+            this->set_octave(first_o);
+            std::cerr << "(en_ch, 1 iteration) целевая нота слишком далеко от исходной" << std::endl;
             return;
         }
     } else {
@@ -217,19 +223,18 @@ void Note::enharmony_сhange(bool dir) noexcept {
         this->set_random_accidental(Accidental::FLAT);
         if (height != static_cast<int>(this->get_height())) {
             this->set_random_accidental(Accidental::NATURAL);
-            return;
         }
         if (height != static_cast<int>(this->get_height())) {
             this->set_random_accidental(Accidental::SHARP);
-            return;
         }
         if (height != static_cast<int>(this->get_height())) {
             this->set_random_accidental(Accidental::DOUBLE_SHARP);
-            return;
         }
         if (height != static_cast<int>(this->get_height())) {
             this->set_random_accidental(first_a);
-            std::cerr << "Не получилось сделать замену, тк целевая нота слишком далеко от исходной" << std::endl;
+            this->set_base(first_b);
+            this->set_octave(first_o);
+            std::cerr << "(en_ch, 2 iteration)целевая нота слишком далеко от исходной" << std::endl;
             return;
         }
     }

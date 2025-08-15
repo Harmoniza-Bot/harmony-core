@@ -132,7 +132,7 @@ namespace harmony_core {
 
         /*!
          * \brief Возвращает общий знак альтерации этой ноты.
-         * \return Сумма двух видов знаков альтерации (максимальный знак - двойной).
+         * \return Знак тональности, если случайный знак не определен и случайный знак, если определен.
          * Возвращает реально используемый знак альтерации этой ноты.
          */
         [[nodiscard]] Accidental get_accidental() const noexcept;
@@ -140,7 +140,7 @@ namespace harmony_core {
         // duration getter & setter
 
         /*!
-         * \brief Задаёт длительность этой ноты равным \code duration \endcode.
+         * \brief Задаёт длительность этой ноты равной \code duration \endcode.
          * \param [in] duration новая длительность этой ноты.
          */
         void set_duration(Duration duration) noexcept;
@@ -169,10 +169,9 @@ namespace harmony_core {
         // name getter
 
         /*!
-         * \brief Возвращает полное название этой ноты по общепринятому стандаргу
-         * \return Полное название этой ноты согласно \code convention \endcode.
+         * \brief Возвращает полное название этой ноты по общепринятому стандарту.
+         * \return Полное название этой ноты.
          */
-
         std::string get_name() const noexcept;
 
         //---------------
@@ -180,6 +179,7 @@ namespace harmony_core {
         /*!
          * \brief Делает энгармоническую замену в указанном направлении.
          * \param [in] dir Направление замены.
+         * 0 - энгармонизм вниз, 1 - энгармонизм наверх
          */
         void enharmony_сhange(bool dir) noexcept;
 
