@@ -156,16 +156,27 @@ Specie Key::get_specie() noexcept {
 
 //--------------------------------
 
-Note Key::get_tone(uint8_t index) noexcept {
-    Note note;
+Note Key::get_tone(uint8_t index) const noexcept {
+    Note note(Base::A, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
+
     // ищем первый тон натуральной модификации тон-ти.
-    for (int x = 0; x != static_cast<uint8_t>(get_mode()); ++x) {
+    for (int x = 0; x < 7; ++x) {
+        Key k = *this;
+        Note key_main_tone = k.get_main();
+        if (note.get_base() == key_main_tone.get_base()) {
+            break;
+        }
         ++note;
         if (note.get_accidental() != Accidental::NATURAL) {
             ++note;
         }
         if (note.get_octave() != Octave::_1_LINE) {
             note.set_octave(Octave::_1_LINE);
+        }
+
+        if (x == 6) {
+            std::cerr << "From Key::get_tone(): something broken..." << std::endl;
+            return note;
         }
     }
 
@@ -219,24 +230,28 @@ std::vector<Note> Key::search_interval(const Interval &interval) noexcept {
 
     std::vector<Note> scale = this->get_scale();
     for (int x = 0; x < 14; ++x) {
-        scale += scale[x];
-        scale[7 + x].set_octave(static_cast<Octave>(static_cast<int>(scale[x].get_octave() + 1)));
+        scale.push_back(scale[x]);
+        scale[7 + x].set_octave(static_cast<Octave>(static_cast<int>(scale[x].get_octave()) + 1));
     }
 
     if (interval.get_direction()) {
         for (int x = 0; x < 7; ++x) {
             Interval i = this->get_interval(x, x + interval.get_distance());
             if (interval == i) {
-                interval_base_list += i;
+                interval_base_list.push_back(scale[x]);
             }
         }
     } else {
         for (int x = 21; x > 14; --x) {
             Interval i = this->get_interval(x, x - interval.get_distance());
             if (interval == i) {
-                interval_base_list += i;
+                interval_base_list.push_back(scale[21 - x]);
             }
         }
+    }
+
+    for (Note n: scale) {
+        n.set_octave(Octave::_1_LINE);
     }
 
     // Сейчас она работает только для натуральных интервалов.

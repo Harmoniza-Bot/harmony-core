@@ -37,7 +37,7 @@ namespace harmony_core {
          * \param [in] Note первая нота.
          * \param [in] Note вторая нота.
          */
-        explicit Interval(const Note n1 &, const Note &n2) noexcept;
+        explicit Interval(Note n1, Note n2) noexcept;
 
         ~Interval() noexcept = default;
 

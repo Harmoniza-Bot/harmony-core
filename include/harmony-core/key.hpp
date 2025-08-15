@@ -3,8 +3,9 @@
 
 #include <cstdint>
 #include <harmony-core/enums.hpp>
-#include <harmony-core/note.hpp>
 #include <harmony-core/interval.hpp>
+#include <harmony-core/note.hpp>
+#include <iostream>
 #include <vector>
 
 namespace harmony_core {
@@ -123,7 +124,7 @@ namespace harmony_core {
          * \brief Возвращает ступень тон-ти по индексу.
          * \return Нота, расположенная на указанном индексе
          */
-        [[nodiscard]] Note get_tone(uint8_t index) noexcept;
+        [[nodiscard]] Note get_tone(uint8_t index) const noexcept;
 
         /*!
          * \brief Ищет указанную ноту в текущей тон-ти.
@@ -155,7 +156,7 @@ namespace harmony_core {
          * \brief Вычисляет знаки тональности.
          * \return Вектор знаков тон-ти или пустой вектор если знаков нет.
          */
-        std::vector<Note> get_accidentals() noexcept;
+        std::vector<Note> get_accidentals() const noexcept;
 
         /*!
         \brief Разрешает ноту согласно правилам разрешения.
@@ -164,7 +165,7 @@ namespace harmony_core {
         * Если нота устойчивая - возвращается эта же нота.
         * \return Нота, в которую разрешается исходная нота.
         */
-        Note get_resolution(const Note &note, bool) const noexcept;
+        Note get_resolution(Note note, bool) const noexcept;
 
         /*!
         \brief Разрешает интервал в тональности
