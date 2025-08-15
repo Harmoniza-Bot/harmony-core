@@ -18,14 +18,14 @@ namespace harmony_core {
          * \brief Создает \code IONIAN NATURAL \endcode тональность на основе \code Note \endcode.
          * \param [in] note тоника тон-ти.
          */
-        explicit Key(const Note &note) noexcept;
+        explicit Key(Note note) noexcept;
 
         /*!
          * \brief Создает тональность \code NATURAL \endcode на основе \code Note \endcode и \code Mode \endcode.
          * \param [in] note тоника тон-ти.
          * \param [in] mode лад тон-ти.
          */
-        explicit Key(const Note &note, Mode mode) noexcept;
+        explicit Key(Note note, Mode mode) noexcept;
 
         /*!
          * \brief Создает тональность на основе \code Note \endcode, \code Mode \endcode и \code Specie \endcode.
@@ -33,7 +33,7 @@ namespace harmony_core {
          * \param [in] mode лад тон-ти.
          * \param [in] specie вид тон-ти.
          */
-        explicit Key(const Note &note, Mode mode, Specie specie) noexcept;
+        explicit Key(Note note, Mode mode, Specie specie) noexcept;
 
         /*!
          * \brief Создает тональность на основе \code Base \endcode, \code Accidental \endcode, \code Mode \endcode и
@@ -129,7 +129,7 @@ namespace harmony_core {
          * \param [in] note нота для поиска
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
-        [[nodiscard]] int8_t search_tone(const Note &note) noexcept;
+        [[nodiscard]] int8_t search_tone(Note note) noexcept;
 
         // interval functions
         /*!
@@ -170,7 +170,7 @@ namespace harmony_core {
         * \param [in] Interval интервал для разрешения.
         * Если интервал устойчивый - возвращается исходный интервал.
         */
-        Interval get_resolution(const Interval &interval) const noexcept;
+        Interval get_resolution(Interval interval) const noexcept;
 
 
         /*!

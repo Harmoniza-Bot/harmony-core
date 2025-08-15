@@ -7,17 +7,17 @@ using namespace harmony_core;
 Key::Key() noexcept : data(0b0000000000001001) {
 }
 
-Key::Key(const Note &note) noexcept : data(0b0000000000001001) {
+Key::Key(Note note) noexcept : data(0b0000000000001001) {
     this->set_main(note);
 }
 
-Key::Key(const Note &note, Mode mode) noexcept : data(0b0000000000001001) {
+Key::Key(Note note, Mode mode) noexcept : data(0b0000000000001001) {
     this->set_main(note);
     set_mode(mode);
 }
 
 
-Key::Key(const Note &note, Mode mode, Specie specie) noexcept : data(0b0000000000001001) {
+Key::Key(Note note, Mode mode, Specie specie) noexcept : data(0b0000000000001001) {
     this->set_main(note);
     this->set_mode(mode);
     this->set_specie(specie);
@@ -50,7 +50,7 @@ uint_fast16_t Key::get_data() const noexcept {
     return this->data;
 }
 
-void Key::set_main(const Note &note) noexcept {
+void Key::set_main(Note note) noexcept {
     Note note1;
     uint8_t flats = 0;
     uint8_t sharps = 0;
@@ -198,7 +198,7 @@ Note Key::get_tone(uint8_t index) noexcept {
     return note;
 }
 
-int8_t Key::search_tone(const Note &note) noexcept {
+int8_t Key::search_tone(Note note) noexcept {
     note.set_octave(Octave::_1_LINE);
     for (int x = 0; x < 7; ++x) {
         Note answer = this->get_tone(x);
@@ -364,7 +364,7 @@ int8_t Key::get_step() const noexcept {
     }
 }
 
-Note Key::get_resolution(const Note &note, bool dir) const noexcept {
+Note Key::get_resolution(Note note, bool dir) const noexcept {
     // гамма тональности
     std::vector<Note> scale;
 
