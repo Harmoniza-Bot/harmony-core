@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <harmony-core/enums.hpp>
 #include <harmony-core/note.hpp>
+#include <harmony-core/interval.hpp>
 #include <vector>
 
 namespace harmony_core {
@@ -78,7 +79,7 @@ namespace harmony_core {
          * \brief Задает тонику тон-ти.
          * \param [in] note новая тоника тональности
          */
-        void set_main(const Note &note) noexcept;
+        void set_main(Note note) noexcept;
 
         /*!
          * \brief Возвращает тонику тон-ти.
