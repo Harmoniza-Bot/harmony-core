@@ -1,6 +1,8 @@
 #ifndef HC2IMG_LIST
 #define HC2IMG_LIST
 
+#include "hc2img.hpp"
+
 namespace hc2img{
     /*!
      * \brief Представляет нотный лист.

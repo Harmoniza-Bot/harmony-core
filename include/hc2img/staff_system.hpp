@@ -1,6 +1,8 @@
 #ifndef HC2IMG_STAFF_SYSTEM
 #define HC2IMG_STAFF_SYSTEM
 
+#include "hc2img.hpp"
+
 namespace hc2img{
     /*!
      * Может объединить несколько нотных станов в одну систему.
