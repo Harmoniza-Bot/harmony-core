@@ -4,8 +4,7 @@
 #include <string>
 using namespace harmony_core;
 
-Note::Note() noexcept :
-    Note(Base::A, Octave::SUB_CONTRA, Accidental::NATURAL, Accidental::UNDEFINED, Duration::WHOLE) {
+Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::NATURAL, Accidental::UNDEFINED, Duration::WHOLE) {
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
@@ -64,7 +63,7 @@ Accidental Note::get_random_accidental() const noexcept {
 }
 
 Accidental Note::get_accidental() const noexcept {
-    if(this->get_random_accidental() == Accidental::UNDEFINED){
+    if (this->get_random_accidental() == Accidental::UNDEFINED) {
         return this->get_key_accidental();
     }
     return this->get_random_accidental();

@@ -48,55 +48,47 @@ float Clef::get_place(Note note) const noexcept {
     float line;
     Note clef_base;
 
-    switch(this->get_type()){
-        case Clef_type::G_CLEF : {
+    switch (this->get_type()) {
+        case Clef_type::G_CLEF: {
             clef_base.set_base(Base::G);
             clef_base.set_octave(Octave::_1_LINE);
 
-            switch(this->get_clef_name()){
-                case Clef_name::FRENCH_VIOLIN : {
+            switch (this->get_clef_name()) {
+                case Clef_name::FRENCH_VIOLIN: {
                     //////дописать......
                 }
-                case Clef_name::TREBLE : {
+                case Clef_name::TREBLE: {
                     //////
                 }
             }
         }
-        case Clef_type::C_CLEF : {
+        case Clef_type::C_CLEF: {
             clef_base.set_base(Base::C);
             clef_base.set_octave(Octave::_1_LINE);
 
-            switch (this->get_clef_name()){
-                case Clef_name::SOPRANO : {
-
+            switch (this->get_clef_name()) {
+                case Clef_name::SOPRANO: {
                 }
-                case Clef_name::MEZZO_SOPRANO : {
-
+                case Clef_name::MEZZO_SOPRANO: {
                 }
-                case Clef_name::ALTO : {
-
+                case Clef_name::ALTO: {
                 }
-                case Clef_name::TENOR : {
-
+                case Clef_name::TENOR: {
                 }
-                case Clef_name::BARITONE : {
-
+                case Clef_name::BARITONE: {
                 }
             }
         }
-        case Clef_type::F_CLEF : {
+        case Clef_type::F_CLEF: {
             clef_base.set_base(Base::F);
             clef_base.set_octave(Octave::SMALL);
 
-            switch (this->get_clef_name()){
-                case Clef_name::BARITONE : {
-
+            switch (this->get_clef_name()) {
+                case Clef_name::BARITONE: {
                 }
-                case Clef_name::BASS : {
-
+                case Clef_name::BASS: {
                 }
-                case Clef_name::SUBBASS : {
-
+                case Clef_name::SUBBASS: {
                 }
             }
         }

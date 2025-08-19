@@ -1,12 +1,12 @@
 #ifndef HC2IMG_BAR
 #define HC2IMG_BAR
 
+#include <cstdint>
 #include <vector>
-#include <pair>
 
-#include "hc2img.hpp"
+#include <harmony-core/harmony-core.hpp>
 
-namespace hc2img{
+namespace hc2img {
     /*!
      * \brief Предствляет Нотный такт.
      * Является базовым кирпичем интерфейса.
@@ -18,22 +18,27 @@ namespace hc2img{
      * Возможность добавления ноты определяется размером такта, размером ноты и суммой размеров нот в такте.
      * (Для функционирования интерфейса необходимо подключить библиотеку CImg.h)
      */
-    struct Bar final{
+    struct Bar final {
 
     private:
         /*!
-         * Хранит информацию о параметрах такта
-         * - 0-3 биты хранят числитель размера
-         * - 4-7 биты хранят знаменатель размера
-         * - 8-15 биты хранят ключ
+         * \brief Хранит информацию о параметрах такта
+         * Бит \code 0-3 \endcode биты хранят числитель размера
+         * Бит \code 4-7 \endcode биты хранят знаменатель размера
+         * Бит \code 8-15 \endcode биты хранят ключ
          */
         uint_fast16_t bar_param;
 
         /*!
+         * \brief Хранит ссылку на тональность такта.
+         */
+        harmony_core::Key *bar_key = nullptr;
+
+        /*!
          * хранит информацию о нотах в такте
          */
-        std::vector<std::pair<uint8_t, harmony_core::Note*>> bar_notes;
+        std::vector<std::pair<uint8_t, harmony_core::Note *>> bar_notes;
     };
-}
+} // namespace hc2img
 
 #endif // HC2IMG_BAR

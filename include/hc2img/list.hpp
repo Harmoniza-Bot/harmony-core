@@ -1,17 +1,36 @@
 #ifndef HC2IMG_LIST
 #define HC2IMG_LIST
 
-#include "hc2img.hpp"
+#include <cstdint>
 
-namespace hc2img{
+#include <harmony-core/harmony-core.hpp>
+#include "staff.hpp"
+#include "staff_system.hpp"
+
+namespace hc2img {
     /*!
      * \brief Представляет нотный лист.
      * В него можно добавить один нотный стан (hc2img::Staff) или систему нотных станов (hc2img::Staff_system).
      * Также можно сохранить лист как изображение.
      * (Для функционирования интерфейса необходимо подключить библиотеку CImg.h)
      */
-    struct List final{
+    struct List final {
+    private:
+        /*!
+         * \brief Хранит информацию о патаметрах листа.
+         * Бит \code 0 \endcode хранит информацию об ориентации нотоносца: 0 - линейный, 1 - переносной.
+         * Биты \code 1-3 \endcode хранят множитель высоты такта от 1 до 8 (при 1 высота равна 20 пикселям).
+         * Ширина определяется колличеством нот в такте. Расстояние между нот постоянное.
+         *
+         */
+        uint8_t list_param;
+
+        /*!
+         * \brief Хранит ссылку на нотный стан или на систему нотных станов.
+         */
+        Staff *staff = nullptr;
+        Staff_system *staff_system = nullptr;
     };
-}
+} // namespace hc2img
 
 #endif // HC2IMG_LIST
