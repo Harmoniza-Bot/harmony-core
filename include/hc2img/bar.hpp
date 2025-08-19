@@ -1,6 +1,9 @@
 #ifndef HC2IMG_BAR
 #define HC2IMG_BAR
 
+#include <vector>
+#include <pair>
+
 #include "hc2img.hpp"
 
 namespace hc2img{
@@ -16,6 +19,7 @@ namespace hc2img{
      * (Для функционирования интерфейса необходимо подключить библиотеку CImg.h)
      */
     struct Bar final{
+
     private:
         /*!
          * Хранит информацию о параметрах такта
@@ -25,7 +29,10 @@ namespace hc2img{
          */
         uint_fast16_t bar_param;
 
-        std::vector<
+        /*!
+         * хранит информацию о нотах в такте
+         */
+        std::vector<std::pair<uint8_t, harmony_core::Note*>> bar_notes;
     };
 }
 
