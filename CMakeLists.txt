@@ -9,3 +9,5 @@ project(harmony-core
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(sources)
+
+target_include_directories(harmony-core PUBLIC CImg)
