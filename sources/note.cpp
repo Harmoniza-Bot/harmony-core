@@ -8,7 +8,8 @@ Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::NATURAL, A
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
-           const Duration duration) noexcept : data(0) {
+           const Duration duration) noexcept :
+    data(0) {
     set_base(base);
     set_octave(octave);
     set_key_accidental(key_accidental);
