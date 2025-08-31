@@ -47,7 +47,7 @@ std::pair<uint8_t, uint8_t> get_note_dur_sum(std::vector<Note> v) {
 }
 
 void Bar::add(Note &note, uint8_t num) noexcept {
-    //Определяем размер ноты
+    // Определяем размер ноты
     std::pair<uint8_t, uint8_t> note_frac;
     if (note.get_duration() == Duration::DOUBLE) {
         note_frac.first = 2;
@@ -57,7 +57,7 @@ void Bar::add(Note &note, uint8_t num) noexcept {
         note_frac.second = std::exp2(static_cast<uint8_t>(note.get_duration()) - 1);
     }
 
-    //определяем размер такта и приводим его к размеру ноты
+    // определяем размер такта и приводим его к размеру ноты
     std::pair<uint8_t, uint8_t> t_s = get_abbr(this->get_time_signature());
     t_s.first *= note_frac.second;
     t_s.second *= note_frac.second;
@@ -65,25 +65,28 @@ void Bar::add(Note &note, uint8_t num) noexcept {
     double t_s_dec = t_s.first / t_s.second;
     double note_frac_dec = note_frac.first / note_frac.second;
 
-    //добавляем ноту вслепую
+    // добавляем ноту вслепую
     std::pair<uint8_t, Note *> add_n;
     add_n.first = num;
     add_n.second = &note;
     this->bar_notes.push_back(add_n);
 
-    //Получаем сумму всех нот
+    // Получаем сумму всех нот
     std::vector<Note> v_n;
     int b_s = this->bar_notes.size();
     for (int x = 0; x < b_s; ++x) {
         v_n.push_back(*(this->bar_notes[x].second));
     }
 
-    //Если сумма больше 1 - убираем добавленную ноту
+    // Если сумма больше 1 - убираем добавленную ноту
     if (get_note_dur_sum(v_n).first > get_note_dur_sum(v_n).second) {
         this->bar_notes.pop_back();
     }
 }
 
 void Bar::remove(uint8_t index) noexcept {
+    if (bar_notes.size() < index) {
+        return;
+    }
     std::erase(this->bar_notes, this->bar_notes[index]);
 }

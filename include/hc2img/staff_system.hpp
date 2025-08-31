@@ -13,7 +13,6 @@ namespace hc2img {
      * (Для функционирования интерфейса необходимо подключить библиотеку CImg.h)
      */
     struct Staff_system final {
-
     private:
         std::vector<Staff *> staffs;
     };

@@ -10,4 +10,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(sources)
 
-target_include_directories(harmony-core PUBLIC CImg)
+find_package(OpenGL REQUIRED)
+find_package(X11 REQUIRED)
+
+target_link_libraries(harmony-core PRIVATE ${X11_LIBRARIES})
+target_include_directories(harmony-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/CImg)

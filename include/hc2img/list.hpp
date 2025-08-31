@@ -18,6 +18,16 @@ namespace hc2img {
     struct List final {
     public:
         /*!
+         * \brief создает лист с одним тактом
+         */
+        List(hc2img::Bar *);
+
+        /*!
+         * \brief создает лисл с одним нотным станом
+         */
+        List(hc2img::Staff *);
+
+        /*!
          * \brief Сохраняет лист как изображение.
          */
         void save_list() noexcept;
