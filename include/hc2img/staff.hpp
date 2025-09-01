@@ -29,9 +29,19 @@ namespace hc2img {
 
     private:
         /*!
-         * \brief Хранит ссылки на такты
+         * \brief Хранит список изменений ключей
          */
-        std::vector<Bar *> staff_list;
+        std::vector<std::pair<harmony_core::Clef, uint8_t>> clef_list;
+
+        /*!
+         * \brief Хранит список изменений размеров
+         */
+        std::vector<std::pair<harmony_core::Time_signature, uint8_t>> t_s_list;
+
+        /*!
+         * \brief Хранит список нот
+         */
+        std::vector<harmony_core::Note> note_list;
     };
 } // namespace hc2img
 

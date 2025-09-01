@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include <harmony-core/harmony-core.hpp>
+
 #include "CImg.h"
 #include "staff.hpp"
 #include "staff_system.hpp"
@@ -18,19 +19,14 @@ namespace hc2img {
     struct List final {
     public:
         /*!
-         * \brief создает лист с одним тактом
+         * \brief Создает пустой нотный лист
          */
-        List(hc2img::Bar *);
-
-        /*!
-         * \brief создает лисл с одним нотным станом
-         */
-        List(hc2img::Staff *);
+        List();
 
         /*!
          * \brief Сохраняет лист как изображение.
          */
-        void save_list() noexcept;
+        void save() noexcept;
 
     private:
         /*!
@@ -43,10 +39,10 @@ namespace hc2img {
         uint8_t list_param;
 
         /*!
-         * \brief Хранит ссылку на нотный стан или на систему нотных станов.
+         * \brief Хранит вектор из нотных станов.
+         * Если станов больше одного, то они объединяются в систему.
          */
-        Staff *staff = nullptr;
-        Staff_system *staff_system = nullptr;
+        std::vector<Staff> staff_list;
     };
 } // namespace hc2img
 

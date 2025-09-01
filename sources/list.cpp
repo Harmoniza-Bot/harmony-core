@@ -1,28 +1,24 @@
-#include <hc2img/hc2img.hpp>
+#include <hc2img/list.hpp>
 
 using namespace hc2img;
 
-List::List(hc2img::Bar *b) {
-    // Пока не работает
+List::List() {
 }
 
-List::List(hc2img::Staff *s) {
-    staff = s;
-}
+void List::save() noexcept {
 
-void List::save_list() noexcept {
-    uint8_t str_index = 0;
-    if (staff != nullptr) {
-        str_index = staff->get_size() / 8 + 1;
-    } else if (staff_system != nullptr) {
-        // Не работает
-    } else {
-        return;
-    }
+    cimg_library::CImg<unsigned char> image(1000, 480, 1, 3, 255);
 
-    for (int x = 0; x < str_index; ++x) {
-    }
-    cimg_library::CImg<unsigned char> output(256, 256, 1, 3, 255);
+    // Define the color red
+    const unsigned char black[] = {0, 0, 0};
 
-    output.save("output.jpg");
+    // Draw a line from (100, 100) to (500, 300) with red color and full opacity
+    image.draw_line(33, 33, 970, 33, black, 1.0f);
+    image.draw_line(33, 43, 970, 43, black, 1.0f);
+    image.draw_line(33, 53, 970, 53, black, 1.0f);
+    image.draw_line(33, 63, 970, 63, black, 1.0f);
+    image.draw_line(33, 73, 970, 73, black, 1.0f);
+
+    image.save_bmp("img/img.bmp");
+    // image.display("winnn");
 }

@@ -6,5 +6,6 @@
 #include "interval.hpp"
 #include "key.hpp"
 #include "note.hpp"
+#include "time_signature.hpp"
 
 #endif // HARMONY_CORE_INCLUDES
