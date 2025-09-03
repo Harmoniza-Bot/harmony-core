@@ -27,30 +27,46 @@ namespace hc2img {
         void add(Note *n, bool is_pause) noexcept;
 
         /*!
-         * \brief Удаляет из такта ноту по указанному индексу
+         * \brief Удаляет из нотного стана ноту по индексу.
+         * \param [in] index Индекс удаляемой ноты
          */
-        void rm(uint16_t) noexcept;
+        void rm(uint16_t index) noexcept;
 
         /*!
-         * \brief Возвращает количество тактов
+         * \brief Возвращает количество целых долей в нотном стане.
          */
-        size_t get_size() const noexcept;
+        size_t get_whole() const noexcept;
+        
+        /*!
+         * \brief инкрементирует указатель на ноту стана.
+         */
+        Staff &operator++();
+        
+        /*!
+         * \brief декрементирует указатель на ноту стана.
+         */
+        Staff &operator--();
 
     private:
         /*!
-         * \brief Хранит список изменений ключей
+         * \brief Хранит Ключ нотного стана.
          */
-        std::vector<std::pair<harmony_core::Clef, uint8_t>> clef_list;
+         harmony_core::Clef * clef = nullptr;
 
         /*!
-         * \brief Хранит список изменений размеров
+         * \brief Хранит размер нотного стана.
          */
-        std::vector<std::pair<harmony_core::Time_signature, uint8_t>> t_s_list;
+         harmony_core::Time_signature * time_sig = nullptr;
 
         /*!
-         * \brief Хранит список нот
+         * \brief Хранит список пар "нота - флаг паузы".
          */
-        std::vector<harmony_core::Note> note_list;
+        std::vector<std::pair<harmony_core::Note, bool>> note_list;
+        
+        /*! 
+         * \brief Представляет индекс нотного указателя, на месте которого происходит вставка и удаление нот.
+         */
+        uint16_t ptr_index = 0;
     };
 } // namespace hc2img
 
