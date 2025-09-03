@@ -4,7 +4,6 @@
 #include <cstdint>
 
 #include <harmony-core/harmony-core.hpp>
-#include "bar.hpp"
 
 namespace hc2img {
     /*!

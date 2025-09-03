@@ -7,7 +7,6 @@
 
 #include "CImg.h"
 #include "staff.hpp"
-#include "staff_system.hpp"
 
 namespace hc2img {
     /*!
