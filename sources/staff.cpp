@@ -9,8 +9,13 @@ Staff::Staff(){
     time_sig = t_s;
 }
 
-void Staff::add(Note *n, bool is_pause) noexcept {
-    
+void Staff::add(harmony_core::Note *n, bool is_pause) noexcept {
+    std::pair<harmony_core::Note *, bool> p(n, is_pause);
+    if(ptr_index==note_list.size() || !ptr_index){
+        note_list.push_back(p);
+    } else {
+        note_list[note_list] = p;
+    }
 }
 
 void Staff::rm(uint16_t) noexcept {
