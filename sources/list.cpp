@@ -1,13 +1,20 @@
 #include <hc2img/list.hpp>
+constexpr uint8_t staff_line_gap = 10;
 
 using namespace hc2img;
 
 List::List() {
 }
 
-void List::save() noexcept {
+void draw_staff(
+    cimg_library::CImg<unsigned char> i
+    , uint16_t x_cord
+    , uint16_t y_cord
+)
 
-    cimg_library::CImg<unsigned char> image(1000, 480, 1, 3, 255);
+void List::draw() noexcept {
+
+    cimg_library::CImg<unsigned char> image(1000, 500, 1, 3, 255);
 
     // Define the color red
     const unsigned char black[] = {0, 0, 0};

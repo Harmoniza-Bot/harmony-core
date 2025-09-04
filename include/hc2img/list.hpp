@@ -25,7 +25,7 @@ namespace hc2img {
         /*!
          * \brief Сохраняет лист как изображение.
          */
-        void save() noexcept;
+        void draw() noexcept;
 
     private:
         /*!
