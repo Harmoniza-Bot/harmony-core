@@ -1,31 +1,40 @@
 #include <hc2img/list.hpp>
-constexpr uint8_t staff_line_gap = 10;
 
-using namespace hc2img;
+namespace hc2img{
+    // размеры, кооидинаты и константы
+    constexpr uint8_t staff_line_gap = 10;
+    constexpr uint8_t staff_gap = 30;
+    constexpr uint8_t staff_edge_gap = 33;
+    
+    constexpr unsigned char black[] = {0, 0, 0};
+    
+    constexpr uint16_t list_size_x = 1000;
+    constexpr uint16_t list_size_y = 500;
 
-List::List() {
-}
+    List::List() {
+    }
+    
+    void draw_staff(
+        cimg_library::CImg<unsigned char> &image,
+        uint16_t mutch
+    ) {
+        for(int x=0; x<mutch; ++x){
+            for(int y=0; y<5; ++y){
+                image->draw_line(
+                staff_edge_gap,
+                staff_edge_gap + y * staff_line_gap + x * staff_gap,
+                list_size_x - staff_edge_gap,
+                staff_edge_gap + y * staff_line_gap + x * staff_gap,
+                black, 1.0f);
+            }
+        }
+    }
 
-void draw_staff(
-    cimg_library::CImg<unsigned char> i
-    , uint16_t x_cord
-    , uint16_t y_cord
-)
+    void List::draw() noexcept {
 
-void List::draw() noexcept {
+        cimg_library::CImg<unsigned char> image(1000, 500, 1, 3, 255);
 
-    cimg_library::CImg<unsigned char> image(1000, 500, 1, 3, 255);
-
-    // Define the color red
-    const unsigned char black[] = {0, 0, 0};
-
-    // Draw a line from (100, 100) to (500, 300) with red color and full opacity
-    image.draw_line(33, 33, 970, 33, black, 1.0f);
-    image.draw_line(33, 43, 970, 43, black, 1.0f);
-    image.draw_line(33, 53, 970, 53, black, 1.0f);
-    image.draw_line(33, 63, 970, 63, black, 1.0f);
-    image.draw_line(33, 73, 970, 73, black, 1.0f);
-
-    image.save_bmp("img/img.bmp");
-    // image.display("winnn");
+      image.save_bmp("img/img.bmp");
+        // image.display("winnn");
+    }
 }
