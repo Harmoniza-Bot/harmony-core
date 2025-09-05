@@ -6,6 +6,10 @@ namespace hc2img{
     constexpr uint8_t staff_gap = 30;
     constexpr uint8_t staff_edge_gap = 33;
     
+    constexpr uint8_t note_gap = 25;
+    constexpr uint8_t note_length = 12;
+    constexpr uint8_t note_stem_length = 30;
+    
     constexpr unsigned char black[] = {0, 0, 0};
     
     constexpr uint16_t list_size_x = 1000;
@@ -31,10 +35,14 @@ namespace hc2img{
     }
 
     void List::draw() noexcept {
-
-        cimg_library::CImg<unsigned char> image(1000, 500, 1, 3, 255);
-
-      image.save_bmp("img/img.bmp");
-        // image.display("winnn");
+        cimg_library::CImg<unsigned char> image(
+            list_size_x,
+            list_size_y,
+            1, 3, 255);
+        
+        draw_staff(image, 1);
+        
+      image.save_bmp("img/list.bmp");
+      // image.display ("winnn");
     }
 }
