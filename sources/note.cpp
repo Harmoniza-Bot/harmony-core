@@ -167,6 +167,14 @@ std::string Note::get_name() const noexcept {
     return name;
 }
 
+void Note::set_pause(bool i) {
+    is_pause_data = i;
+}
+
+bool Note::is_pause() {
+    return is_pause_data;
+}
+
 void Note::enharmony_сhange(bool dir) noexcept {
     Accidental first_a = this->get_random_accidental();
     Base first_b = this->get_base();

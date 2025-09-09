@@ -174,6 +174,20 @@ namespace harmony_core {
          */
         std::string get_name() const noexcept;
 
+
+        /*!
+         * \brief Превращает ноту в паузу.
+         * \param [in] bool флаг паузы (true - нота-пауза, false - обычная нота).
+         */
+        void set_pause(bool);
+
+        /*!
+         * \brief Отвечает, является ли нота паузой.
+         * true - нота является паузой.
+         * false - нота не является паузой.
+         */
+        bool is_pause();
+
         //---------------
 
         /*!
@@ -296,6 +310,13 @@ namespace harmony_core {
          * - Биты \code 13-15 \endcode задают длительность этой ноты.
          */
         uint_fast16_t data;
+
+        /*!
+         * \brief Хранит флаг, обозначающий, что нота - это пауза.
+         * \code false \endcode - Нота не пауза
+         * \code true \endcode - Нота не пауза
+         */
+        bool is_pause_data = 0;
     };
 } // namespace harmony_core
 
