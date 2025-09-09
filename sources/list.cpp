@@ -18,6 +18,13 @@ namespace hc2img{
     List::List() {
     }
     
+    void draw_clef(
+        cimg_library::CImg<unsigned char> &image,
+        harmony_core::clef clef,
+        uint16_t mutch
+    ){
+    }
+    
     void draw_staff(
         cimg_library::CImg<unsigned char> &image,
         uint16_t mutch
