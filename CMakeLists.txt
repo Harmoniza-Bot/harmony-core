@@ -15,3 +15,4 @@ find_package(X11 REQUIRED)
 
 target_link_libraries(harmony-core PRIVATE ${X11_LIBRARIES})
 target_include_directories(harmony-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/CImg)
+target_include_directories(harmony-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/images)

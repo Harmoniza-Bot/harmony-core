@@ -7,6 +7,7 @@
 
 #include "CImg.h"
 #include "staff.hpp"
+#include "list_param.hpp"
 
 namespace hc2img {
     /*!
@@ -24,7 +25,7 @@ namespace hc2img {
         /*!
          * \brief Сохраняет лист как изображение.
          */
-        void draw() noexcept;
+        void save() noexcept;
 
     private:
         /*!

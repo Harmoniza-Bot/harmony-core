@@ -1,12 +1,13 @@
 #include <cmath>
+#include <harmony-core/harmony-core.hpp>
 #include <hc2img/staff.hpp>
 using namespace hc2img;
 
 Staff::Staff() {
     harmony_core::Clef c;
-    clef = *c;
+    clef = c;
     harmony_core::Time_signature t_s;
-    time_sig = *t_s;
+    time_sig = t_s;
 }
 
 Staff::Staff(const hc2img::Staff &s) {
@@ -18,35 +19,35 @@ Staff::Staff(const hc2img::Staff &s) {
     }
 }
 
-void set_clef(harmony_core::Clef c) noexcept {
-    clef = *c.get_clef();
+void Staff::set_clef(harmony_core::Clef c) noexcept {
+    clef = c;
 }
 
-harmony_core::Clef get_clef() const noexcept {
-    return *clef;
+harmony_core::Clef Staff::get_clef() const noexcept {
+    return clef;
 }
 
-void set_time_signature(harmony_core::Time_signature t) noexcept {
-    time_sig = *t.get_time_signature();
+void Staff::set_time_signature(harmony_core::Time_signature t) noexcept {
+    time_sig = t;
 }
 
-harmony_core::time_signature get_time_signature() const noexcept {
-    return *time_sig;
+harmony_core::Time_signature Staff::get_time_signature() const noexcept {
+    return time_sig;
 }
 
-harmony_core::Note get_note(uint16_t i) const noexcept {
+harmony_core::Note Staff::get_note(uint16_t i) const noexcept {
     return note_list[i];
 }
 
-size_t get_note_list_size() const noexcept {
+size_t Staff::get_note_list_size() const noexcept {
     return note_list.size();
 }
 
-void Staff::add(harmony_core::Note *n) noexcept {
+void Staff::add(harmony_core::Note &n) noexcept {
     if (ptr_index == note_list.size() || !ptr_index) {
-        note_list.push_back(*n);
+        note_list.push_back(n);
     } else {
-        note_list[note_list] = *n;
+        note_list[ptr_index] = n;
     }
 }
 
@@ -61,7 +62,7 @@ size_t Staff::get_size() const noexcept {
     float full_note_size = 0;
     for (int x = 0; x < note_list.size(); ++x) {
         static uint8_t note_size;
-        note_size = static_cast<int>(note_list.first.get_duration());
+        note_size = static_cast<int>(note_list[x].get_duration());
         if (note_size == 0) {
             full_note_size += 2;
         } else {
@@ -74,7 +75,7 @@ size_t Staff::get_size() const noexcept {
 }
 
 Staff &Staff::operator++() {
-    if (index == 65'536) {
+    if (ptr_index == 65'536) {
         return *this;
     }
     ++ptr_index;
@@ -88,7 +89,7 @@ Staff Staff::operator++(int) {
 }
 
 Staff &Staff::operator--() {
-    if (index == 0) {
+    if (ptr_index == 0) {
         return *this;
     }
     --ptr_index;

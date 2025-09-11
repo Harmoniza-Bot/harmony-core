@@ -2,7 +2,7 @@
 #define HARMONY_CORE_TIME_SIGNATURE
 
 #include <cstdint>
-
+#include <vector>
 #include "harmony-core/note.hpp"
 
 namespace harmony_core {
@@ -26,7 +26,7 @@ namespace harmony_core {
         /*!
          * \brief Создает размер на основе другого размера.
          */
-        Time_signature(Time_signature &);
+        Time_signature(const Time_signature &);
 
         // getters & setters
 

@@ -61,7 +61,7 @@ namespace hc2img {
          * \param [in] is_pause Флаг, обозначающий добавление паузы. В этом случае считывается только размер ноты.
          * Такты и связки штилей расставляются автоматически.
          */
-        void add(harmony_core::Note *n) noexcept;
+        void add(harmony_core::Note &n) noexcept;
 
         /*!
          * \brief Удаляет из нотного стана ноту по индексу.
@@ -84,21 +84,31 @@ namespace hc2img {
          */
         Staff &operator--();
 
+        /*!
+         * \brief инкрементирует указатель на ноту стана (постфиксный).
+         */
+        Staff operator++(int);
+
+        /*!
+         * \brief декрементирует указатель на ноту стана (постфиксный).
+         */
+        Staff operator--(int);
+
     private:
         /*!
          * \brief Хранит Ключ нотного стана.
          */
-        harmony_core::Clef *clef = nullptr;
+        harmony_core::Clef clef;
 
         /*!
-         * \brief Хранит размер нотного стана.
+         * \brief Хранит музыкальный размер нотного стана.
          */
-        harmony_core::Time_signature *time_sig = nullptr;
+        harmony_core::Time_signature time_sig;
 
         /*!
-         * \brief Хранит список пар "нота - флаг паузы".
+         * \brief Хранит список нот.
          */
-        std::vector<std::pair<harmony_core::Note, bool>> note_list;
+        std::vector<harmony_core::Note> note_list;
 
         /*!
          * \brief Представляет индекс нотного указателя, на месте которого происходит вставка и удаление нот.
