@@ -5,6 +5,7 @@ add_library(harmony-core
             clef.cpp
             list.cpp
             staff.cpp
+            staff_cord.cpp
             time_signature.cpp)
 
 target_include_directories(harmony-core PUBLIC ${PROJECT_SOURCE_DIR}/include)

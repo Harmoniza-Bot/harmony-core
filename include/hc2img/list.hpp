@@ -4,10 +4,11 @@
 #include <cstdint>
 
 #include <harmony-core/harmony-core.hpp>
+#include <hc2img/staff_cord.hpp>
 
 #include "CImg.h"
-#include "staff.hpp"
 #include "list_param.hpp"
+#include "staff.hpp"
 
 namespace hc2img {
     /*!
@@ -15,7 +16,7 @@ namespace hc2img {
      * В него можно добавить нотный стан (hc2img::Staff). Если добпвить больше одного стана они объединятся в систему
      * нотных станов. Также можно сохранить лист как изображение. (Для работы с графикой исаользуется библиотека CImg.h)
      */
-    struct List final {
+    class List final {
     public:
         /*!
          * \brief Создает пустой нотный лист
@@ -23,11 +24,33 @@ namespace hc2img {
         List();
 
         /*!
+         * \brief Добавляет нотный стан в лист.
+         * \param[in] Staff& Ссылка на стан для добавления
+         */
+        void add(Staff &s);
+
+        /*!
+         * \brief Удаляет нотный стан из листа
+         */
+        void rm(uint8_t index);
+
+        /*!
          * \brief Сохраняет лист как изображение.
          */
         void save() noexcept;
 
     private:
+        /*!
+         * Рисует нотный стан. Возвращает объект hc2img::staff_cord c координатами нотного стана.
+         */
+        hc2img::Staff_cord draw_staff(cimg_library::CImg<unsigned char> &image, uint16_t) noexcept;
+
+        /*!
+         * Рисует ключ по координатам нотного стана
+         */
+        void draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept;
+
+
         /*!
          * \brief Хранит информацию о патаметрах листа.
          * Бит \code 0 \endcode хранит информацию об ориентации нотоносца: 0 - линейный, 1 - переносной.
