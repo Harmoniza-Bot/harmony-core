@@ -39,11 +39,20 @@ namespace hc2img {
          */
         void save() noexcept;
 
+        /*!
+         * Возвращает количество нотных станов в листе
+         */
+        size_t size() const noexcept;
+
+        Staff &operator[](int index) {
+            return staff_list[index];
+        }
+
     private:
         /*!
-         * Рисует нотный стан. Возвращает объект hc2img::staff_cord c координатами нотного стана.
+         * Рисует нотный стан. Возвращает объекты hc2img::staff_cord c координатами нотных станов.
          */
-        hc2img::Staff_cord draw_staff(cimg_library::CImg<unsigned char> &image, uint16_t) noexcept;
+        std::vector<hc2img::Staff_cord> draw_staff(cimg_library::CImg<unsigned char> &image) noexcept;
 
         /*!
          * Рисует ключ по координатам нотного стана
