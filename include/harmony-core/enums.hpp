@@ -10,31 +10,31 @@ namespace harmony_core {
      */
     enum class Base {
         /*!
-         * \brief Представляет собой ноту \code До \endcode.
+         * \brief Представляет собой ноту \code Ля \endcode.
          */
         A = 0b001,
         /*!
-         * \brief Представляет собой ноту \code Ре \endcode.
+         * \brief Представляет собой ноту \code Си бемоль \endcode.
          */
         B = 0b010,
         /*!
-         * \brief Представляет собой ноту \code Ми \endcode.
+         * \brief Представляет собой ноту \code До \endcode.
          */
         C = 0b011,
         /*!
-         * \brief Представляет собой ноту \code Фа \endcode.
+         * \brief Представляет собой ноту \code Ре \endcode.
          */
         D = 0b100,
         /*!
-         * \brief Представляет собой ноту \code Соль \endcode.
+         * \brief Представляет собой ноту \code Ми \endcode.
          */
         E = 0b101,
         /*!
-         * \brief Представляет собой ноту \code Ля \endcode.
+         * \brief Представляет собой ноту \code Фа \endcode.
          */
         F = 0b110,
         /*!
-         * \brief Представляет собой ноту \code Си \endcode.
+         * \brief Представляет собой ноту \code Соль \endcode.
          */
         G = 0b111
     };

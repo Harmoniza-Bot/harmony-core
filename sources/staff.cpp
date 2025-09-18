@@ -70,7 +70,7 @@ size_t Staff::get_size() const noexcept {
             full_note_size += 1 / pow(2, note_size);
         }
     }
-    full_note_size /= (time_sig.get_numerator() / time_sig.get_denominator());
+    full_note_size /= (static_cast<float>(time_sig.get_numerator()) / static_cast<float>(time_sig.get_denominator()));
     return static_cast<size_t>(full_note_size);
 }
 

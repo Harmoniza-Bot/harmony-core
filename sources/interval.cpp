@@ -97,74 +97,128 @@ Interval::Interval(Note n1, Note n2) noexcept {
     switch (base_dist) {
         case 0: {
             switch (n1.get_height() - n2.get_height()) {
-                case 0:
+                case 0: {
                     this->set_quality(Quality::PERFECT);
-                case 1:
+                    break;
+                }
+                case 1: {
                     this->set_quality(Quality::AUG);
-                case 2:
+                    break;
+                }
+                case 2: {
                     this->set_quality(Quality::DOUBLY_AUG);
+                    break;
+                }
             }
+            break;
         }
         case 1: {
             switch (n1.get_height() - n2.get_height()) {
-                case 0:
+                case 0: {
                     this->set_quality(Quality::DIM);
-                case 1:
+                    break;
+                }
+                case 1: {
                     this->set_quality(Quality::MINOR);
-                case 2:
+                    break;
+                }
+                case 2: {
                     this->set_quality(Quality::MAJOR);
-                case 3:
+                    break;
+                }
+                case 3: {
                     this->set_quality(Quality::AUG);
-                case 4:
+                    break;
+                }
+                case 4: {
                     this->set_quality(Quality::DOUBLY_AUG);
+                    break;
+                }
             }
+            break;
         }
         case 2: {
             switch (n1.get_height() - n2.get_height()) {
-                case 1:
+                case 1: {
                     this->set_quality(Quality::DOUBLY_DIM);
-                case 2:
+                    break;
+                }
+                case 2: {
                     this->set_quality(Quality::DIM);
-                case 3:
+                    break;
+                }
+                case 3: {
                     this->set_quality(Quality::MINOR);
-                case 4:
+                    break;
+                }
+                case 4: {
                     this->set_quality(Quality::MAJOR);
-                case 5:
+                    break;
+                }
+                case 5: {
                     this->set_quality(Quality::AUG);
-                case 6:
+                    break;
+                }
+                case 6: {
                     this->set_quality(Quality::DOUBLY_AUG);
+                    break;
+                }
             }
+            break;
         }
         case 3: {
             switch (n1.get_height() - n2.get_height()) {
-                case 3:
+                case 3: {
                     this->set_quality(Quality::DOUBLY_DIM);
-                case 4:
+                    break;
+                }
+                case 4: {
                     this->set_quality(Quality::DIM);
-                case 5:
+                    break;
+                }
+                case 5: {
                     this->set_quality(Quality::PERFECT);
-                case 6:
+                    break;
+                }
+                case 6: {
                     this->set_quality(Quality::AUG);
-                case 7:
+                    break;
+                }
+                case 7: {
                     this->set_quality(Quality::DOUBLY_AUG);
+                    break;
+                }
             }
+            break;
         }
     }
 
     if (rev_q) {
         switch (this->get_quality()) {
-            case (Quality::MAJOR):
+            case (Quality::MAJOR): {
                 this->set_quality(Quality::MINOR);
-            case (Quality::MINOR):
+                break;
+            }
+            case (Quality::MINOR): {
                 this->set_quality(Quality::MAJOR);
-            case (Quality::AUG):
+                break;
+            }
+            case (Quality::AUG): {
                 this->set_quality(Quality::DIM);
-            case (Quality::DIM):
+                break;
+            }
+            case (Quality::DIM): {
                 this->set_quality(Quality::AUG);
-            case (Quality::DOUBLY_AUG):
+                break;
+            }
+            case (Quality::DOUBLY_AUG): {
                 this->set_quality(Quality::DOUBLY_DIM);
-            case (Quality::DOUBLY_DIM):
+                break;
+            }
+            case (Quality::DOUBLY_DIM): {
                 this->set_quality(Quality::DOUBLY_AUG);
+                break;
+            }
         }
     }
 }
@@ -182,7 +236,7 @@ void Interval::set_distance(uint8_t d) noexcept {
         d = 15;
     }
     this->data &= ~0b1111;
-    this->data | d;
+    this->data |= d;
 }
 
 uint8_t Interval::get_distance() const noexcept {
@@ -213,20 +267,34 @@ bool Interval::get_direction() const noexcept {
 std::string Interval::get_name() const noexcept {
     std::string name;
     switch (this->get_quality()) {
-        case Quality::PERFECT:
+        case Quality::PERFECT: {
             name += "per";
-        case Quality::MINOR:
+            break;
+        }
+        case Quality::MINOR: {
             name += "min";
-        case Quality::MAJOR:
+            break;
+        }
+        case Quality::MAJOR: {
             name += "maj";
-        case Quality::AUG:
+            break;
+        }
+        case Quality::AUG: {
             name += "aug";
-        case Quality::DIM:
+            break;
+        }
+        case Quality::DIM: {
             name += "dim";
-        case Quality::DOUBLY_AUG:
+            break;
+        }
+        case Quality::DOUBLY_AUG: {
             name += "2xdim";
-        case Quality::DOUBLY_DIM:
+            break;
+        }
+        case Quality::DOUBLY_DIM: {
             name += "2xdim";
+            break;
+        }
     }
 
     name += std::to_string(this->get_distance());

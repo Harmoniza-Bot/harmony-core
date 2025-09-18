@@ -143,7 +143,7 @@ void Key::set_mode(Mode mode) noexcept {
 }
 
 Mode Key::get_mode() noexcept {
-    return static_cast<Mode>(data & 0b11100000);
+    return static_cast<Mode>((data & 0b11100000) >> 5);
 }
 
 void Key::set_specie(Specie specie) noexcept {
@@ -151,7 +151,7 @@ void Key::set_specie(Specie specie) noexcept {
 }
 
 Specie Key::get_specie() noexcept {
-    return static_cast<Specie>(data & 0b11100000000);
+    return static_cast<Specie>((data & 0b11100000000) >> 7);
 }
 
 //--------------------------------

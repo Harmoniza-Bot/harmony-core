@@ -17,7 +17,7 @@ namespace hc2img {
      * нотных станов. Также можно сохранить лист как изображение. (Для работы с графикой исаользуется библиотека CImg.h)
      */
     class List final {
-      public:
+    public:
         /*!
          * \brief Создает пустой нотный лист
          */
@@ -48,7 +48,7 @@ namespace hc2img {
             return staff_list[index];
         }
 
-      private:
+    private:
         /*!
          * Рисует нотный стан. Возвращает объекты hc2img::staff_cord c координатами нотных станов.
          */

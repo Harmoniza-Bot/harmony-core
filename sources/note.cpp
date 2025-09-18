@@ -84,7 +84,7 @@ void Note::set_height(const uint_fast8_t height) {
         return;
     }
     set_octave(static_cast<Octave>(height / (7 * 2)));
-    set_base(static_cast<Base>(height % 9 / 2));
+    set_base(static_cast<Base>(height % 7 / 2));
     if (height % (9 * 7 * 2) > 0) {
         set_random_accidental(Accidental::SHARP);
         return;
@@ -272,7 +272,7 @@ Note &Note::operator++() {
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
         }
-        if (this->get_base() != Base::B || this->get_base() != Base::E) {
+        if (this->get_base() != Base::B && this->get_base() != Base::E) {
             this->set_random_accidental(Accidental::SHARP);
             this->set_base(static_cast<Base>(base));
         } else {
