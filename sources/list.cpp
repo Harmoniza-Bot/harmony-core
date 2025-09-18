@@ -4,8 +4,6 @@
 
 namespace hc2img {
 
-    std::vector<uint16_t> cord_staff_line; // Вектор для записи коордират линий нотных станов
-
     List::List() {
     }
 
