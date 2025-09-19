@@ -1,24 +1,22 @@
-#ifndef IMAGES_TREBLE_CLEF
-#define IMAGES_TREBLE_CLEF
+#ifndef IMAGES_F_CLEF
+#define IMAGES_F_CLEF
+
 namespace images {
-    /*!
-     * Данная структура хранит опорные точки для рисования скрипичного ключа
-     */
-    struct Treble_clef {
+    struct F_clef {
     private:
         /*!
-         * Данная константа хранит количество опорных точек скрипичного ключа
+         * Данная константа хранит количество опорных точек в ключе до
          */
-        const uint8_t clef_size = 16;
+        const uint8_t clef_size = 13;
 
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.
          * Нулевые координаты расположены в левом верхнем углу.
          * Первые 4 бита хранят координату x остальные - координату y
          */
-        const std::vector<uint8_t> treble_clef_cord = {
-            0b0001'1000, 0b0001'0111, 0b0010'0110, 0b0011'0110, 0b0100'0111, 0b0100'1001, 0b0011'1010, 0b0001'1010,
-            0b0000'1001, 0b0000'0111, 0b0011'0010, 0b0011'0000, 0b0010'0000, 0b0010'1100, 0b0001'1100, 0b0001'1011};
+        const std::vector<uint8_t> f_clef_cord = {0b0010'0100, 0b011'0100,  0b0011'0101, 0b0010'0101, 0b0001'0101,
+                                                  0b0000'0100, 0b0000'0001, 0b0001'0000, 0b0100'0000, 0b0101'0010,
+                                                  0b0101'0110, 0b0100'1001, 0b0001'1100};
 
     public:
         /*!
@@ -35,17 +33,17 @@ namespace images {
             if (i >= clef_size) {
                 return 255;
             }
-            return treble_clef_cord[i] & 0xF;
+            return f_clef_cord[i] & 0xF;
         };
 
         /*!
          * Возвращает x координату опорной точки по индексу
          */
         uint8_t x(uint8_t i) const noexcept {
-            return (treble_clef_cord[i] >> 4) & 0xF;
+            return (f_clef_cord[i] >> 4) & 0xF;
         };
 
-    } treble_clef;
+    } f_clef;
 } // namespace images
 
-#endif // IMAGES_TREBLE_CLEF
+#endif // IMAGES_F_CLEF

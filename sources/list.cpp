@@ -56,18 +56,6 @@ namespace hc2img {
     }
 
     void List::draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept {
-        for (int x = 0; x < images::treble_clef_size - 1; ++x) {
-            image.draw_line(images::treble_clef[x].first * treble_clef_index,
-                            images::treble_clef[x].second * treble_clef_index,
-                            images::treble_clef[x + 1].first * treble_clef_index,
-                            images::treble_clef[x + 1].second * treble_clef_index, black);
-        }
-
-        for (int x = 0; x < images::c_clef_size - 1; ++x) {
-            image.draw_line(images::c_clef[x].first * c_clef_index, images::c_clef[x].second * c_clef_index,
-                            images::c_clef[x + 1].first * c_clef_index, images::c_clef[x + 1].second * c_clef_index,
-                            black);
-        }
     }
 
     void List::save() noexcept {
