@@ -2,7 +2,7 @@
 #define IMAGES_C_CLEF
 
 namespace images {
-    struct C_clef {
+    struct C_clef final {
     private:
         /*!
          * Данная константа хранит количество опорных точек в ключе до
