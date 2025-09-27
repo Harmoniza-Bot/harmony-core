@@ -30,14 +30,12 @@ namespace images {
         /*!
          * Возвращает y координату опорной точки по индексу или 255, если индекс больше количества точек.
          */
-        uint8_t y(uint8_t i) const noexcept {
-        };
+        uint8_t y(uint8_t i) const noexcept {};
 
         /*!
          * Возвращает x координату опорной точки по индексу
          */
-        uint8_t x(uint8_t i) const noexcept {
-        };
+        uint8_t x(uint8_t i) const noexcept {};
 
     } note;
 } // namespace images

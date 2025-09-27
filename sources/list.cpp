@@ -18,6 +18,20 @@ namespace hc2img {
         // staff_list.erase(index);
     }
 
+    template<typename T>
+    void List::draw_parts(cimg_library::CImg<unsigned char> &image, T part, int x, int y) {
+        for (int a = 0; a < part.size() - 1; ++a) {
+            image.draw_line((part.x(a) * pixel_index) + x, (part.y(a) * pixel_index) + y,
+                            (part.x(a + 1) * pixel_index) + x, (part.y(a + 1) * pixel_index) + y, black);
+            image.draw_line((part.x(a) * pixel_index) + x + 1, (part.y(a) * pixel_index) + y,
+                            (part.x(a + 1) * pixel_index) + x + 1, (part.y(a + 1) * pixel_index) + y, black);
+            image.draw_line((part.x(a) * pixel_index) + x, (part.y(a) * pixel_index) + y + 1,
+                            (part.x(a + 1) * pixel_index) + x, (part.y(a + 1) * pixel_index) + y + 1, black);
+            image.draw_line((part.x(a) * pixel_index) + x + 1, (part.y(a) * pixel_index) + y + 1,
+                            (part.x(a + 1) * pixel_index) + x + 1, (part.y(a + 1) * pixel_index) + y + 1, black);
+        }
+    }
+
     std::vector<hc2img::Staff_cord> List::draw_staff(cimg_library::CImg<unsigned char> &image) noexcept {
         std::vector<Staff_cord> cords;
 
@@ -55,9 +69,6 @@ namespace hc2img {
         return cords;
     }
 
-    void List::draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept {
-    }
-
     void List::save() noexcept {
         cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
         // cimg_library::CImg<unsigned char> image1("/home/tim/Загрузки/ключ_до.bmp");
@@ -65,6 +76,7 @@ namespace hc2img {
         // image.save_bmp("img/list.bmp");
         // image1.display("1");
         std::vector<hc2img::Staff_cord> s = draw_staff(image);
+        draw_parts(image, images::treble_clef, 50, 22);
         image.display("winnn");
     }
 

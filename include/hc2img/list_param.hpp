@@ -17,7 +17,6 @@ constexpr unsigned char black[] = {0, 0, 0}; // цвет нот и станов 
 constexpr uint16_t list_size_x = 1000; // размер листа (х)
 constexpr uint16_t list_size_y = 500; // размер листа (у)
 
-constexpr float treble_clef_index = 0.18; // коэфициент сжатия скрипичного ключа
-constexpr float c_clef_index = 0.9;
+constexpr float pixel_index = 5; // множитель увеличения пиксельных частей
 
 #endif // HC2IMG_LIST_PARAM
