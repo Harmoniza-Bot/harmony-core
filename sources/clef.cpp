@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdexcept>
 #include <string>
 
@@ -50,49 +51,73 @@ float Clef::get_place(Note note) const noexcept {
 
     switch (this->get_type()) {
         case Clef_type::G_CLEF: {
-            clef_base.set_base(Base::G);
-            clef_base.set_octave(Octave::_1_LINE);
-
             switch (this->get_clef_name()) {
                 case Clef_name::FRENCH_VIOLIN: {
-                    //////дописать......
+                    clef_base.set_base(Base::E);
+                    clef_base.set_octave(Octave::_1_LINE);
+                    goto exit_from_switch;
                 }
                 case Clef_name::TREBLE: {
-                    //////
+                    clef_base.set_base(Base::G);
+                    clef_base.set_octave(Octave::_1_LINE);
+                    goto exit_from_switch;
                 }
             }
         }
         case Clef_type::C_CLEF: {
-            clef_base.set_base(Base::C);
-            clef_base.set_octave(Octave::_1_LINE);
-
             switch (this->get_clef_name()) {
                 case Clef_name::SOPRANO: {
+                    clef_base.set_base(Base::C);
+                    clef_base.set_octave(Octave::_1_LINE);
+                    goto exit_from_switch;
                 }
                 case Clef_name::MEZZO_SOPRANO: {
+                    clef_base.set_base(Base::A);
+                    clef_base.set_octave(Octave::SMALL);
+                    goto exit_from_switch;
                 }
                 case Clef_name::ALTO: {
+                    clef_base.set_base(Base::F);
+                    clef_base.set_octave(Octave::SMALL);
+                    goto exit_from_switch;
                 }
                 case Clef_name::TENOR: {
+                    clef_base.set_base(Base::D);
+                    clef_base.set_octave(Octave::SMALL);
+                    goto exit_from_switch;
                 }
                 case Clef_name::BARITONE: {
+                    clef_base.set_base(Base::B);
+                    clef_base.set_octave(Octave::SMALL);
+                    goto exit_from_switch;
                 }
             }
         }
         case Clef_type::F_CLEF: {
-            clef_base.set_base(Base::F);
-            clef_base.set_octave(Octave::SMALL);
-
             switch (this->get_clef_name()) {
                 case Clef_name::BARITONE: {
+                    clef_base.set_base(Base::B);
+                    clef_base.set_octave(Octave::SMALL);
+                    goto exit_from_switch;
                 }
                 case Clef_name::BASS: {
+                    clef_base.set_base(Base::G);
+                    clef_base.set_octave(Octave::GREAT);
+                    goto exit_from_switch;
                 }
                 case Clef_name::SUBBASS: {
+                    clef_base.set_base(Base::E);
+                    clef_base.set_octave(Octave::GREAT);
+                    goto exit_from_switch;
                 }
             }
         }
     }
+
+exit_from_switch:
+    line = (static_cast<float>(note.get_octave()) * 3.5f) - (static_cast<float>(clef_base.get_octave()) * 3.5f);
+
+    line += (static_cast<float>(note.get_base())) - (static_cast<float>(clef_base.get_base()));
     return line;
 }
 
