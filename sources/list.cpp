@@ -7,15 +7,15 @@ namespace hc2img {
     List::List() {
     }
 
-    void List::add(Staff &s) {
-        staff_list.push_back(s);
+    void List::add(Staff s) {
+        this->staff_list.push_back(s);
     }
 
     void List::rm(uint8_t index) {
         if (index < staff_list.size()) {
             return;
         }
-        // staff_list.erase(index);
+        this->staff_list.erase(staff_list.begin() + index);
     }
 
     template<typename T>
@@ -68,6 +68,12 @@ namespace hc2img {
         }
         return cords;
     }
+
+    // void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord){
+    //     for(int y=0; y<staff_list[0].get_size(); ++y){
+    //         draw_parts(image, images::note, y * 10, 100);
+    //     }
+    // }
 
     void List::save() noexcept {
         cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
