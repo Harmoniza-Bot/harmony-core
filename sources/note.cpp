@@ -267,7 +267,7 @@ Note &Note::operator++() {
         if (base > 7) {
             base = 1;
             if (this->get_octave() == Octave::_5_LINE) {
-                std::cerr << "Эта нота слишком высокая" << std::endl;
+                std::cerr << "from Note::operator++: Эта нота слишком высокая" << std::endl;
                 return *this;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
@@ -315,7 +315,7 @@ Note &Note::operator--() {
         if (base == 0) {
             base = 7;
             if (this->get_octave() == Octave::SUB_CONTRA) {
-                std::cerr << "Эта нота очень низкая" << std::endl;
+                std::cerr << "from Note::operator--: Эта нота очень низкая" << std::endl;
                 return *this;
             }
             this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));

@@ -46,19 +46,19 @@ Clef_name Clef::get_clef_name() const noexcept {
 }
 
 float Clef::get_place(Note note) const noexcept {
-    float line;
+    float line = 0;
     Note clef_base;
 
     switch (this->get_type()) {
         case Clef_type::G_CLEF: {
             switch (this->get_clef_name()) {
                 case Clef_name::FRENCH_VIOLIN: {
-                    clef_base.set_base(Base::E);
+                    clef_base.set_base(Base::G);
                     clef_base.set_octave(Octave::_1_LINE);
                     goto exit_from_switch;
                 }
                 case Clef_name::TREBLE: {
-                    clef_base.set_base(Base::G);
+                    clef_base.set_base(Base::E);
                     clef_base.set_octave(Octave::_1_LINE);
                     goto exit_from_switch;
                 }
@@ -115,9 +115,25 @@ float Clef::get_place(Note note) const noexcept {
     }
 
 exit_from_switch:
-    line = (static_cast<float>(note.get_octave()) * 3.5f) - (static_cast<float>(clef_base.get_octave()) * 3.5f);
-
-    line += (static_cast<float>(note.get_base())) - (static_cast<float>(clef_base.get_base()));
+    int t = note.get_height() - clef_base.get_height();
+    Base b = note.get_base();
+    while (t != 0) {
+        if (t > 0) {
+            --note;
+            --t;
+            if (b != note.get_base()) {
+                b = note.get_base();
+                line += 0.5;
+            }
+        } else {
+            ++note;
+            ++t;
+            if (b != note.get_base()) {
+                b = note.get_base();
+                line -= 0.5;
+            }
+        }
+    }
     return line;
 }
 
