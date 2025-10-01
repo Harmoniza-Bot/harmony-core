@@ -187,3 +187,7 @@ std::string Clef::get_name() const noexcept {
     }
     return "no_name";
 }
+
+bool check_clef(){
+    return 0;
+}

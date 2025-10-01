@@ -90,6 +90,13 @@ namespace harmony_core {
          * \param [in] Clef Целевой ключ.
          */
         void clef_alteration(Note &, Clef) noexcept;
+        
+        /*!
+         * \brief Провеояет ключ на правильночть.
+         * Возвращает false, если ключ верный.
+         * В противном случае - true.
+         */
+        bool check_clef();
 
         /*!
          * \brief Возвращает имя ключа в строковом формате.
