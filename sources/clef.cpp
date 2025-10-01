@@ -147,7 +147,43 @@ void Clef::clef_alteration(Note &note, Clef clef) noexcept {
 }
 
 std::string Clef::get_name() const noexcept {
-    std::string name;
-
-    return name;
+    switch(get_name()){
+        case Clef_name::NEUTRAL {
+            return "NEUTRAL";
+        }
+        case Clef_name::FRENCH_VIOLIN {
+            return "FRENCH_VIOLIN";
+        }
+        case Clef_name::TREBLE{
+            return "TREBLE";
+        }
+        case Clef_name::SOPRANO{
+            return "SOPRANO";
+        }
+        case Clef_name::MEZZO_SOPRANO{
+            return "MEZZO_SOPRANO";
+        }
+        case Clef_name::ALTO{
+            return "ALTO";
+        }
+        case Clef_name::TENOR{
+            return "TENOR";
+        }
+        case Clef_name::BARITONE{
+            return "BARITONE";
+        }
+        case Clef_name::BASS{
+            return "BASS";
+        }
+        case Clef_name::SUBBASS{
+            return "SUBBASS;
+        }
+        case Clef_name::TABULATURE{
+            return "TABULATURE";
+        }
+        case Clef_name::NONE{
+            return "NONE";
+        }
+    }
+    return "no_name";
 }
