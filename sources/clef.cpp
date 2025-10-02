@@ -192,7 +192,7 @@ bool check_clef(){
     switch(static_cast<int>(get_type())){
         case 0 : {
             std::cerr << "from check_clef: clef_type is none!" << std::endl;
-            return;
+            return 1;
         }
         case 1 : {
             if (
