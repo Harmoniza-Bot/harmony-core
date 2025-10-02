@@ -147,41 +147,41 @@ void Clef::clef_alteration(Note &note, Clef clef) noexcept {
 }
 
 std::string Clef::get_name() const noexcept {
-    switch(get_name()){
-        case Clef_name::NEUTRAL {
+    switch(static_cast<int>(get_name())){
+        case 1 : {
             return "NEUTRAL";
         }
-        case Clef_name::FRENCH_VIOLIN {
+        case 2 : {
             return "FRENCH_VIOLIN";
         }
-        case Clef_name::TREBLE{
+        case Clef_name::TREBLE : {
             return "TREBLE";
         }
-        case Clef_name::SOPRANO{
+        case 3 : {
             return "SOPRANO";
         }
-        case Clef_name::MEZZO_SOPRANO{
+        case 4 : {
             return "MEZZO_SOPRANO";
         }
-        case Clef_name::ALTO{
+        case 5 : {
             return "ALTO";
         }
-        case Clef_name::TENOR{
+        case 6 : {
             return "TENOR";
         }
-        case Clef_name::BARITONE{
+        case 7 : {
             return "BARITONE";
         }
-        case Clef_name::BASS{
+        case 8 : {
             return "BASS";
         }
-        case Clef_name::SUBBASS{
+        case 9 : {
             return "SUBBASS;
         }
-        case Clef_name::TABULATURE{
+        case 10 : {
             return "TABULATURE";
         }
-        case Clef_name::NONE{
+        case 0 : {
             return "NONE";
         }
     }
@@ -200,7 +200,7 @@ bool check_clef(){
                 get_clef_name() != Clef_name::BASS &&
                 get_clef_name() != Clef_name::SUBBASS
             ){
-                std::cerr << "from check_clef: bad clef name or type!"
+                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }
@@ -212,7 +212,7 @@ bool check_clef(){
                 get_clef_name() != Clef_name::TENOR &&
                 get_clef_name() != Clef_name::BARITONE
             ){
-                std::cerr << "from check_clef: bad clef name or type!"
+                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }
@@ -221,7 +221,7 @@ bool check_clef(){
                 get_clef_name() != Clef_name::TREBLE &&
                 get_clef_name() != Clef_name::FRENCH_VIOLIN
             ){
-                std::cerr << "from check_clef: bad clef name or type!"
+                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }
