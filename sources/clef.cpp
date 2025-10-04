@@ -147,38 +147,38 @@ void Clef::clef_alteration(Note &note, Clef clef) noexcept {
 }
 
 std::string Clef::get_name() const noexcept {
-    switch(static_cast<int>(get_name())){
+    switch(static_cast<int>(get_clef_name())){
         case 1 : {
             return "NEUTRAL";
         }
         case 2 : {
             return "FRENCH_VIOLIN";
         }
-        case Clef_name::TREBLE : {
+        case 3 : {
             return "TREBLE";
         }
-        case 3 : {
+        case 4 : {
             return "SOPRANO";
         }
-        case 4 : {
+        case 5 : {
             return "MEZZO_SOPRANO";
         }
-        case 5 : {
+        case 6 : {
             return "ALTO";
         }
-        case 6 : {
+        case 7 : {
             return "TENOR";
         }
-        case 7 : {
+        case 8 : {
             return "BARITONE";
         }
-        case 8 : {
+        case 9 : {
             return "BASS";
         }
-        case 9 : {
-            return "SUBBASS;
-        }
         case 10 : {
+            return "SUBBASS";
+        }
+        case 11 : {
             return "TABULATURE";
         }
         case 0 : {
@@ -188,7 +188,7 @@ std::string Clef::get_name() const noexcept {
     return "no_name";
 }
 
-bool check_clef(){
+bool Clef::check_clef(){
     switch(static_cast<int>(get_type())){
         case 0 : {
             std::cerr << "from check_clef: clef_type is none!" << std::endl;

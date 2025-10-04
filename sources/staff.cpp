@@ -44,11 +44,7 @@ size_t Staff::get_note_list_size() const noexcept {
 }
 
 void Staff::add(harmony_core::Note &n) noexcept {
-    if (ptr_index == note_list.size() || !ptr_index) {
-        note_list.push_back(n);
-    } else {
-        note_list[ptr_index] = n;
-    }
+    note_list.push_back(n);
 }
 
 void Staff::rm(uint16_t index) noexcept {
