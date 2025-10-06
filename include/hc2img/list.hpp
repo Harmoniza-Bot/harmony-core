@@ -29,7 +29,7 @@ namespace hc2img {
          * \brief Добавляет нотный стан в лист.
          * \param[in] Staff Ссылка на стан для добавления
          */
-        void add(Staff s);
+        void add(Staff &s);
 
         /*!
          * \brief Удаляет нотный стан из листа
@@ -73,7 +73,7 @@ namespace hc2img {
         /*
          * Рисует ноты по координатам нотного стана.
          */
-        //void draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord);
+        void draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord);
 
         /*!
          * \brief Хранит информацию о патаметрах листа.

@@ -7,8 +7,9 @@ namespace hc2img {
     List::List() {
     }
 
-    void List::add(Staff s) {
-        this->staff_list.push_back(s);
+    void List::add(Staff &s) {
+        staff_list.resize(staff_list.size() + 1);
+        staff_list[staff_list.size() - 1] = s;
     }
 
     void List::rm(uint8_t index) {
@@ -69,11 +70,11 @@ namespace hc2img {
         return cords;
     }
 
-    // void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord){
-    //     for(int y=0; y<staff_list[0].get_size(); ++y){
-    //         draw_parts(image, images::note, y * 10, 100);
-    //     }
-    // }
+    void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord) {
+        for (int y = 0; y < staff_list[0].get_note_list_size(); ++y) {
+            draw_parts(image, images::note, y * 50, 100); // Дописать рисование по координатам стафа
+        }
+    }
 
     void List::save() noexcept {
         cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
@@ -83,6 +84,7 @@ namespace hc2img {
         // image1.display("1");
         std::vector<hc2img::Staff_cord> s = draw_staff(image);
         draw_parts(image, images::treble_clef, 50, 22);
+        draw_notes(image, s[0]);
         image.display("winnn");
     }
 
