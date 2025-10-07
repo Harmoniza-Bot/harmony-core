@@ -48,31 +48,55 @@ namespace hc2img {
                     /*цвет*/ black);
 
                 static uint16_t cord_y;
-                cord_y = cords[x]._1 = staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap));
+                cord_y = staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap));
+                cords[x]._1_LINE = cord_y;
 
-                switch (y) {
-                    case 0:
-                        cords[x]._1 = cord_y;
-                    case 1:
-                        cords[x]._2 = cord_y;
-                    case 2:
-                        cords[x]._3 = cord_y;
-                    case 3:
-                        cords[x]._4 = cord_y;
-                    case 4:
-                        cords[x]._5 = cord_y;
-                }
-                cords[x].clef_cord = {staff_edge_gap, cords[y]._1};
-                cords[x].accidental_cord = {staff_edge_gap + clef_acc_gap, cords[y]._1};
-                cords[x].time_signature_cord = {staff_edge_gap + clef_acc_gap + acc_ts_gap, cords[y]._1};
+                // cords[x].clef_cord = {staff_edge_gap, cords[y]._1_LINE};
+                // cords[x].accidental_cord = {staff_edge_gap + clef_acc_gap, cords[y]._1};
+                // cords[x].time_signature_cord = {staff_edge_gap + clef_acc_gap + acc_ts_gap, cords[y]._1};
             }
         }
         return cords;
     }
 
-    void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord) {
+    void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) {
+        if (staff_list.size() == 0)
+            return;
+
         for (int y = 0; y < staff_list[0].get_note_list_size(); ++y) {
-            draw_parts(image, images::note, y * 50, 100); // Дописать рисование по координатам стафа
+            uint16_t x_gap = staff_edge_gap + 50 + (note_gap * (y + 1));
+            uint16_t y_gap = 0;
+            int note_place = static_cast<int>(staff_list[0].get_clef().get_place(staff_list[0].get_note(y)) * 2 + 1);
+            int note_place_2 = note_place;
+            std::cout << "note height: " << note_place << std::endl;
+
+            // находим у-координату ноты
+            y_gap = cord._1_LINE;
+            while (note_place != 0) {
+                if (note_place > 0) {
+                    --note_place;
+                    y_gap -= staff_line_gap / 2;
+                }
+                if (note_place < 0) {
+                    ++note_place;
+                    y_gap += staff_line_gap / 2;
+                }
+            }
+
+            // рисуем ноту
+            draw_parts(image, images::note, x_gap, y_gap);
+
+            // округляем у-координату до линеечной
+            if (y_gap % staff_line_gap != 0) {
+                if (note_place >= 0) {
+                    y_gap -= staff_line_gap / 2;
+                } else {
+                    y_gap += staff_line_gap / 2;
+                }
+            }
+
+            // Рисуем добавочные линейки
+            // Необходимо дописать
         }
     }
 

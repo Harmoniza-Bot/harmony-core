@@ -27,9 +27,6 @@ namespace images {
          * Возвращает y координату опорной точки по индексу или 255, если индекс больше количества точек.
          */
         uint8_t y(uint8_t i) const noexcept {
-            if (i > 3) {
-                std::cerr << "from note::x(): too big argument" << std::endl;
-            }
             switch (i) {
                 case 0: {
                     return 1;
@@ -46,17 +43,18 @@ namespace images {
                 case 4: {
                     return 1;
                 }
+                default:
+                    if (i > 3) {
+                        std::cerr << "from note::y(): too big argument" << std::endl;
+                    }
             }
-            return 255;
+            return 1;
         };
 
         /*!
          * Возвращает x координату опорной точки по индексу
          */
         uint8_t x(uint8_t i) const noexcept {
-            if (i > 3) {
-                std::cerr << "from note::x(): too big argument" << std::endl;
-            }
             switch (i) {
                 case 0: {
                     return 0;
@@ -73,8 +71,12 @@ namespace images {
                 case 4: {
                     return 0;
                 }
+                default:
+                    if (i > 3) {
+                        std::cerr << "from note::y(): too big argument" << std::endl;
+                    }
             }
-            return 255;
+            return 1;
         };
     } note;
 } // namespace images

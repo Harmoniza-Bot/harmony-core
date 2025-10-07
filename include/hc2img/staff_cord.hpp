@@ -13,32 +13,10 @@ namespace hc2img {
      */
     struct Staff_cord final {
 
-        Staff_cord();
-
         /*!
-         * \brief первая линейка
+         * \brief первая линейка нотного стана
          */
-        uint16_t _1 = 0;
-
-        /*!
-         * \brief вторая линейка
-         */
-        uint16_t _2 = 0;
-
-        /*!
-         * \brief третья линейка
-         */
-        uint16_t _3 = 0;
-
-        /*!
-         * \brief четвертая линейка
-         */
-        uint16_t _4 = 0;
-
-        /*!
-         * \brief пятая линейка
-         */
-        uint16_t _5 = 0;
+        uint16_t _1_LINE = 0;
 
         /*!
          * \brief Координаты ключа
