@@ -109,6 +109,11 @@ namespace hc2img {
         std::vector<hc2img::Staff_cord> s = draw_staff(image);
         draw_parts(image, images::treble_clef, 50, 22);
         draw_notes(image, s[0]);
+        draw_parts(image, images::natural, 100, 100);
+        draw_parts(image, images::flat, 120, 100);
+        draw_parts(image, images::sharp, 140, 100);
+        draw_parts(image, images::double_flat, 160, 100);
+        draw_parts(image, images::double_sharp, 180, 100);
         image.display("winnn");
     }
 
