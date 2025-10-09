@@ -191,13 +191,11 @@ std::string Clef::get_name() const noexcept {
 bool Clef::check_clef() {
     switch (static_cast<int>(get_type())) {
         case 0: {
-            std::cerr << "from check_clef: clef_type is none!" << std::endl;
             return 1;
         }
         case 1: {
             if (get_clef_name() != Clef_name::BARITONE && get_clef_name() != Clef_name::BASS &&
                 get_clef_name() != Clef_name::SUBBASS) {
-                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }
@@ -205,13 +203,11 @@ bool Clef::check_clef() {
             if (get_clef_name() != Clef_name::SOPRANO && get_clef_name() != Clef_name::MEZZO_SOPRANO &&
                 get_clef_name() != Clef_name::ALTO && get_clef_name() != Clef_name::TENOR &&
                 get_clef_name() != Clef_name::BARITONE) {
-                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }
         case 3: {
             if (get_clef_name() != Clef_name::TREBLE && get_clef_name() != Clef_name::FRENCH_VIOLIN) {
-                std::cerr << "from check_clef: bad clef name or type!";
                 return 1;
             }
         }

@@ -70,6 +70,16 @@ namespace hc2img {
          */
         void draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept;
 
+        /*!
+         * Рисует знаки по координатам нотного стана.
+         */
+        void draw_accidentals(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept;
+
+        /*!
+         * Рисует нотный размер по координатам нотного стана.
+         */
+        void draw_time_signature(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept;
+
         /*
          * Рисует ноты по координатам нотного стана.
          */
