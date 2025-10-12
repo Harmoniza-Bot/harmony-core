@@ -176,11 +176,13 @@ namespace hc2img {
     }
 
     void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) {
-        if (staff_list.size() == 0)
+        if (staff_list.size() == 0) {
             return;
+        }
 
         if (staff_list[0].get_clef().check_clef()) {
             std::cerr << "from List::draw_notes: clef is none or type & name dont fit" << std::endl;
+            return;
         }
 
         for (int y = 0; y < staff_list[0].get_note_list_size(); ++y) {
@@ -206,17 +208,26 @@ namespace hc2img {
             // рисуем ноту
             draw_parts(image, images::note, x_gap, y_gap);
 
-            // округляем у-координату до линеечной
-            if (y_gap % staff_line_gap != 0) {
-                if (note_place >= 0) {
-                    y_gap -= staff_line_gap / 2;
-                } else {
-                    y_gap += staff_line_gap / 2;
+            // Рисуем добавочные линейки
+
+            uint16_t start_cord = cord._1_LINE; // координаты первой линии стана
+            if (y_gap > start_cord) {
+                while (y_gap > start_cord) {
+                    start_cord += staff_line_gap;
+                    image.draw_line(
+                        /*первая координата*/ x_gap - 5, start_cord,
+                        /*вторая координата*/ x_gap + 15, start_cord,
+                        /*цвет*/ black);
+                }
+            } else if (y_gap < start_cord) {
+                while (y_gap < start_cord) {
+                    image.draw_line(
+                        /*первая координата*/ x_gap - 5, start_cord,
+                        /*вторая координата*/ x_gap + 15, start_cord,
+                        /*цвет*/ black);
+                    start_cord -= staff_line_gap;
                 }
             }
-
-            // Рисуем добавочные линейки
-            // Необходимо дописать
         }
     }
 } // namespace hc2img
