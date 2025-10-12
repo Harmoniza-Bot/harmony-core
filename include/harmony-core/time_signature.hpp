@@ -31,6 +31,16 @@ namespace harmony_core {
         // getters & setters
 
         /*!
+         * Задает информацию о размере
+         */
+        void set_data(uint8_t);
+
+        /*!
+         * Возвращает информацию о размере
+         */
+        uint8_t get_data();
+
+        /*!
          * \brief Задает числитель и знаменатель.
          */
         void set_signature(uint8_t, uint8_t) noexcept;

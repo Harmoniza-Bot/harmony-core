@@ -11,6 +11,14 @@ Time_signature::Time_signature(uint8_t, uint8_t) {
 Time_signature::Time_signature(const Time_signature &) {
 }
 
+void Time_signature::set_data(uint8_t i) {
+    data = i;
+}
+
+uint8_t Time_signature::get_data() {
+    return data;
+}
+
 void Time_signature::set_signature(uint8_t, uint8_t) noexcept {
 }
 

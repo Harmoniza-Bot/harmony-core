@@ -94,6 +94,19 @@ namespace hc2img {
          */
         Staff operator--(int);
 
+        /*!
+         * Копирует один стан в другой
+         */
+        Staff &operator=(const Staff &staff) {
+            clef.set_data(staff.get_clef().get_data());
+            time_sig.set_data(staff.get_time_signature().get_data());
+            note_list.resize(staff.get_note_list_size());
+            for (int x = 0; x < note_list.size(); ++x) {
+                note_list[x] = staff.get_note(x);
+            }
+            return *this;
+        }
+
     private:
         /*!
          * \brief Хранит Ключ нотного стана.

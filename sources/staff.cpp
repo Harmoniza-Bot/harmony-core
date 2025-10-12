@@ -15,6 +15,7 @@ Staff::Staff(const hc2img::Staff &s) {
     time_sig = s.get_time_signature();
     ptr_index = 0;
     for (int x = 0; x < s.get_note_list_size(); ++x) {
+        note_list.resize(note_list.size() + 1);
         note_list[x] = s.get_note(x);
     }
 }
@@ -44,8 +45,7 @@ size_t Staff::get_note_list_size() const noexcept {
 }
 
 void Staff::add(harmony_core::Note &n) noexcept {
-    note_list.resize(note_list.size() + 1);
-    note_list[note_list.size() - 1] = n;
+    note_list.push_back(n);
 }
 
 void Staff::rm(uint16_t index) noexcept {

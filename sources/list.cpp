@@ -8,8 +8,7 @@ namespace hc2img {
     }
 
     void List::add(Staff &s) {
-        staff_list.resize(staff_list.size() + 1);
-        staff_list[staff_list.size() - 1] = s;
+        staff_list.push_back(s);
     }
 
     void List::rm(uint8_t index) {
@@ -21,14 +20,13 @@ namespace hc2img {
 
     void List::save() noexcept {
         cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
-        // cimg_library::CImg<unsigned char> image1("/home/tim/Загрузки/ключ_до.bmp");
-
         // image.save_bmp("img/list.bmp");
         // image1.display("1");
         std::vector<hc2img::Staff_cord> s = draw_staff(image);
-        // draw_parts(image, images::treble_clef, 50, 22);
-        draw_clef(image, s[0]);
-        draw_notes(image, s[0]);
+        for (int x = 0; x < s.size(); ++x) {
+            draw_clef(image, s[x]);
+            draw_notes(image, s[x]);
+        }
         image.display("winnn");
     }
 
@@ -56,9 +54,9 @@ namespace hc2img {
                 cord_y = staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap));
                 cords[x]._1_LINE = cord_y;
 
-                cords[x].clef_cord = {staff_edge_gap, cords[y]._1_LINE};
-                cords[x].accidental_cord = {staff_edge_gap + clef_acc_gap, cords[y]._1_LINE};
-                cords[x].time_signature_cord = {staff_edge_gap + clef_acc_gap + acc_ts_gap, cords[y]._1_LINE};
+                cords[x].clef_cord = {staff_edge_gap, cords[x]._1_LINE};
+                cords[x].accidental_cord = {staff_edge_gap + clef_acc_gap, cords[x]._1_LINE};
+                cords[x].time_signature_cord = {staff_edge_gap + clef_acc_gap + acc_ts_gap, cords[x]._1_LINE};
             }
         }
         return cords;
@@ -139,10 +137,14 @@ namespace hc2img {
             case 3: {
                 switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
                     case 2: {
-                        draw_parts(image, images::treble_clef, 50, 12);
+                        draw_parts(image, images::treble_clef, cord.clef_cord.first, cord.clef_cord.second);
+                        std::cout << "first: " << cord.clef_cord.first << std::endl;
+                        std::cout << "second: " << cord.clef_cord.second << std::endl;
                     }
                     case 3: {
-                        draw_parts(image, images::treble_clef, 50, 22);
+                        draw_parts(image, images::treble_clef, cord.clef_cord.first, cord.clef_cord.second);
+                        std::cout << "first: " << cord.clef_cord.first << std::endl;
+                        std::cout << "second: " << cord.clef_cord.second << std::endl;
                     }
                     default: {
                         std::cerr << "From List::draw_clef: clef type and name dont fit together" << std::endl;
