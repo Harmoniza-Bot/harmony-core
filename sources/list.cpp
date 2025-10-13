@@ -25,8 +25,8 @@ namespace hc2img {
         std::vector<hc2img::Staff_cord> s = draw_staff(image);
         for (int x = 0; x < s.size(); ++x) {
             draw_clef(image, s[x]);
-            draw_notes(image, s[x]);
         }
+        draw_notes(image, s);
         image.display("winnn");
     }
 
@@ -76,7 +76,7 @@ namespace hc2img {
         }
     }
 
-    void List::draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept {
+    void List::draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) noexcept {
         if (staff_list.size() == 0) {
             return;
         }
@@ -101,7 +101,7 @@ namespace hc2img {
                         return;
                     }
                     default: {
-                        std::cerr << "From List::draw_clef: clef type and name dont fit together" << std::endl;
+                        std::cerr << "From List::draw_clef(F fork): clef type and name dont fit together" << std::endl;
                         return;
                     }
                 }
@@ -109,27 +109,32 @@ namespace hc2img {
             case 2: {
                 switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
                     case 4: {
-                        draw_parts(image, images::c_clef, 50, 2);
+                        draw_parts(image, images::c_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 3);
                         return;
                     }
                     case 5: {
-                        draw_parts(image, images::c_clef, 50, 12);
+                        draw_parts(image, images::c_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 4);
                         return;
                     }
                     case 6: {
-                        draw_parts(image, images::c_clef, 50, 22);
+                        draw_parts(image, images::c_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 5);
                         return;
                     }
                     case 7: {
-                        draw_parts(image, images::c_clef, 50, 32);
+                        draw_parts(image, images::c_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 6);
                         return;
                     }
                     case 8: {
-                        draw_parts(image, images::c_clef, 50, 42);
+                        draw_parts(image, images::c_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 7);
                         return;
                     }
                     default: {
-                        std::cerr << "From List::draw_clef: clef type and name dont fit together" << std::endl;
+                        std::cerr << "From List::draw_clef(C fork): clef type and name dont fit together" << std::endl;
                         return;
                     }
                 }
@@ -137,17 +142,17 @@ namespace hc2img {
             case 3: {
                 switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
                     case 2: {
-                        draw_parts(image, images::treble_clef, cord.clef_cord.first, cord.clef_cord.second);
-                        std::cout << "first: " << cord.clef_cord.first << std::endl;
-                        std::cout << "second: " << cord.clef_cord.second << std::endl;
+                        draw_parts(image, images::treble_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 4);
+                        return;
                     }
                     case 3: {
-                        draw_parts(image, images::treble_clef, cord.clef_cord.first, cord.clef_cord.second);
-                        std::cout << "first: " << cord.clef_cord.first << std::endl;
-                        std::cout << "second: " << cord.clef_cord.second << std::endl;
+                        draw_parts(image, images::treble_clef, cord.clef_cord.first,
+                                   cord.clef_cord.second - staff_line_gap * 5);
+                        return;
                     }
                     default: {
-                        std::cerr << "From List::draw_clef: clef type and name dont fit together" << std::endl;
+                        std::cerr << "From List::draw_clef(G fork): clef type and name dont fit together" << std::endl;
                         return;
                     }
                 }
@@ -177,57 +182,65 @@ namespace hc2img {
         // Дописать
     }
 
-    void List::draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) {
+    void List::draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
         if (staff_list.size() == 0) {
             return;
         }
 
-        if (staff_list[0].get_clef().check_clef()) {
-            std::cerr << "from List::draw_notes: clef is none or type & name dont fit" << std::endl;
-            return;
-        }
-
-        for (int y = 0; y < staff_list[0].get_note_list_size(); ++y) {
-            uint16_t x_gap = staff_edge_gap + 50 + (note_gap * (y + 1));
-            uint16_t y_gap = 0;
-            int note_place = static_cast<int>(staff_list[0].get_clef().get_place(staff_list[0].get_note(y)) * 2 + 1);
-            int note_place_2 = note_place;
-            // std::cout << "note height: " << note_place << std::endl;
-
-            // находим у-координату ноты
-            y_gap = cord._1_LINE;
-            while (note_place != 0) {
-                if (note_place > 0) {
-                    --note_place;
-                    y_gap -= staff_line_gap / 2;
-                }
-                if (note_place < 0) {
-                    ++note_place;
-                    y_gap += staff_line_gap / 2;
-                }
+        for (int x = 0; x < staff_list.size(); ++x) {
+            if (staff_list[x].get_clef().check_clef()) {
+                std::cerr << "from List::draw_notes(iteration " << x << "): clef is none or type & name dont fit"
+                          << std::endl;
+                return;
             }
-
-            // рисуем ноту
-            draw_parts(image, images::note, x_gap, y_gap);
-
-            // Рисуем добавочные линейки
-
-            uint16_t start_cord = cord._1_LINE; // координаты первой линии стана
-            if (y_gap > start_cord) {
-                while (y_gap > start_cord) {
-                    start_cord += staff_line_gap;
-                    image.draw_line(
-                        /*первая координата*/ x_gap - 5, start_cord,
-                        /*вторая координата*/ x_gap + 15, start_cord,
-                        /*цвет*/ black);
+            for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
+                uint16_t x_gap = staff_edge_gap + 50 + (note_gap * (y + 1));
+                uint16_t y_gap = 0;
+                int note_place =
+                    static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y)) * 2 + 1);
+                // std::cout << "note_place: " << note_place << std::endl;
+                // std::cout << "y_gap: " << y_gap << std::endl;
+                // находим у-координату ноты
+                y_gap = cord[x]._1_LINE;
+                while (note_place != 0) {
+                    // std::cout << "y_gap(in while): " << y_gap << std::endl;
+                    if (note_place > 0) {
+                        --note_place;
+                        y_gap -= staff_line_gap / 2;
+                    }
+                    if (note_place < 0) {
+                        ++note_place;
+                        y_gap += staff_line_gap / 2;
+                    }
+                    if (y_gap < staff_line_gap / 2) {
+                        note_place = 0;
+                        std::cerr << "from List::draw_notes: note outs from list!" << std::endl;
+                    }
                 }
-            } else if (y_gap < start_cord) {
-                while (y_gap < start_cord) {
-                    image.draw_line(
-                        /*первая координата*/ x_gap - 5, start_cord,
-                        /*вторая координата*/ x_gap + 15, start_cord,
-                        /*цвет*/ black);
-                    start_cord -= staff_line_gap;
+                // std::cout << "y_gap(finish): " << y_gap << std::endl;
+
+                // рисуем ноту
+                draw_parts(image, images::note, x_gap, y_gap);
+
+                // Рисуем добавочные линейки
+
+                uint16_t start_cord = cord[x]._1_LINE; // координаты первой линии стана
+                if (y_gap > start_cord) {
+                    while (y_gap > start_cord) {
+                        start_cord += staff_line_gap;
+                        image.draw_line(
+                            /*первая координата*/ x_gap - 5, start_cord,
+                            /*вторая координата*/ x_gap + 15, start_cord,
+                            /*цвет*/ black);
+                    }
+                } else if (y_gap < start_cord) {
+                    while (y_gap < start_cord) {
+                        image.draw_line(
+                            /*первая координата*/ x_gap - 5, start_cord,
+                            /*вторая координата*/ x_gap + 15, start_cord,
+                            /*цвет*/ black);
+                        start_cord -= staff_line_gap;
+                    }
                 }
             }
         }

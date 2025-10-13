@@ -198,6 +198,7 @@ bool Clef::check_clef() {
                 get_clef_name() != Clef_name::SUBBASS) {
                 return 1;
             }
+            return 0;
         }
         case 2: {
             if (get_clef_name() != Clef_name::SOPRANO && get_clef_name() != Clef_name::MEZZO_SOPRANO &&
@@ -205,11 +206,13 @@ bool Clef::check_clef() {
                 get_clef_name() != Clef_name::BARITONE) {
                 return 1;
             }
+            return 0;
         }
         case 3: {
             if (get_clef_name() != Clef_name::TREBLE && get_clef_name() != Clef_name::FRENCH_VIOLIN) {
                 return 1;
             }
+            return 0;
         }
     }
     return 0;

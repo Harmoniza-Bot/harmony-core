@@ -68,7 +68,7 @@ namespace hc2img {
         /*!
          * Рисует ключ по координатам нотного стана.
          */
-        void draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept;
+        void draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) noexcept;
 
         /*!
          * Рисует знаки по координатам нотного стана.
@@ -83,7 +83,7 @@ namespace hc2img {
         /*
          * Рисует ноты по координатам нотного стана.
          */
-        void draw_notes(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord);
+        void draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord>);
 
         /*!
          * \brief Хранит информацию о патаметрах листа.
