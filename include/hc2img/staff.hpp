@@ -48,7 +48,7 @@ namespace hc2img {
         /*!
          * \brief возвращает ноту по индексу.
          */
-        harmony_core::Note get_note(uint16_t i) const noexcept;
+        std::pair<harmony_core::Note, uint16_t> get_note(uint16_t i) const noexcept;
 
         /*!
          * \brief возвращает количество нот и пауз в нотном стане.
@@ -61,7 +61,7 @@ namespace hc2img {
          * \param [in] is_pause Флаг, обозначающий добавление паузы. В этом случае считывается только размер ноты.
          * Такты и связки штилей расставляются автоматически.
          */
-        void add(harmony_core::Note &n) noexcept;
+        void add(std::pair<harmony_core::Note, uint16_t> &n) noexcept;
 
         /*!
          * \brief Удаляет из нотного стана ноту по индексу.
@@ -94,18 +94,19 @@ namespace hc2img {
          */
         Staff operator--(int);
 
-        /*!
-         * Копирует один стан в другой
-         */
-        Staff &operator=(const Staff &staff) {
-            clef.set_data(staff.get_clef().get_data());
-            time_sig.set_data(staff.get_time_signature().get_data());
-            note_list.resize(staff.get_note_list_size());
-            for (int x = 0; x < note_list.size(); ++x) {
-                note_list[x] = staff.get_note(x);
-            }
-            return *this;
-        }
+        // /*!
+        //  * Копирует один стан в другой
+        //  */
+        // Staff &operator=(const Staff &staff) {
+        //     clef.set_data(staff.get_clef().get_data());
+        //     time_sig.set_data(staff.get_time_signature().get_data());
+        //     note_list.resize(staff.get_note_list_size());
+        //     for (int x = 0; x < note_list.size(); ++x) {
+        //         note_list[x].first = staff.get_note(x).first;
+        //         note_list[x].second = staff.get_note(x).second;
+        //     }
+        //     return *this;
+        // }
 
     private:
         /*!
@@ -121,7 +122,7 @@ namespace hc2img {
         /*!
          * \brief Хранит список нот.
          */
-        std::vector<harmony_core::Note> note_list;
+        std::vector<std::pair<harmony_core::Note, uint16_t>> note_list;
 
         /*!
          * \brief Представляет индекс нотного указателя, на месте которого происходит вставка и удаление нот.

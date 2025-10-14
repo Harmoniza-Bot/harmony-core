@@ -22,10 +22,8 @@ namespace hc2img {
         cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
         // image.save_bmp("img/list.bmp");
         // image1.display("1");
-        std::vector<hc2img::Staff_cord> s = draw_staff(image);
-        for (int x = 0; x < s.size(); ++x) {
-            draw_clef(image, s[x]);
-        }
+        std::vector<hc2img::Staff_cord> s = draw_staffs(image);
+        draw_clefs(image, s);
         draw_notes(image, s);
         image.display("winnn");
     }
@@ -36,7 +34,7 @@ namespace hc2img {
 
     //================== Приватные функции ==================
 
-    std::vector<hc2img::Staff_cord> List::draw_staff(cimg_library::CImg<unsigned char> &image) noexcept {
+    std::vector<hc2img::Staff_cord> List::draw_staffs(cimg_library::CImg<unsigned char> &image) noexcept {
         std::vector<Staff_cord> cords;
 
         for (int x = 0; x < staff_list.size(); ++x) {
@@ -76,89 +74,97 @@ namespace hc2img {
         }
     }
 
-    void List::draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) noexcept {
+    void List::draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept {
         if (staff_list.size() == 0) {
             return;
         }
 
-        switch (static_cast<int>(staff_list[0].get_clef().get_type())) {
-            case 0: {
-                std::cerr << "From List::draw_clef: clef type is NONE!" << std::endl;
-                return;
-            }
-            case 1: {
-                switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
-                    case 8: {
-                        draw_parts(image, images::f_clef, 50, 12);
-                        return;
-                    }
-                    case 9: {
-                        draw_parts(image, images::f_clef, 50, 22);
-                        return;
-                    }
-                    case 10: {
-                        draw_parts(image, images::f_clef, 50, 32);
-                        return;
-                    }
-                    default: {
-                        std::cerr << "From List::draw_clef(F fork): clef type and name dont fit together" << std::endl;
-                        return;
+        for (int x = 0; x < staff_list.size(); ++x) {
+            switch (static_cast<int>(staff_list[x].get_clef().get_type())) {
+                case 0: {
+                    std::cerr << "From List::draw_clef: clef type is NONE!" << std::endl;
+                    continue;
+                }
+                case 1: {
+                    switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
+                        case 8: {
+                            draw_parts(image, images::f_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 6);
+                            continue;
+                        }
+                        case 9: {
+                            draw_parts(image, images::f_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                            continue;
+                        }
+                        case 10: {
+                            draw_parts(image, images::f_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                            continue;
+                        }
+                        default: {
+                            std::cerr << "From List::draw_clef(F fork): clef type and name dont fit together"
+                                      << std::endl;
+                            continue;
+                        }
                     }
                 }
-            }
-            case 2: {
-                switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
-                    case 4: {
-                        draw_parts(image, images::c_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 3);
-                        return;
-                    }
-                    case 5: {
-                        draw_parts(image, images::c_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 4);
-                        return;
-                    }
-                    case 6: {
-                        draw_parts(image, images::c_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 5);
-                        return;
-                    }
-                    case 7: {
-                        draw_parts(image, images::c_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 6);
-                        return;
-                    }
-                    case 8: {
-                        draw_parts(image, images::c_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 7);
-                        return;
-                    }
-                    default: {
-                        std::cerr << "From List::draw_clef(C fork): clef type and name dont fit together" << std::endl;
-                        return;
-                    }
-                }
-            }
-            case 3: {
-                switch (static_cast<int>(staff_list[0].get_clef().get_clef_name())) {
-                    case 2: {
-                        draw_parts(image, images::treble_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 4);
-                        return;
-                    }
-                    case 3: {
-                        draw_parts(image, images::treble_clef, cord.clef_cord.first,
-                                   cord.clef_cord.second - staff_line_gap * 5);
-                        return;
-                    }
-                    default: {
-                        std::cerr << "From List::draw_clef(G fork): clef type and name dont fit together" << std::endl;
-                        return;
+                case 2: {
+                    switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
+                        case 4: {
+                            draw_parts(image, images::c_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 3);
+                            continue;
+                        }
+                        case 5: {
+                            draw_parts(image, images::c_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                            continue;
+                        }
+                        case 6: {
+                            draw_parts(image, images::c_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                            continue;
+                        }
+                        case 7: {
+                            draw_parts(image, images::c_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 6);
+                            continue;
+                        }
+                        case 8: {
+                            draw_parts(image, images::c_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 7);
+                            continue;
+                        }
+                        default: {
+                            std::cerr << "From List::draw_clef(C fork): clef type and name dont fit together"
+                                      << std::endl;
+                            continue;
+                        }
                     }
                 }
-            }
-            default: {
-                std::cerr << "From List::draw_clef: something broken..." << std::endl;
+                case 3: {
+                    switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
+                        case 2: {
+                            draw_parts(image, images::treble_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                            continue;
+                        }
+                        case 3: {
+                            draw_parts(image, images::treble_clef, cord[x].clef_cord.first,
+                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                            continue;
+                        }
+                        default: {
+                            std::cerr << "From List::draw_clef(G fork): clef type and name dont fit together"
+                                      << std::endl;
+                            continue;
+                        }
+                    }
+                }
+                default: {
+                    std::cerr << "From List::draw_clef: something broken..." << std::endl;
+                }
             }
         }
     }
@@ -194,10 +200,11 @@ namespace hc2img {
                 return;
             }
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
-                uint16_t x_gap = staff_edge_gap + 50 + (note_gap * (y + 1));
+                uint16_t x_gap = staff_edge_gap + 50 + (staff_list[x].get_note(y).second * note_gap);
+
                 uint16_t y_gap = 0;
                 int note_place =
-                    static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y)) * 2 + 1);
+                    static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y).first) * 2 + 1);
                 // std::cout << "note_place: " << note_place << std::endl;
                 // std::cout << "y_gap: " << y_gap << std::endl;
                 // находим у-координату ноты

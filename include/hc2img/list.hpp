@@ -57,7 +57,7 @@ namespace hc2img {
          * В hc2img::staff_cord хранятся координаты только одного стана без учета систем.
          * Поэтому нужно учитывать количество станов в листе staff_list.size().
          */
-        std::vector<hc2img::Staff_cord> draw_staff(cimg_library::CImg<unsigned char> &image) noexcept;
+        std::vector<hc2img::Staff_cord> draw_staffs(cimg_library::CImg<unsigned char> &image) noexcept;
 
         /*!
          * Рисует примитив, используя сам примитив и координаты для смещения.
@@ -68,7 +68,7 @@ namespace hc2img {
         /*!
          * Рисует ключ по координатам нотного стана.
          */
-        void draw_clef(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord cord) noexcept;
+        void draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept;
 
         /*!
          * Рисует знаки по координатам нотного стана.

@@ -16,7 +16,8 @@ Staff::Staff(const hc2img::Staff &s) {
     ptr_index = 0;
     for (int x = 0; x < s.get_note_list_size(); ++x) {
         note_list.resize(note_list.size() + 1);
-        note_list[x] = s.get_note(x);
+        note_list[x].first = s.get_note(x).first;
+        note_list[x].second = s.get_note(x).second;
     }
 }
 
@@ -36,7 +37,7 @@ harmony_core::Time_signature Staff::get_time_signature() const noexcept {
     return time_sig;
 }
 
-harmony_core::Note Staff::get_note(uint16_t i) const noexcept {
+std::pair<harmony_core::Note, uint16_t> Staff::get_note(uint16_t i) const noexcept {
     return note_list[i];
 }
 
@@ -44,7 +45,7 @@ size_t Staff::get_note_list_size() const noexcept {
     return note_list.size();
 }
 
-void Staff::add(harmony_core::Note &n) noexcept {
+void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
     note_list.push_back(n);
 }
 
@@ -55,21 +56,21 @@ void Staff::rm(uint16_t index) noexcept {
     note_list.erase(note_list.begin() + index);
 }
 
-size_t Staff::get_size() const noexcept {
-    float full_note_size = 0;
-    for (int x = 0; x < note_list.size(); ++x) {
-        static uint8_t note_size;
-        note_size = static_cast<int>(note_list[x].get_duration());
-        if (note_size == 0) {
-            full_note_size += 2;
-        } else {
-            --note_size;
-            full_note_size += 1 / pow(2, note_size);
-        }
-    }
-    full_note_size /= (static_cast<float>(time_sig.get_numerator()) / static_cast<float>(time_sig.get_denominator()));
-    return static_cast<size_t>(full_note_size);
-}
+// size_t Staff::get_size() const noexcept {
+//     float full_note_size = 0;
+//     for (int x = 0; x < note_list.size(); ++x) {
+//         static uint8_t note_size;
+//         note_size = static_cast<int>(note_list[x].get_duration());
+//         if (note_size == 0) {
+//             full_note_size += 2;
+//         } else {
+//             --note_size;
+//             full_note_size += 1 / pow(2, note_size);
+//         }
+//     }
+//     full_note_size /= (static_cast<float>(time_sig.get_numerator()) /
+//     static_cast<float>(time_sig.get_denominator())); return static_cast<size_t>(full_note_size);
+// }
 
 Staff &Staff::operator++() {
     if (ptr_index == 65'536) {
