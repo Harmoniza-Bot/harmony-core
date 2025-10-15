@@ -8,6 +8,8 @@ Staff::Staff() {
     clef = c;
     harmony_core::Time_signature t_s;
     time_sig = t_s;
+    harmony_core::Key k;
+    key = k;
 }
 
 Staff::Staff(const hc2img::Staff &s) {
@@ -43,6 +45,14 @@ std::pair<harmony_core::Note, uint16_t> Staff::get_note(uint16_t i) const noexce
 
 size_t Staff::get_note_list_size() const noexcept {
     return note_list.size();
+}
+
+void Staff::set_key(harmony_core::Key &k) noexcept {
+    key.set_data(k.get_data());
+}
+
+harmony_core::Key Staff::get_key() const noexcept {
+    return key;
 }
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {

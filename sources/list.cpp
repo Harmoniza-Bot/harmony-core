@@ -19,7 +19,7 @@ namespace hc2img {
     }
 
     void List::save() noexcept {
-        cimg_library::CImg<unsigned char> image(list_size_x, list_size_y, 1, 3, 255);
+        cimg_library::CImg<unsigned char> image(list_param::list_size_x, list_param::list_size_y, 1, 3, 255);
         // image.save_bmp("img/list.bmp");
         // image1.display("1");
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
@@ -42,19 +42,23 @@ namespace hc2img {
             cords.push_back(cord);
             for (int y = 0; y < 5; ++y) {
                 image.draw_line(
-                    /*первая координата*/ staff_edge_gap,
-                    staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap)),
-                    /*вторая координата*/ list_size_x - staff_edge_gap,
-                    staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap)),
-                    /*цвет*/ black);
+                    /*первая координата*/ list_param::staff_edge_gap,
+                    list_param::staff_edge_gap + y * list_param::staff_line_gap +
+                        (x * (list_param::staff_line_gap * 5 + list_param::staff_gap)),
+                    /*вторая координата*/ list_param::list_size_x - list_param::staff_edge_gap,
+                    list_param::staff_edge_gap + y * list_param::staff_line_gap +
+                        (x * (list_param::staff_line_gap * 5 + list_param::staff_gap)),
+                    /*цвет*/ list_param::black);
 
                 static uint16_t cord_y;
-                cord_y = staff_edge_gap + y * staff_line_gap + (x * (staff_line_gap * 5 + staff_gap));
+                cord_y = list_param::staff_edge_gap + y * list_param::staff_line_gap +
+                         (x * (list_param::staff_line_gap * 5 + list_param::staff_gap));
                 cords[x]._1_LINE = cord_y;
 
-                cords[x].clef_cord = {staff_edge_gap, cords[x]._1_LINE};
-                cords[x].accidental_cord = {staff_edge_gap + clef_acc_gap, cords[x]._1_LINE};
-                cords[x].time_signature_cord = {staff_edge_gap + clef_acc_gap + acc_ts_gap, cords[x]._1_LINE};
+                cords[x].clef_cord = {list_param::staff_edge_gap, cords[x]._1_LINE};
+                cords[x].accidental_cord = {list_param::staff_edge_gap + list_param::clef_acc_gap, cords[x]._1_LINE};
+                cords[x].time_signature_cord = {
+                    list_param::staff_edge_gap + list_param::clef_acc_gap + list_param::acc_ts_gap, cords[x]._1_LINE};
             }
         }
         return cords;
@@ -63,14 +67,19 @@ namespace hc2img {
     template<typename T>
     void List::draw_parts(cimg_library::CImg<unsigned char> &image, T part, int x, int y) {
         for (int a = 0; a < part.size() - 1; ++a) {
-            image.draw_line((part.x(a) * pixel_index) + x, (part.y(a) * pixel_index) + y,
-                            (part.x(a + 1) * pixel_index) + x, (part.y(a + 1) * pixel_index) + y, black);
-            image.draw_line((part.x(a) * pixel_index) + x + 1, (part.y(a) * pixel_index) + y,
-                            (part.x(a + 1) * pixel_index) + x + 1, (part.y(a + 1) * pixel_index) + y, black);
-            image.draw_line((part.x(a) * pixel_index) + x, (part.y(a) * pixel_index) + y + 1,
-                            (part.x(a + 1) * pixel_index) + x, (part.y(a + 1) * pixel_index) + y + 1, black);
-            image.draw_line((part.x(a) * pixel_index) + x + 1, (part.y(a) * pixel_index) + y + 1,
-                            (part.x(a + 1) * pixel_index) + x + 1, (part.y(a + 1) * pixel_index) + y + 1, black);
+            image.draw_line((part.x(a) * list_param::pixel_index) + x, (part.y(a) * list_param::pixel_index) + y,
+                            (part.x(a + 1) * list_param::pixel_index) + x,
+                            (part.y(a + 1) * list_param::pixel_index) + y, list_param::black);
+            image.draw_line((part.x(a) * list_param::pixel_index) + x + 1, (part.y(a) * list_param::pixel_index) + y,
+                            (part.x(a + 1) * list_param::pixel_index) + x + 1,
+                            (part.y(a + 1) * list_param::pixel_index) + y, list_param::black);
+            image.draw_line((part.x(a) * list_param::pixel_index) + x, (part.y(a) * list_param::pixel_index) + y + 1,
+                            (part.x(a + 1) * list_param::pixel_index) + x,
+                            (part.y(a + 1) * list_param::pixel_index) + y + 1, list_param::black);
+            image.draw_line((part.x(a) * list_param::pixel_index) + x + 1,
+                            (part.y(a) * list_param::pixel_index) + y + 1,
+                            (part.x(a + 1) * list_param::pixel_index) + x + 1,
+                            (part.y(a + 1) * list_param::pixel_index) + y + 1, list_param::black);
         }
     }
 
@@ -89,17 +98,17 @@ namespace hc2img {
                     switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
                         case 8: {
                             draw_parts(image, images::f_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 6);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 6);
                             continue;
                         }
                         case 9: {
                             draw_parts(image, images::f_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 5);
                             continue;
                         }
                         case 10: {
                             draw_parts(image, images::f_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 4);
                             continue;
                         }
                         default: {
@@ -113,27 +122,27 @@ namespace hc2img {
                     switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
                         case 4: {
                             draw_parts(image, images::c_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 3);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 3);
                             continue;
                         }
                         case 5: {
                             draw_parts(image, images::c_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 4);
                             continue;
                         }
                         case 6: {
                             draw_parts(image, images::c_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 5);
                             continue;
                         }
                         case 7: {
                             draw_parts(image, images::c_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 6);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 6);
                             continue;
                         }
                         case 8: {
                             draw_parts(image, images::c_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 7);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 7);
                             continue;
                         }
                         default: {
@@ -147,12 +156,12 @@ namespace hc2img {
                     switch (static_cast<int>(staff_list[x].get_clef().get_clef_name())) {
                         case 2: {
                             draw_parts(image, images::treble_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 4);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 4);
                             continue;
                         }
                         case 3: {
                             draw_parts(image, images::treble_clef, cord[x].clef_cord.first,
-                                       cord[x].clef_cord.second - staff_line_gap * 5);
+                                       cord[x].clef_cord.second - list_param::staff_line_gap * 5);
                             continue;
                         }
                         default: {
@@ -185,7 +194,6 @@ namespace hc2img {
         if (staff_list[0].get_clef().check_clef()) {
             std::cerr << "from List::draw_time_signature: clef is none or type & name dont fit" << std::endl;
         }
-        // Дописать
     }
 
     void List::draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
@@ -200,7 +208,8 @@ namespace hc2img {
                 return;
             }
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
-                uint16_t x_gap = staff_edge_gap + 50 + (staff_list[x].get_note(y).second * note_gap);
+                uint16_t x_gap =
+                    list_param::staff_edge_gap + 50 + (staff_list[x].get_note(y).second * list_param::note_gap);
 
                 uint16_t y_gap = 0;
                 int note_place =
@@ -213,13 +222,13 @@ namespace hc2img {
                     // std::cout << "y_gap(in while): " << y_gap << std::endl;
                     if (note_place > 0) {
                         --note_place;
-                        y_gap -= staff_line_gap / 2;
+                        y_gap -= list_param::staff_line_gap / 2;
                     }
                     if (note_place < 0) {
                         ++note_place;
-                        y_gap += staff_line_gap / 2;
+                        y_gap += list_param::staff_line_gap / 2;
                     }
-                    if (y_gap < staff_line_gap / 2) {
+                    if (y_gap < list_param::staff_line_gap / 2) {
                         note_place = 0;
                         std::cerr << "from List::draw_notes: note outs from list!" << std::endl;
                     }
@@ -234,19 +243,19 @@ namespace hc2img {
                 uint16_t start_cord = cord[x]._1_LINE; // координаты первой линии стана
                 if (y_gap > start_cord) {
                     while (y_gap > start_cord) {
-                        start_cord += staff_line_gap;
+                        start_cord += list_param::staff_line_gap;
                         image.draw_line(
                             /*первая координата*/ x_gap - 5, start_cord,
                             /*вторая координата*/ x_gap + 15, start_cord,
-                            /*цвет*/ black);
+                            /*цвет*/ list_param::black);
                     }
                 } else if (y_gap < start_cord) {
                     while (y_gap < start_cord) {
                         image.draw_line(
                             /*первая координата*/ x_gap - 5, start_cord,
                             /*вторая координата*/ x_gap + 15, start_cord,
-                            /*цвет*/ black);
-                        start_cord -= staff_line_gap;
+                            /*цвет*/ list_param::black);
+                        start_cord -= list_param::staff_line_gap;
                     }
                 }
             }

@@ -56,6 +56,16 @@ namespace hc2img {
         size_t get_note_list_size() const noexcept;
 
         /*!
+         * \brief Задает тональность нотного стана
+         */
+        void set_key(harmony_core::Key &) noexcept;
+
+        /*!
+         * \brief Возвращает тональность нотного стана
+         */
+        harmony_core::Key get_key() const noexcept;
+
+        /*!
          * \brief Добавляет ноту в такт.
          * \param [in] n Нота для добпвления
          * \param [in] is_pause Флаг, обозначающий добавление паузы. В этом случае считывается только размер ноты.
@@ -118,6 +128,11 @@ namespace hc2img {
          * \brief Хранит музыкальный размер нотного стана.
          */
         harmony_core::Time_signature time_sig;
+
+        /*!
+         * \brief Хранит тональность нотного стана
+         */
+        harmony_core::Key key;
 
         /*!
          * \brief Хранит список нот.

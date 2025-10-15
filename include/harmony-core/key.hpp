@@ -260,8 +260,8 @@ namespace harmony_core {
          * \brief Сравнивает левую и правую тональности.
          * \param lhs левая тон-ть.
          * \param rhs правая тон-ть.
-         * \return Если индекс квинтового круга левой тон-ти больше или равен, то \code true\endcode, иначе \code
-         * false\endcode.
+         * \return Если индекс квинтового круга левой тон-ти больше или равен, то \code true \endcode, иначе \code
+         * false \endcode.
          */
         friend bool operator>=(const Key &lhs, const Key &rhs) {
             return lhs.get_step() >= rhs.get_step();
