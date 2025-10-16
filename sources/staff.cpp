@@ -47,11 +47,11 @@ size_t Staff::get_note_list_size() const noexcept {
     return note_list.size();
 }
 
-void Staff::set_key(harmony_core::Key &k) noexcept {
-    key.set_data(k.get_data());
+void Staff::set_key(int8_t k) noexcept {
+    key = k;
 }
 
-harmony_core::Key Staff::get_key() const noexcept {
+int8_t Staff::get_key() const noexcept {
     return key;
 }
 

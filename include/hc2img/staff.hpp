@@ -56,14 +56,16 @@ namespace hc2img {
         size_t get_note_list_size() const noexcept;
 
         /*!
-         * \brief Задает тональность нотного стана
+         * \brief Задает знаки нотного стана.
+         * Отрицательное число - бемоли, положительное - диезы.
          */
-        void set_key(harmony_core::Key &) noexcept;
+        void set_key(int8_t) noexcept;
+        
 
         /*!
-         * \brief Возвращает тональность нотного стана
+         * \brief Возвращает количество знаков нотного стана
          */
-        harmony_core::Key get_key() const noexcept;
+        int8_t get_key() const noexcept;
 
         /*!
          * \brief Добавляет ноту в такт.
@@ -130,9 +132,10 @@ namespace hc2img {
         harmony_core::Time_signature time_sig;
 
         /*!
-         * \brief Хранит тональность нотного стана
+         * \brief Хранит знаки нотного стана.
+         * Отрицательное число - бемоли, положительное - диезы.
          */
-        harmony_core::Key key;
+        int8_t key;
 
         /*!
          * \brief Хранит список нот.
