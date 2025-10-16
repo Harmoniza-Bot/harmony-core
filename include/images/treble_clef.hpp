@@ -6,10 +6,6 @@ namespace images {
      */
     struct Treble_clef final {
     private:
-        /*!
-         * Данная константа хранит количество опорных точек скрипичного ключа
-         */
-        const uint8_t clef_size = 16;
 
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.
@@ -21,11 +17,12 @@ namespace images {
             0b0000'1001, 0b0000'0111, 0b0011'0010, 0b0011'0000, 0b0010'0000, 0b0010'1100, 0b0001'1100, 0b0001'1011};
 
     public:
+    
         /*!
          * Возвращает количество опорных точек ключа
          */
         size_t size() const noexcept {
-            return static_cast<size_t>(clef_size);
+            return 16;
         };
 
         /*!

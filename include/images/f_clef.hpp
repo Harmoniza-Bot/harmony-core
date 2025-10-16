@@ -4,10 +4,6 @@
 namespace images {
     struct F_clef final {
     private:
-        /*!
-         * Данная константа хранит количество опорных точек в ключе до
-         */
-        const uint8_t clef_size = 13;
 
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.
@@ -23,7 +19,7 @@ namespace images {
          * Возвращает количество опорных точек ключа
          */
         size_t size() const noexcept {
-            return static_cast<size_t>(clef_size);
+            return 13;
         };
 
         /*!

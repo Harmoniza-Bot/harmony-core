@@ -9,18 +9,13 @@ namespace images {
      * Данная структура хранит опорные точки для рисования ноты (без штиля).
      */
     struct Note final {
-    private:
-        /*!
-         * Данная константа хранит количество опорных точек ноты
-         */
-        const uint8_t note_size = 5;
 
     public:
         /*!
          * Возвращает количество опорных точек ноты
          */
         size_t size() const noexcept {
-            return static_cast<size_t>(note_size);
+            return 5;
         };
 
         /*!
