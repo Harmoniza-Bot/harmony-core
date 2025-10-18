@@ -2,9 +2,7 @@
 #define IMAGES_HPP
 
 #include "accidentals/accidentals.hpp"
-#include "c_clef.hpp"
-#include "f_clef.hpp"
-#include "note.hpp"
-#include "treble_clef.hpp"
+#include "clefs/clefs.hpp"
+#include "notes/note.hpp"
 
 #endif // IMAGES_HPP

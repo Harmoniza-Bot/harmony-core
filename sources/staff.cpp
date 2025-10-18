@@ -8,8 +8,7 @@ Staff::Staff() {
     clef = c;
     harmony_core::Time_signature t_s;
     time_sig = t_s;
-    harmony_core::Key k;
-    key = k;
+    key = 0;
 }
 
 Staff::Staff(const hc2img::Staff &s) {
@@ -56,8 +55,32 @@ int8_t Staff::get_key() const noexcept {
 }
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
-    note_list.push_back(n);
+    // Происходит умная вставка: ноты сортируются по индексу (2 элемент пары)
+    auto &notes = note_list;
+
+    // Определяем размер списка
+    int size = notes.size();
+
+    if (size != 0) { // Если список не пустой
+        for (int i = 0; i < size; ++i) {
+            // Теперь проверяем, что текущий элемент больше нового
+            if (notes[i].second >= n.second) {
+                // Вставляем новую пару в позицию перед текущим элементом
+                notes.insert(notes.begin() + i, n);
+                return;
+            }
+        }
+
+        // Если не нашли подходящего места, значит добавляем в конец
+        notes.push_back(n);
+        return;
+    } else {
+        // Если список пуст, просто добавляем новую пару
+        notes.push_back(n);
+        return;
+    }
 }
+
 
 void Staff::rm(uint16_t index) noexcept {
     if (index + 1 > note_list.size()) {

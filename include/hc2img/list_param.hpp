@@ -5,7 +5,7 @@ namespace list_param {
     constexpr uint8_t staff_gap = 30; // расстояние между нотными станами
     constexpr uint8_t staff_edge_gap = 60; // расстояние от края до стана
 
-    constexpr uint8_t note_gap = 25; // зазор между нотами
+    constexpr uint8_t note_gap = 35; // зазор между нотами
     constexpr uint8_t note_stem_length = 30; // длина штиля ноты
 
     constexpr uint8_t clef_acc_gap = 20; // зазор между ключем и ключевыми знаками

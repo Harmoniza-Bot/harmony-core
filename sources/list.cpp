@@ -20,12 +20,22 @@ namespace hc2img {
 
     void List::save() noexcept {
         cimg_library::CImg<unsigned char> image(list_param::list_size_x, list_param::list_size_y, 1, 3, 255);
-        // image.save_bmp("img/list.bmp");
-        // image1.display("1");
+
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
         draw_clefs(image, s);
         draw_notes(image, s);
         image.display("winnn");
+
+        // image.save_bmp("img/list.bmp");
+        // Для сохранения фотки
+
+        // for(int x=0; x<staff_list.size(); ++x){
+        //     for(int y=0; y<staff_list[x].get_note_list_size(); ++y){
+        //         std::cout << "note index " << y << " in " << x << " staff: " << staff_list[x].get_note(y).second <<
+        //         std::endl;
+        //     }
+        // }
+        // Для проверки сортировки нот
     }
 
     size_t List::size() const noexcept {
@@ -208,18 +218,36 @@ namespace hc2img {
                 return;
             }
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
-                uint16_t x_gap =
-                    list_param::staff_edge_gap + 50 + (staff_list[x].get_note(y).second * list_param::note_gap);
+                // В этих переменных хранятся переменные прошлых нот
+                static int past_note_height;
+                static uint16_t past_note_index;
+                static uint8_t add_gap = 0;
 
-                uint16_t y_gap = 0;
+                // Получаем место ноты на нотном стане
                 int note_place =
                     static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y).first) * 2 + 1);
-                // std::cout << "note_place: " << note_place << std::endl;
-                // std::cout << "y_gap: " << y_gap << std::endl;
+
+                // Проверяем, нужен ли доп. зазор между соседних нот
+                if (y != 0) {
+                    if (past_note_index == staff_list[x].get_note(y).second) {
+                        if (past_note_height == note_place || past_note_height - note_place == -1 ||
+                            past_note_height - note_place == 1) {
+                            add_gap = 10;
+                        }
+                    }
+                }
+
+                past_note_height = note_place;
+                past_note_index = staff_list[x].get_note(y).second;
+
+                uint16_t x_gap = list_param::staff_edge_gap + 50 +
+                                 (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
+
+                uint16_t y_gap = 0;
+
                 // находим у-координату ноты
                 y_gap = cord[x]._1_LINE;
                 while (note_place != 0) {
-                    // std::cout << "y_gap(in while): " << y_gap << std::endl;
                     if (note_place > 0) {
                         --note_place;
                         y_gap -= list_param::staff_line_gap / 2;
@@ -233,7 +261,6 @@ namespace hc2img {
                         std::cerr << "from List::draw_notes: note outs from list!" << std::endl;
                     }
                 }
-                // std::cout << "y_gap(finish): " << y_gap << std::endl;
 
                 // рисуем ноту
                 draw_parts(image, images::note, x_gap, y_gap);

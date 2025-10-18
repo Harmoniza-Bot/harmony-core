@@ -1,45 +1,44 @@
-#ifndef IMAGES_F_CLEF
-#define IMAGES_F_CLEF
+#ifndef IMAGES_C_CLEF
+#define IMAGES_C_CLEF
 
 namespace images {
-    struct F_clef final {
+    struct C_clef final {
     private:
-
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.
          * Нулевые координаты расположены в левом верхнем углу.
          * Первые 4 бита хранят координату x остальные - координату y
          */
-        const std::vector<uint8_t> f_clef_cord = {0b0010'0100, 0b011'0100,  0b0011'0101, 0b0010'0101, 0b0001'0101,
-                                                  0b0000'0100, 0b0000'0001, 0b0001'0000, 0b0100'0000, 0b0101'0010,
-                                                  0b0101'0110, 0b0100'1001, 0b0001'1100};
+        const std::vector<uint8_t> c_clef_cord = {
+            0b0000'1100, 0b000'0000,  0b0001'0000, 0b0001'1100, 0b0010'1100, 0b0010'0000, 0b0100'0000, 0b0101'0001,
+            0b0101'0101, 0b0100'0110, 0b0010'0110, 0b0100'0110, 0b0101'0111, 0b0101'1011, 0b0100'1100, 0b0010'1100};
 
     public:
         /*!
          * Возвращает количество опорных точек ключа
          */
         size_t size() const noexcept {
-            return 13;
+            return 16;
         };
 
         /*!
          * Возвращает y координату опорной точки по индексу или 255, если индекс больше количества точек.
          */
         uint8_t y(uint8_t i) const noexcept {
-            if (i >= clef_size) {
+            if (i >= 16) {
                 return 255;
             }
-            return f_clef_cord[i] & 0xF;
+            return c_clef_cord[i] & 0xF;
         };
 
         /*!
          * Возвращает x координату опорной точки по индексу
          */
         uint8_t x(uint8_t i) const noexcept {
-            return (f_clef_cord[i] >> 4) & 0xF;
+            return (c_clef_cord[i] >> 4) & 0xF;
         };
 
-    } f_clef;
+    } c_clef;
 } // namespace images
 
-#endif // IMAGES_F_CLEF
+#endif // IMAGES_C_CLEF
