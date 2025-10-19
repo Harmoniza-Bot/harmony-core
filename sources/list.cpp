@@ -8,6 +8,16 @@ namespace hc2img {
     }
 
     void List::add(Staff &s) {
+        if (staff_list.size() == 0) {
+            staff_list.push_back(s);
+            return;
+        }
+        for (int x = 0; x < staff_list.size(); ++x) {
+            if (static_cast<int>(staff_list[x].get_clef().get_type()) <= static_cast<int>(s.get_clef().get_type())) {
+                staff_list.insert(staff_list.begin() + x, s);
+                return;
+            }
+        }
         staff_list.push_back(s);
     }
 
@@ -234,6 +244,8 @@ namespace hc2img {
                             past_note_height - note_place == 1) {
                             add_gap = 10;
                         }
+                    } else {
+                        add_gap = 0;
                     }
                 }
 
