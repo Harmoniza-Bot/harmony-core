@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <hc2img/list.hpp>
 #include <images/images.hpp>
 #include <iostream>
@@ -33,6 +34,8 @@ namespace hc2img {
 
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
         draw_clefs(image, s);
+        draw_accidentals(image, s); // нуждается в доработке
+        // draw_time_signature(image, s); // нуждается в доработке
         draw_notes(image, s);
         image.display("winnn");
 
@@ -198,21 +201,42 @@ namespace hc2img {
         }
     }
 
-    void List::draw_accidentals(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept {
-        if (staff_list.size() == 0)
+    void List::draw_accidentals(cimg_library::CImg<unsigned char> &image,
+                                std::vector<hc2img::Staff_cord> &cord) noexcept {
+        if (staff_list.size() == 0) {
             return;
+        }
         if (staff_list[0].get_clef().check_clef()) {
             std::cerr << "from List::draw_accidentals: clef is none or type & name dont fit" << std::endl;
         }
-        // Дописать
+        for (int x = 0; x < staff_list.size(); ++x) {
+            int acc_index = staff_list[x].get_key();
+            while (acc_index != 0) {
+                static int acc_num = 0;
+                if (acc_index > 0) {
+                    --acc_index;
+                    draw_parts(image, images::sharp, 300 + acc_num * 50, 100);
+                }
+                if (acc_index < 0) {
+                    ++acc_index;
+                    draw_parts(image, images::flat, 100 + acc_num * 5, 100);
+                }
+                ++acc_num;
+            }
+        }
     }
 
-    void List::draw_time_signature(cimg_library::CImg<unsigned char> &image, hc2img::Staff_cord &cord) noexcept {
+    void List::draw_time_signature(cimg_library::CImg<unsigned char> &image,
+                                   std::vector<hc2img::Staff_cord> &cord) noexcept {
         if (staff_list.size() == 0)
             return;
 
         if (staff_list[0].get_clef().check_clef()) {
             std::cerr << "from List::draw_time_signature: clef is none or type & name dont fit" << std::endl;
+        }
+        for (int x = 0; x < cord.size(); ++x) {
+            image.draw_text(cord[x].time_signature_cord.first, cord[x].time_signature_cord.second, "4",
+                            list_param::black, list_param::white, 0.5f, 40);
         }
     }
 
@@ -252,7 +276,7 @@ namespace hc2img {
                 past_note_height = note_place;
                 past_note_index = staff_list[x].get_note(y).second;
 
-                uint16_t x_gap = list_param::staff_edge_gap + 50 +
+                uint16_t x_gap = list_param::staff_edge_gap + list_param::start_note_gap +
                                  (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
 
                 uint16_t y_gap = 0;

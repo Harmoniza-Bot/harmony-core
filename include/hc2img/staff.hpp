@@ -65,7 +65,7 @@ namespace hc2img {
         /*!
          * \brief Возвращает количество знаков нотного стана
          */
-        int8_t get_key() const noexcept;
+        int get_key() const noexcept;
 
         /*!
          * \brief Добавляет ноту в такт.
@@ -135,7 +135,7 @@ namespace hc2img {
          * \brief Хранит знаки нотного стана.
          * Отрицательное число - бемоли, положительное - диезы.
          */
-        int8_t key;
+        int8_t key = 0;
 
         /*!
          * \brief Хранит список нот.
