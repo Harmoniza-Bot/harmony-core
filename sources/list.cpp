@@ -211,15 +211,17 @@ namespace hc2img {
         }
         for (int x = 0; x < staff_list.size(); ++x) {
             int acc_index = staff_list[x].get_key();
+            int acc_num = 0;
             while (acc_index != 0) {
-                static int acc_num = 0;
                 if (acc_index > 0) {
                     --acc_index;
-                    draw_parts(image, images::sharp, 300 + acc_num * 50, 100);
+                    draw_parts(image, images::sharp, cord[x].accidental_cord.first + acc_num * staff_line_gap,
+                               cord[x].accidental_cord.second - acc_num * staff_line_gap);
                 }
                 if (acc_index < 0) {
                     ++acc_index;
-                    draw_parts(image, images::flat, 100 + acc_num * 5, 100);
+                    draw_parts(image, images::flat, cord[x].accidental_cord.first + acc_num * staff_line_gap,
+                               cord[x].accidental_cord.second - acc_num * staff_line_gap);
                 }
                 ++acc_num;
             }
