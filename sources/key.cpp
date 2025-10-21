@@ -263,43 +263,38 @@ std::vector<Note> Key::search_interval(const Interval &interval) noexcept {
 
 
 std::vector<Note> Key::get_accidentals() const noexcept {
-    std::vector<Note> answer;
-    uint8_t index = 0;
-    if ((static_cast<uint8_t>(data & 0b1111 - index)) == 0) {
-        return answer;
-    }
-    Note note; // знаки одинаковы для всех ладов
-    if (data & 0b10000) {
-        note.set_base(Base::B);
-        note.set_key_accidental(Accidental::FLAT);
-    } else {
-        note.set_base(Base::F);
-        note.set_key_accidental(Accidental::SHARP);
-    }
-
-    for (int x = 0; x <= 14; ++x) {
-        if ((static_cast<uint8_t>(data & 0b1111 - index)) == 0) {
-            return answer;
+    Note n;
+    n.set_octave(Octave::_1_LINE);
+    std::vector<Note> f_acc;
+    std::vector<Note> sh_acc;
+    for (int x = 0; x < 14; ++x) {
+        static int f = 2;
+        static int sh = 6;
+        if (f >= 8) {
+            f -= 7;
         }
-
-        for (int y = 0; y < 7; ++y) {
-            if (data & 0b10000) {
-                --note;
-            } else {
-                ++note;
-            }
-
-            if (note.get_octave() != Octave::_1_LINE) {
-                note.set_octave(Octave::_1_LINE);
-            }
-
-            if (y == 6) {
-                ++index;
-            }
+        if (sh >= 8) {
+            sh -= 7;
         }
-        answer.push_back(note);
+        n.set_base(static_cast<Base>(f));
+        f_acc.push_back(n);
+        n.set_base(static_cast<Base>(sh));
+        sh_acc.push_back(n);
+        f += 3;
+        sh += 4;
     }
-    return answer;
+
+    if (get_step() == 0) {
+        std::vector<Note> ans;
+        return ans;
+    }
+    if (get_step() > 0) {
+        std::vector<Note> ans(sh_acc.begin(), sh_acc.begin() + get_step());
+        return ans;
+    }
+
+    std::vector<Note> ans(f_acc.begin(), f_acc.begin() + (get_step() * -1));
+    return ans;
 }
 
 //--------------------------------
@@ -352,32 +347,35 @@ void Key::flat_step() noexcept {
     data = (data & ~0b1111) | value;
 }
 
-void Key::set_step(int8_t step) noexcept {
-    if (step > 0) {
-        data &= ~0b10000;
-    } else {
-        data |= 0b10000;
-    }
+// Сеттер
+void Key::set_step(int8_t value) noexcept {
+    // Ограничиваем диапазон
+    if (value < -14)
+        value = -14;
+    if (value > 14)
+        value = 14;
 
-    if (data < 0) {
-        data = -data;
-    }
+    // Преобразуем в 5 битное представление
+    uint8_t uvalue = static_cast<uint8_t>(value) & 0x1F;
 
-    if (step > 14 || step < -14)
-        return;
-    data = data & 0b1111 | (static_cast<uint16_t>(step));
+    // Очищаем биты 0-4
+    data &= ~0x1F;
+
+    // Записываем новое значение
+    data |= uvalue;
 }
 
-int8_t Key::get_step() const noexcept {
-    int8_t answer;
-    answer = data & 0b1111;
-
-    if (data & 0b10000) {
-        return -answer;
+int Key::get_step() const noexcept {
+    uint8_t raw = data & 0x1F; // Получаем 5 бит
+    // Расширяем знак (sign extension)
+    if (raw & 0x10) { // если старший бит (бит 4) равен 1, число отрицательное
+        // Заполняем старшие биты знаковых 8 битов
+        return static_cast<int>(raw | 0xE0); // 0xE0 = 1110 0000, расширение знака
     } else {
-        return answer;
+        return static_cast<int>(raw); // положительное число
     }
 }
+
 
 Note Key::get_resolution(Note note, bool dir) const noexcept {
     // гамма тональности

@@ -199,7 +199,7 @@ namespace harmony_core {
         /*!
          * \brief Возвращает количество шагов по кварто-квинтовому кругу
          */
-        int8_t get_step() const noexcept;
+        int get_step() const noexcept;
 
         //---- equality operator --------
 
