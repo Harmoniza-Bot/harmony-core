@@ -2,7 +2,7 @@
 #define HC2IMG_LIST_PARAM
 namespace list_param {
     constexpr uint8_t staff_line_gap = 10; // расстояние между линиями стана
-    constexpr uint8_t staff_gap = 30; // расстояние между нотными станами
+    constexpr uint8_t staff_gap = 45; // расстояние между нотными станами
     constexpr uint8_t staff_edge_gap = 60; // расстояние от края до стана
 
     constexpr uint8_t start_note_gap = 130; // доп. зазор между ключем и первой нотой в стане

@@ -212,39 +212,51 @@ namespace hc2img {
             }
             int acc_index = staff_list[x].get_key();
             int acc_num = 0;
-            harmony_core::Key k;
+            static harmony_core::Key k;
             k.set_step(acc_index);
             std::vector<harmony_core::Note> acc_vector = k.get_accidentals();
-            for (int s = 0; s < acc_vector.size(); ++s) {
-                if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::C_CLEF) {
-                    acc_vector[s].set_octave(harmony_core::Octave::_1_LINE);
-                }
-                if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::G_CLEF) {
-                    acc_vector[s].set_octave(harmony_core::Octave::_2_LINE);
-                }
-                if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::F_CLEF) {
-                    acc_vector[s].set_octave(harmony_core::Octave::SMALL);
-                }
-            }
+            // for (int s = 0; s < acc_vector.size(); ++s) {
+            //     if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::C_CLEF) {
+            //         acc_vector[s].set_octave(harmony_core::Octave::SMALL);
+            //     }
+            //     if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::G_CLEF) {
+            //         acc_vector[s].set_octave(harmony_core::Octave::_2_LINE);
+            //     }
+            //     if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::F_CLEF) {
+            //         acc_vector[s].set_octave(harmony_core::Octave::SMALL);
+            //     }
+            // }
             while (acc_index != 0) {
-                std::cout << "acc_vector notes: " << acc_vector[acc_num].get_name() << std::endl;
+                // std::cout << "acc_vector notes: " << acc_vector[acc_num].get_name() << std::endl;
                 if (acc_index > 0) {
                     --acc_index;
-                    draw_parts(
-                        image, images::sharp, cord[x].accidental_cord.first + acc_num * list_param::staff_line_gap,
-                        cord[x].accidental_cord.second -
-                            staff_list[x].get_clef().get_place(acc_vector[acc_index]) * list_param::staff_line_gap);
+                    int y_cord = cord[x].accidental_cord.second - list_param::staff_line_gap -
+                                 staff_list[x].get_clef().get_place(acc_vector[acc_num]) * list_param::staff_line_gap;
+                    if (y_cord > cord[x]._1_LINE - list_param::staff_line_gap * 1.5) {
+                        y_cord -= list_param::staff_line_gap * 3 + list_param::staff_line_gap / 2;
+                    }
+                    if (y_cord < cord[x]._1_LINE - list_param::staff_line_gap * 5) {
+                        y_cord += list_param::staff_line_gap * 3 + list_param::staff_line_gap / 2;
+                    }
+                    draw_parts(image, images::sharp,
+                               cord[x].accidental_cord.first + acc_num * list_param::staff_line_gap, y_cord);
                 }
                 if (acc_index < 0) {
                     ++acc_index;
-                    draw_parts(
-                        image, images::flat, cord[x].accidental_cord.first + acc_num * list_param::staff_line_gap,
-                        cord[x].accidental_cord.second -
-                            staff_list[x].get_clef().get_place(acc_vector[acc_index]) * list_param::staff_line_gap);
+                    int y_cord = cord[x].accidental_cord.second - list_param::staff_line_gap * 1.5 -
+                                 staff_list[x].get_clef().get_place(acc_vector[acc_num]) * list_param::staff_line_gap;
+                    if (y_cord > cord[x]._1_LINE - list_param::staff_line_gap * 2.5) {
+                        y_cord -= list_param::staff_line_gap * 3 + list_param::staff_line_gap / 2;
+                    }
+                    if (y_cord < cord[x]._1_LINE - list_param::staff_line_gap * 5) {
+                        y_cord += list_param::staff_line_gap * 3 + list_param::staff_line_gap / 2;
+                    }
+                    draw_parts(image, images::flat,
+                               cord[x].accidental_cord.first + acc_num * list_param::staff_line_gap, y_cord);
                 }
                 ++acc_num;
             }
-            std::cout << std::endl;
+            // std::cout << std::endl;
         }
     }
 

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <harmony-core/key.hpp>
 #include <stdexcept>
 
@@ -284,17 +285,21 @@ std::vector<Note> Key::get_accidentals() const noexcept {
         sh += 4;
     }
 
+    std::vector<Note> null_ans;
+
     if (get_step() == 0) {
-        std::vector<Note> ans;
-        return ans;
+        // std::cout << 1 << std::endl;
+        // std::cout << "get_step: " << get_step() << std::endl;
+        return null_ans;
     }
     if (get_step() > 0) {
-        std::vector<Note> ans(sh_acc.begin(), sh_acc.begin() + get_step());
-        return ans;
+        // std::cout << 2 << std::endl;
+        // std::cout << "get_step: " << get_step() << std::endl;
+        return sh_acc;
     }
-
-    std::vector<Note> ans(f_acc.begin(), f_acc.begin() + (get_step() * -1));
-    return ans;
+    // std::cout << 3 << std::endl;
+    // std::cout << "get_step: " << get_step() << std::endl;
+    return f_acc;
 }
 
 //--------------------------------
@@ -347,32 +352,30 @@ void Key::flat_step() noexcept {
     data = (data & ~0b1111) | value;
 }
 
-// Сеттер
 void Key::set_step(int8_t value) noexcept {
-    // Ограничиваем диапазон
-    if (value < -14)
-        value = -14;
-    if (value > 14)
+    if (value < 0) { // Если значение отрицательно
+        data = data | (1 << 4); // Устанавливаем 5-й бит в 1
+        value = -value; // Приводим значение к положительному
+    } else { // Если значение неотрицательно
+        data &= ~(1 << 4); // Обязательно сбросим 5-й бит в 0
+    }
+
+    if (value > 14) { // Ограничиваем максимум до 14
         value = 14;
+    }
 
-    // Преобразуем в 5 битное представление
-    uint8_t uvalue = static_cast<uint8_t>(value) & 0x1F;
-
-    // Очищаем биты 0-4
-    data &= ~0x1F;
-
-    // Записываем новое значение
-    data |= uvalue;
+    data &= ~0b1111; // Чистим младшие 4 бита
+    data |= value; // Присваиваем новое значение
 }
 
 int Key::get_step() const noexcept {
-    uint8_t raw = data & 0x1F; // Получаем 5 бит
-    // Расширяем знак (sign extension)
-    if (raw & 0x10) { // если старший бит (бит 4) равен 1, число отрицательное
-        // Заполняем старшие биты знаковых 8 битов
-        return static_cast<int>(raw | 0xE0); // 0xE0 = 1110 0000, расширение знака
+    uint8_t raw = data & 0b1111; // Получаем 4 младших бита
+    int ans = static_cast<int>(raw); // Преобразуем полученные 4 бита в целое число
+
+    if ((data & 0b10000) != 0) { // Проверяем 5-й бит
+        return -ans; // Если 5-й бит установлен, возвращаем отрицательное значение
     } else {
-        return static_cast<int>(raw); // положительное число
+        return ans; // Иначе оставляем положительное значение
     }
 }
 
