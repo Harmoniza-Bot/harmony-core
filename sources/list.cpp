@@ -2,6 +2,8 @@
 #include <hc2img/list.hpp>
 #include <images/images.hpp>
 #include <iostream>
+#include <string>
+
 
 namespace hc2img {
 
@@ -34,8 +36,9 @@ namespace hc2img {
 
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
         draw_clefs(image, s);
-        draw_accidentals(image, s); // нуждается в доработке
-        // draw_time_signature(image, s); // нуждается в доработке
+        draw_accidentals(image, s);
+        draw_time_signature(image, s); // нуждается в доработке
+        s = draw_staffs(image);
         draw_notes(image, s);
         image.display("winnn");
 
@@ -80,8 +83,9 @@ namespace hc2img {
 
                 cords[x].clef_cord = {list_param::staff_edge_gap, cords[x]._1_LINE};
                 cords[x].accidental_cord = {list_param::staff_edge_gap + list_param::clef_acc_gap, cords[x]._1_LINE};
-                cords[x].time_signature_cord = {
-                    list_param::staff_edge_gap + list_param::clef_acc_gap + list_param::acc_ts_gap, cords[x]._1_LINE};
+                cords[x].time_signature_cord = {list_param::staff_edge_gap + list_param::clef_acc_gap +
+                                                    list_param::acc_ts_gap,
+                                                cords[x]._1_LINE - list_param::staff_line_gap * 2};
             }
         }
         return cords;
@@ -268,9 +272,20 @@ namespace hc2img {
         if (staff_list[0].get_clef().check_clef()) {
             std::cerr << "from List::draw_time_signature: clef is none or type & name dont fit" << std::endl;
         }
+
+        // Рисуем числитель размера
         for (int x = 0; x < cord.size(); ++x) {
-            image.draw_text(cord[x].time_signature_cord.first, cord[x].time_signature_cord.second, "4",
-                            list_param::black, list_param::white, 0.5f, 40);
+            std::string num = std::to_string(staff_list[x].get_time_signature().get_numerator());
+            image.draw_text(cord[x].time_signature_cord.first,
+                            cord[x].time_signature_cord.second - list_param::staff_line_gap * 3, num.c_str(),
+                            list_param::black, list_param::white, 1.0f, 30);
+        }
+
+        // Рисуем знаменатель размера
+        for (int x = 0; x < cord.size(); ++x) {
+            std::string den = std::to_string(staff_list[x].get_time_signature().get_denominator());
+            image.draw_text(cord[x].time_signature_cord.first, cord[x].time_signature_cord.second, den.c_str(),
+                            list_param::black, list_param::white, 1.0f, 30);
         }
     }
 

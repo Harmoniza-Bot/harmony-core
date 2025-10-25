@@ -31,16 +31,6 @@ namespace harmony_core {
         // getters & setters
 
         /*!
-         * Задает информацию о размере
-         */
-        void set_data(uint8_t);
-
-        /*!
-         * Возвращает информацию о размере
-         */
-        uint8_t get_data();
-
-        /*!
          * \brief Задает числитель и знаменатель.
          */
         void set_signature(uint8_t, uint8_t) noexcept;
@@ -65,10 +55,11 @@ namespace harmony_core {
     private:
         /*!
          * Представляет информацию о размере
-         * Биты \code 0-3 \endcode хранят числитель дроби
-         * Биты \code 4-7 \endcode хранят знаменатель дроби
+         * numerator - числитель размера
+         * denominator - знаменатель размера
          */
-        uint8_t data;
+        uint8_t numerator = 0;
+        uint8_t denominator = 0;
     };
 } // namespace harmony_core
 

@@ -5,12 +5,12 @@ namespace list_param {
     constexpr uint8_t staff_gap = 45; // расстояние между нотными станами
     constexpr uint8_t staff_edge_gap = 60; // расстояние от края до стана
 
-    constexpr uint8_t start_note_gap = 130; // доп. зазор между ключем и первой нотой в стане
+    constexpr uint8_t start_note_gap = 160; // доп. зазор между ключем и первой нотой в стане
     constexpr uint8_t note_gap = 35; // зазор между нотами
     constexpr uint8_t note_stem_length = 30; // длина штиля ноты
 
     constexpr uint8_t clef_acc_gap = 30; // зазор между ключем и ключевыми знаками
-    constexpr uint8_t acc_ts_gap = 15; // зазор между ключевыми знаками и размером
+    constexpr uint8_t acc_ts_gap = 80; // зазор между ключевыми знаками и размером
 
     constexpr unsigned char black[] = {0, 0, 0}; // цвет нот и станов (черный)
     constexpr unsigned char white[] = {255, 255, 255}; // белый цвет
