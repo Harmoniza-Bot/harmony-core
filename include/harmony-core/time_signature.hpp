@@ -50,15 +50,17 @@ namespace harmony_core {
          * \param [in] список нот для добавления
          * \return Пару числитель - знаменатель остатка размера.
          */
-        std::pair<uint8_t, uint8_t> get_remainder(std::vector<harmony_core::Note>);
+        std::pair<uint16_t, uint16_t> get_remainder(std::vector<harmony_core::Note>);
 
     private:
         /*!
-         * Представляет информацию о размере
-         * numerator - числитель размера
-         * denominator - знаменатель размера
+         * Представляет информацию о числителе размера.
          */
         uint8_t numerator = 0;
+
+        /*!
+         * Представляет информацию о знаменателе размера.
+         */
         uint8_t denominator = 0;
     };
 } // namespace harmony_core
