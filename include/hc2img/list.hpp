@@ -56,35 +56,58 @@ namespace hc2img {
          * Возвращает объекты hc2img::staff_cord c координатами нотных станов.
          * В hc2img::staff_cord хранятся координаты только одного стана без учета систем.
          * Поэтому нужно учитывать количество станов в листе staff_list.size().
+         * \param &image общект cimg_library (лист) для рисования.
          */
         std::vector<hc2img::Staff_cord> draw_staffs(cimg_library::CImg<unsigned char> &image) noexcept;
 
         /*!
          * Рисует примитив, используя сам примитив и координаты для смещения.
+         * \param &image общект cimg_library (лист) для рисования.
+         * \param part объект с координатами опорных точек для рисования.
+         * \param x х-координата
+         * \param y y-координата
          */
         template<typename T>
         void draw_parts(cimg_library::CImg<unsigned char> &image, T part, int x, int y);
 
         /*!
+         * Рисует лигу между двумя координатами.
+         * \param image лист для рисования.
+         * \param start координаты стартовой точки лиги.
+         * \param finish координаты конечной точки лиги.
+         * \param direction ориентация лиги (1 - вверх, 0 - вниз).
+         */
+        void draw_tie(cimg_library::CImg<unsigned char> &image, std::pair<uint16_t, uint16_t> start,
+                      std::pair<uint16_t, uint16_t> finish, bool direction);
+
+        /*!
          * Рисует ключ по координатам нотного стана.
+         * \param &image общект cimg_library (лист) для рисования.
+         * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
         void draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept;
 
         /*!
          * Рисует знаки по координатам нотного стана.
+         * \param &image общект cimg_library (лист) для рисования.
+         * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
         void draw_accidentals(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> &cord) noexcept;
 
         /*!
          * Рисует нотный размер по координатам нотного стана.
+         * \param &image общект cimg_library (лист) для рисования.
+         * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
         void draw_time_signature(cimg_library::CImg<unsigned char> &image,
                                  std::vector<hc2img::Staff_cord> &cord) noexcept;
 
-        /*
+        /*!
          * Рисует ноты по координатам нотного стана.
+         * \param &image общект cimg_library (лист) для рисования.
+         * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
-        void draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord>);
+        void draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
 
         /*!
          * \brief Хранит информацию о патаметрах листа.

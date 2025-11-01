@@ -6,7 +6,7 @@
 
 namespace images {
     /*!
-     * Данная структура хранит опорные точки для рисования ноты (без штиля).
+     * Данная структура хранит опорные точки для рисования закрашенной ноты (без штиля).
      */
     struct Note_1 final {
 
@@ -19,7 +19,7 @@ namespace images {
         };
 
         /*!
-         * Возвращает y координату опорной точки по индексу или 255, если индекс больше количества точек.
+         * Возвращает y координату опорной точки по индексу или 1 и предупреждение, если индекс больше количества точек.
          */
         uint8_t y(uint8_t i) const noexcept {
             switch (i) {
@@ -47,16 +47,15 @@ namespace images {
                 case 7: {
                     return 2;
                 }
-                default:
-                    if (i > 3) {
-                        std::cerr << "from note::y(): too big argument" << std::endl;
-                    }
+                default: {
+                    std::cerr << "from note::y(): too big argument" << std::endl;
+                }
             }
             return 1;
         };
 
         /*!
-         * Возвращает x координату опорной точки по индексу
+         * Возвращает x координату опорной точки по индексу или 1 и предупреждение, если индекс больше количества точек.
          */
         uint8_t x(uint8_t i) const noexcept {
             switch (i) {
@@ -85,9 +84,7 @@ namespace images {
                     return 1;
                 }
                 default:
-                    if (i > 3) {
-                        std::cerr << "from note::y(): too big argument" << std::endl;
-                    }
+                    std::cerr << "from note::y(): too big argument" << std::endl;
             }
             return 1;
         };

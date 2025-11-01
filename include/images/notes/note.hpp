@@ -73,6 +73,18 @@ namespace images {
             }
             return 1;
         };
+
+        /*!
+         * Возвращает x координату точки для крепления штиля.
+         */
+        uint16_t x_stem(bool dir) {
+        }
+
+        /*!
+         * Возвращает у координату точки для крепления штиля.
+         */
+        uint16_t y_stem(bool dir) {
+        }
     } note;
 } // namespace images
 #endif // IMAGES_NOTE_HPP
