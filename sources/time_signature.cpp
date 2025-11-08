@@ -28,46 +28,52 @@ uint8_t Time_signature::get_denominator() const noexcept {
     return denominator;
 }
 
-// НОД
-long long gcd(long long a, long long b) {
-    while (b) {
-        a %= b;
-        std::swap(a, b);
+int gcd(int a, int b) {
+    while(b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
     return a;
 }
 
-// НОК
-long long lcm(long long a, long long b) {
-    if (a == 0 || b == 0) {
-        return 0;
-    }
-    return std::abs(a * b) / gcd(a, b);
+unsigned long long powerOfTwo(int exponent) {
+    return 1ULL << exponent;
 }
 
-std::pair<uint16_t, uint16_t> Time_signature::get_remainder(std::vector<harmony_core::Note> n) {
-    std::pair<uint16_t, uint16_t> ans;
-    int max_note_sig = 0;
-    for (int x = 0; x < n.size(); ++x) {
-        if (max_note_sig < static_cast<int>(n[x].get_duration())) {
-            max_note_sig = static_cast<int>(n[x].get_duration());
-        }
+std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note, int num, int den) {
+    int num2, den2;
+    if(note.get_duration() == Duration::DOUBLE){
+        num2 = 2;
+        den2 = 1;
+    } else {
+        num2 = 1;
+        den2 = powerOfTwo(static_cast<int>(note.get_duration()) - 1);
     }
-
-    ans.second = lcm(max_note_sig, denominator);
-    ans.first = ans.second;
-
-    for (int x = 0; x < n.size(); ++x) {
-        static std::pair<uint16_t, uint16_t> note_sig;
-        note_sig.first = max_note_sig / static_cast<int>(n[x].get_duration());
-        note_sig.second = lcm(max_note_sig, denominator);
-        note_sig.first *= note_sig.second / max_note_sig;
-
-        if (note_sig.first > ans.first) {
-            ans.first = 0;
-            return ans;
-        }
-        ans.first -= note_sig.first;
+    if(den == 0 || den2 == 0) {
+        std::cerr << "from get_remainder: гле-то ноль...." << std::endl;
+        return {1,1};
     }
-    return ans;
+    
+    // Приведение дробей к общему знаменателю
+    int common_denominator = den * den2 / gcd(den, den2);
+    int numerator1 = num * (common_denominator / den);   // Числитель первой дроби
+    int numerator2 = num2 * (common_denominator / den2);   // Числитель второй дроби
+    
+    // Вычитаем дроби
+    int result_numerator = numerator1 - numerator2;
+    if (result_numerator < 0){
+        result_numerator = 0;
+        std::cerr << "from get_remainder: слишком большая нота..." << std::endl;
+    }
+    // Сокращение результата
+    int divisor = gcd(result_numerator, common_denominator);
+    result_numerator /= divisor;
+    common_denominator /= divisor;
+    
+    return {result_numerator, common_denominator};
+}
+
+std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note){
+    return get_remainder(note, numerator, denominator);
 }
