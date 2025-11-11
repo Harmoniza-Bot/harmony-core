@@ -52,13 +52,13 @@ namespace harmony_core {
          * \param den - знаменатель размера такта.
          * \return Пару числитель - знаменатель остатка размера.
          */
-        std::pair<int, int> get_remainder(harmony_core::Note note, int num, int den);
+        std::pair<int, int> get_remainder(harmony_core::Note note, int num, int den) const noexcept;
         
         /*!
          * \brief вохвращает остаточный размер такта после добавления ноты.
          * Используется размер объекта.
          */
-        std::pair<int, int> get_remainder(harmony_core::Note note);
+        std::pair<int, int> get_remainder(harmony_core::Note note) const noexcept;
 
     private:
         /*!

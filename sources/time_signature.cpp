@@ -41,7 +41,7 @@ unsigned long long powerOfTwo(int exponent) {
     return 1ULL << exponent;
 }
 
-std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note, int num, int den) {
+std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note, int num, int den) const noexcept {
     int num2, den2;
     if(note.get_duration() == Duration::DOUBLE){
         num2 = 2;
@@ -74,6 +74,6 @@ std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note, int n
     return {result_numerator, common_denominator};
 }
 
-std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note){
+std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note) const noexcept {
     return get_remainder(note, numerator, denominator);
 }
