@@ -68,6 +68,34 @@ namespace hc2img {
         int get_key() const noexcept;
 
         /*!
+         *\brief Добавляет номера нот, которые нужно залиговать.
+         * Используются номера от общего к-ва нот в стане.
+         */
+        void add_tie(uint16_t index) noexcept;
+
+        /*!
+         * \brief Убирает номера нот, которые нужно залиговать
+         * Используются номера от общего к-ва нот в стане.
+         */
+        void rm_tie(uint16_t index) noexcept;
+
+        /*!
+         * \brief Проверяет, является ли нота по указанному индексу залигованой
+         * Используются номера от общего к-ва нот в стане.
+         */
+        bool is_tie(uint16_t index) const noexcept;
+
+        /*!
+         * \brief Возвращает элемент из списка лиг по индексу.
+         */
+        uint16_t get_tie(uint16_t index) const noexcept;
+
+        /*!
+         * \brief Возвращает количество залигованных нот
+         */
+        size_t tie_size() const noexcept;
+
+        /*!
          * \brief Добавляет ноту в такт.
          * \param [in] n Нота для добпвления
          * \param [in] is_pause Флаг, обозначающий добавление паузы. В этом случае считывается только размер ноты.
@@ -82,9 +110,14 @@ namespace hc2img {
         void rm(uint16_t index) noexcept;
 
         /*!
-         * \brief Возвращает количество тактов в  нотном стане.
+         * \brief Возвращает количество тактов в нотном стане.
          */
         size_t get_size() const noexcept;
+
+        /*!
+         * \brief Исправляет группировку нот в нотном стане на основе размера
+         */
+        void fix_groups() noexcept;
 
         /*!
          * \brief инкрементирует указатель на ноту стана.
@@ -141,6 +174,11 @@ namespace hc2img {
          * \brief Хранит список нот.
          */
         std::vector<std::pair<harmony_core::Note, uint16_t>> note_list;
+
+        /*!
+         * \brief Хранит список залигованных нот
+         */
+        std::vector<uint16_t> tie_list;
 
         /*!
          * \brief Представляет индекс нотного указателя, на месте которого происходит вставка и удаление нот.

@@ -88,6 +88,23 @@ namespace images {
             }
             return 1;
         };
+
+        /*!
+         * Возвращает x координату точки для крепления штиля по направлению (0 - вниз, 1 - вверх).
+         */
+        uint8_t x_stem(bool dir) {
+            if (dir) {
+                return 0;
+            }
+            return 2;
+        }
+
+        /*!
+         * Возвращает у координату точки для крепления штиля по направлению (0 - вниз, 1 - вверх).
+         */
+        uint8_t y_stem(bool dir) {
+            return 1;
+        }
     } note_1;
 } // namespace images
 #endif // IMAGES_NOTE_1_HPP

@@ -20,6 +20,10 @@ Staff::Staff(const hc2img::Staff &s) {
         note_list[x].first = s.get_note(x).first;
         note_list[x].second = s.get_note(x).second;
     }
+    for (int x = 0; x < s.tie_size(); ++x) {
+        tie_list.resize(tie_list.size() + 1);
+        tie_list[x] = s.get_tie(x);
+    }
 }
 
 void Staff::set_clef(harmony_core::Clef c) noexcept {
@@ -53,6 +57,55 @@ void Staff::set_key(int8_t k) noexcept {
 int Staff::get_key() const noexcept {
     return static_cast<int>(key);
 }
+
+void Staff::add_tie(uint16_t index) noexcept {
+    if (index > note_list.size()) {
+        std::cerr << "From add_tie: Слишком большой индекс ноты..." << std::endl;
+        return;
+    }
+    if (tie_list.size() == 0) {
+        tie_list.push_back(index);
+        return;
+    }
+    for (int x = 0; x < tie_list.size(); ++x) {
+        if (index <= tie_list[x]) {
+            tie_list.insert(tie_list.begin() + x, index);
+        }
+    }
+    tie_list.push_back(index);
+}
+
+void Staff::rm_tie(uint16_t index) noexcept {
+    for (int x = 0; x < tie_list.size(); ++x) {
+        if (tie_list[x] == index) {
+            tie_list.erase(tie_list.begin() + x);
+            return;
+        }
+    }
+    std::cerr << "From rm_tie: Нота " << index << " и так не залигована..." << std::endl;
+}
+
+bool Staff::is_tie(uint16_t index) const noexcept {
+    for (int x = 0; x < tie_list.size(); ++x) {
+        if (tie_list[x] == index) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+size_t Staff::tie_size() const noexcept {
+    return tie_list.size();
+}
+
+uint16_t Staff::get_tie(uint16_t index) const noexcept {
+    if (index > tie_list.size()) {
+        std::cerr << "From get_tie: Слишком большой индекс..." << std::endl;
+        return 0;
+    }
+    return tie_list[index];
+}
+
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
     // Происходит умная вставка: ноты сортируются по индексу (2 элемент пары)

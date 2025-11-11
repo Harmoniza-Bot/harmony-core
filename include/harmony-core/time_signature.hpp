@@ -2,6 +2,7 @@
 #define HARMONY_CORE_TIME_SIGNATURE
 
 #include <cstdint>
+#include <iostream>
 #include <vector>
 #include "harmony-core/note.hpp"
 
@@ -46,19 +47,26 @@ namespace harmony_core {
         uint8_t get_denominator() const noexcept;
 
         /*!
-         * \brief Возвращает остаточный размер такта после добавления ноты или 0 если нота больше или равна размеру такта.
+         * \brief Возвращает остаточный размер такта после добавления ноты или 0 если нота больше или равна размеру
+         * такта.
          * \param note нота для добавления.
          * \param num - числитель размера такта.
          * \param den - знаменатель размера такта.
          * \return Пару числитель - знаменатель остатка размера.
          */
         std::pair<int, int> get_remainder(harmony_core::Note note, int num, int den) const noexcept;
-        
+
         /*!
-         * \brief вохвращает остаточный размер такта после добавления ноты.
+         * \brief Возвращает остаточный размер такта после добавления ноты.
          * Используется размер объекта.
          */
         std::pair<int, int> get_remainder(harmony_core::Note note) const noexcept;
+
+        /*!
+         * \brief Возвращает остаточный размер такта после добавления нескольких нот.
+         * Используется размер объекта.
+         */
+        std::pair<int, int> get_remainder(std::vector<harmony_core::Note> note) const noexcept;
 
     private:
         /*!
