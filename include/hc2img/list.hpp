@@ -13,7 +13,7 @@
 namespace hc2img {
     /*!
      * \brief Представляет нотный лист.
-     * В него можно добавить нотный стан (hc2img::Staff).
+     * В него можно добавить нотный стан (harmony_core::Staff).
      * Если добавить больше одного стана они объединятся в систему нотных станов.
      * Также можно сохранить лист как изображение.
      * (Для работы с графикой исаользуется библиотека CImg.h)
@@ -29,7 +29,7 @@ namespace hc2img {
          * \brief Добавляет нотный стан в лист.
          * \param[in] Staff Ссылка на стан для добавления
          */
-        void add(Staff &s);
+        void add(harmony_core::Staff &s);
 
         /*!
          * \brief Удаляет нотный стан из листа
@@ -46,7 +46,7 @@ namespace hc2img {
          */
         size_t size() const noexcept;
 
-        Staff &operator[](int index) {
+        harmony_core::Staff &operator[](int index) {
             return staff_list[index];
         }
 
@@ -122,7 +122,7 @@ namespace hc2img {
          * \brief Хранит вектор из нотных станов.
          * Если станов больше одного, то они объединяются в систему.
          */
-        std::vector<Staff> staff_list;
+        std::vector<harmony_core::Staff> staff_list;
     };
 } // namespace hc2img
 

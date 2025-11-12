@@ -1,7 +1,6 @@
 #include <cmath>
 #include <harmony-core/harmony-core.hpp>
-#include <hc2img/staff.hpp>
-using namespace hc2img;
+using namespace harmony_core;
 
 Staff::Staff() {
     harmony_core::Clef c;
@@ -10,7 +9,7 @@ Staff::Staff() {
     time_sig = t_s;
 }
 
-Staff::Staff(const hc2img::Staff &s) {
+Staff::Staff(const harmony_core::Staff &s) {
     clef = s.get_clef();
     time_sig = s.get_time_signature();
     ptr_index = 0;

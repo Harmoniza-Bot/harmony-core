@@ -1,8 +1,8 @@
 #include <cstdint>
 #include <hc2img/list.hpp>
-#include <images/images.hpp>
 #include <iostream>
 #include <string>
+#include "images/images.hpp"
 
 
 namespace hc2img {
@@ -10,7 +10,7 @@ namespace hc2img {
     List::List() {
     }
 
-    void List::add(Staff &s) {
+    void List::add(harmony_core::Staff &s) {
         if (staff_list.size() == 0) {
             staff_list.push_back(s);
             return;

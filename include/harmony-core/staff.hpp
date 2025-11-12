@@ -3,12 +3,9 @@
 
 #include <cstdint>
 
-#include <harmony-core/harmony-core.hpp>
-
-namespace hc2img {
+namespace harmony_core {
     /*!
-     * \brief Представляет нотный стан и является контейнером для тактов.
-     * (Для функционирования интерфейса необходимо подключить библиотеку CImg.h)
+     * \brief Представляет нотный стан и является контейнером для нот и нотных обозначений.
      */
     class Staff final {
     public:
@@ -20,7 +17,7 @@ namespace hc2img {
         /*!
          * \brief создает нотный стан на основе днугого нотного стана.
          */
-        Staff(const hc2img::Staff &);
+        Staff(const harmony_core::Staff &);
         /*!
          * \brief устанавливает ключ.
          * \param [in] harmony_core::Clef
@@ -185,6 +182,6 @@ namespace hc2img {
          */
         uint16_t ptr_index = 0;
     };
-} // namespace hc2img
+} // namespace harmony_core
 
 #endif // HC2IMG_STUFF
