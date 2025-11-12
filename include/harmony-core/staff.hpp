@@ -1,7 +1,11 @@
-#ifndef HC2IMG_STUFF
-#define HC2IMG_STUFF
+#ifndef HARMONY_CORE_STAFF
+#define HARMONY_CORE_STAFF
 
 #include <cstdint>
+
+#include <harmony-core/clef.hpp>
+#include <harmony-core/note.hpp>
+#include <harmony-core/time_signature.hpp>
 
 namespace harmony_core {
     /*!
@@ -184,4 +188,4 @@ namespace harmony_core {
     };
 } // namespace harmony_core
 
-#endif // HC2IMG_STUFF
+#endif // HARMONY_CORE_STAFF
