@@ -6,6 +6,7 @@ add_library(harmony-core
             list.cpp
             staff.cpp
             staff_cord.cpp
-            time_signature.cpp)
+            time_signature.cpp
+            images.cpp)
 
 target_include_directories(harmony-core PUBLIC ${PROJECT_SOURCE_DIR}/include)

@@ -1,8 +1,11 @@
 #ifndef IMAGES_F_CLEF
 #define IMAGES_F_CLEF
 
+#include <cstdint>
+#include <vector>
+
 namespace images {
-    struct F_clef final {
+    const struct F_clef final {
     private:
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.

@@ -1,8 +1,11 @@
 #ifndef HC2IMG_ACCIDENTALS_FLAT
 #define HC2IMG_ACCIDENTALS_FLAT
+#include <cstdint>
 #include <iostream>
+#include <vector>
+
 namespace images {
-    struct Flat final {
+    extern const struct Flat final {
     public:
         size_t size() {
             return 5;

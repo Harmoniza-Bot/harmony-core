@@ -1,8 +1,11 @@
 #ifndef HC2IMG_ACCIDENTALS_NATURAL
 #define HC2IMG_ACCIDENTALS_NATURAL
+#include <cstdint>
 #include <iostream>
+#include <vector>
+
 namespace images {
-    struct Natural final {
+    extern const struct Natural final {
     public:
         size_t size() {
             return 6;

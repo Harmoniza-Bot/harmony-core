@@ -14,4 +14,13 @@ find_package(OpenGL REQUIRED)
 find_package(X11 REQUIRED)
 
 target_link_libraries(harmony-core PRIVATE ${X11_LIBRARIES})
-target_include_directories(harmony-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/CImg)
+
+# Используем модуль поиска CImg
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/modules/")
+
+# Подключаем CImg
+find_package(CImg REQUIRED)
+
+# Включаем интерфейсы CImg
+target_link_libraries(harmony-core PUBLIC CImg::CImg)
+

@@ -1,8 +1,11 @@
 #ifndef HC2IMG_ACCIDENTALS_DOUBLE_SHARP
 #define HC2IMG_ACCIDENTALS_DOUBLE_SHARP
+#include <cstdint>
 #include <iostream>
+#include <vector>
+
 namespace images {
-    struct Double_sharp final {
+    extern const struct Double_sharp final {
     public:
         size_t size() {
             return 5;

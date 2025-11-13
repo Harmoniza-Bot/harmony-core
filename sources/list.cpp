@@ -1,10 +1,5 @@
-#include <cstdint>
+#include <hc2img/images/images.hpp>
 #include <hc2img/list.hpp>
-#include <iostream>
-#include <string>
-#include "images/images.hpp"
-
-
 namespace hc2img {
 
     List::List() {

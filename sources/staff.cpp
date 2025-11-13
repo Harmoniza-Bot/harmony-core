@@ -23,6 +23,10 @@ Staff::Staff(const harmony_core::Staff &s) {
         tie_list.resize(tie_list.size() + 1);
         tie_list[x] = s.get_tie(x);
     }
+    for (int x = 0; x < s.tie_size(); ++x) {
+        bar_list.resize(bar_list.size() + 1);
+        bar_list[x] = s.get_tie(x);
+    }
 }
 
 void Staff::set_clef(harmony_core::Clef c) noexcept {
@@ -105,6 +109,36 @@ uint16_t Staff::get_tie(uint16_t index) const noexcept {
     return tie_list[index];
 }
 
+void Staff::add_bar(uint16_t index){
+    if (index > note_list.size()) {
+        std::cerr << "From add_bar: Слишком большой индекс ноты..." << std::endl;
+        return;
+    }
+    if (bar_list.size() == 0) {
+        bar_list.push_back(index);
+        return;
+    }
+    for (int x = 0; x < bar_list.size(); ++x) {
+        if (index <= bar_list[x]) {
+            bar_list.insert(bar_list.begin() + x, index);
+        }
+    }
+    bar_list.push_back(index);
+}
+
+void Staff::rm_bar(uint16_t index){
+    for (int x = 0; x < bar_list.size(); ++x) {
+        if (bar_list[x] == index) {
+            bar_list.erase(bar_list.begin() + x);
+            return;
+        }
+    }
+    std::cerr << "From rm_bar: После ноты " << index << " нет тактовой черты..." << std::endl;
+}
+
+void Staff::fix_bar(){
+
+}
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
     // Происходит умная вставка: ноты сортируются по индексу (2 элемент пары)

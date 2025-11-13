@@ -2,13 +2,13 @@
 #define HC2IMG_LIST
 
 #include <cstdint>
+#include "CImg/CImg.h"
 
 #include <harmony-core/harmony-core.hpp>
-#include <hc2img/staff_cord.hpp>
 
-#include "CImg.h"
+#include "images/images.hpp"
 #include "list_param.hpp"
-#include "staff.hpp"
+#include "staff_cord.hpp"
 
 namespace hc2img {
     /*!

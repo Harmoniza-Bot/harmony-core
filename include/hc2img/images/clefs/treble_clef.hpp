@@ -1,10 +1,14 @@
 #ifndef IMAGES_TREBLE_CLEF
 #define IMAGES_TREBLE_CLEF
+
+#include <cstdint>
+#include <vector>
+
 namespace images {
     /*!
      * Данная структура хранит опорные точки для рисования скрипичного ключа
      */
-    struct Treble_clef final {
+    const struct Treble_clef final {
     private:
         /*!
          * Данная константа хранит опорные точки скрипичного ключа.

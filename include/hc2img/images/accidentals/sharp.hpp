@@ -1,8 +1,11 @@
 #ifndef HC2IMG_ACCIDENTALS_SHARP
 #define HC2IMG_ACCIDENTALS_SHARP
+#include <cstdint>
 #include <iostream>
+#include <vector>
+
 namespace images {
-    struct Sharp final {
+    extern const struct Sharp final {
     public:
         size_t size() {
             return 11;

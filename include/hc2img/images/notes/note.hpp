@@ -3,12 +3,13 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <vector>
 
 namespace images {
     /*!
      * Данная структура хранит опорные точки для рисования ноты (без штиля).
      */
-    struct Note final {
+    extern const struct Note final {
 
     public:
         /*!
