@@ -73,12 +73,9 @@ namespace hc2img {
         /*!
          * Рисует лигу между двумя координатами.
          * \param image лист для рисования.
-         * \param start координаты стартовой точки лиги.
-         * \param finish координаты конечной точки лиги.
-         * \param direction ориентация лиги (1 - вверх, 0 - вниз).
+         * \param cord вектор из координат нотных станов (возвращается функцией рисования станов).
          */
-        void draw_tie(cimg_library::CImg<unsigned char> &image, std::pair<uint16_t, uint16_t> start,
-                      std::pair<uint16_t, uint16_t> finish, bool direction);
+        void draw_tie(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
 
         /*!
          * Рисует ключ по координатам нотного стана.

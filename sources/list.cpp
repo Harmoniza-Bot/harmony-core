@@ -36,6 +36,7 @@ namespace hc2img {
         s = draw_staffs(image);
         draw_notes(image, s);
         draw_bar(image, s);
+        draw_tie(image, s);
         image.display("winnn");
 
         // image.save_bmp("img/list.bmp");
@@ -106,35 +107,59 @@ namespace hc2img {
         }
     }
 
-    void draw_tie(cimg_library::CImg<unsigned char> &image, std::pair<uint16_t, uint16_t> start,
-                  std::pair<uint16_t, uint16_t> finish, bool direction) {
-        if (direction) {
-            image.draw_line(
-                /*первая координата*/ start.first, start.second,
-                /*вторая координата*/ start.first - list_param::tie_height, start.second - list_param::tie_height,
-                /*цвет*/ list_param::black);
-            image.draw_line(
-                /*первая координата*/ start.first - list_param::tie_height, start.second - list_param::tie_height,
-                /*вторая координата*/ finish.first - list_param::tie_height, finish.second - list_param::tie_height,
-                /*цвет*/ list_param::black);
-            image.draw_line(
-                /*первая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
-                /*вторая координата*/ finish.first, finish.second,
-                /*цвет*/ list_param::black);
-        } else {
-            image.draw_line(
-                /*первая координата*/ start.first, start.second,
-                /*вторая координата*/ start.first + list_param::tie_height, start.second + list_param::tie_height,
-                /*цвет*/ list_param::black);
-            image.draw_line(
-                /*первая координата*/ start.first + list_param::tie_height, start.second + list_param::tie_height,
-                /*вторая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
-                /*цвет*/ list_param::black);
-            image.draw_line(
-                /*первая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
-                /*вторая координата*/ finish.first, finish.second,
-                /*цвет*/ list_param::black);
-        }
+    // Данная реализация функции рисует квадратную лигу. Новая реализация использует сплайн
+    // void List::draw_tie(cimg_library::CImg<unsigned char> &image, std::pair<uint16_t, uint16_t> start,
+    //               std::pair<uint16_t, uint16_t> finish, bool direction) {
+    //     if (direction) {
+    //         image.draw_line(
+    //             /*первая координата*/ start.first, start.second,
+    //             /*вторая координата*/ start.first - list_param::tie_height, start.second - list_param::tie_height,
+    //             /*цвет*/ list_param::black);
+    //         image.draw_line(
+    //             /*первая координата*/ start.first - list_param::tie_height, start.second - list_param::tie_height,
+    //             /*вторая координата*/ finish.first - list_param::tie_height, finish.second - list_param::tie_height,
+    //             /*цвет*/ list_param::black);
+    //         image.draw_line(
+    //             /*первая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
+    //             /*вторая координата*/ finish.first, finish.second,
+    //             /*цвет*/ list_param::black);
+    //     } else {
+    //         image.draw_line(
+    //             /*первая координата*/ start.first, start.second,
+    //             /*вторая координата*/ start.first + list_param::tie_height, start.second + list_param::tie_height,
+    //             /*цвет*/ list_param::black);
+    //         image.draw_line(
+    //             /*первая координата*/ start.first + list_param::tie_height, start.second + list_param::tie_height,
+    //             /*вторая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
+    //             /*цвет*/ list_param::black);
+    //         image.draw_line(
+    //             /*первая координата*/ finish.first + list_param::tie_height, finish.second + list_param::tie_height,
+    //             /*вторая координата*/ finish.first, finish.second,
+    //             /*цвет*/ list_param::black);
+    //     }
+    // }
+
+
+    void List::draw_tie(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
+        // Координаты начальной и конечной точки сплина
+        int x1 = 30;
+        int y1 = 30;
+
+        int x2 = 200;
+        int y2 = 30;
+
+        // вектора, ответственные за изгиб линии.
+        // один из векторов изгибает стартовую точку в одну сторону,
+        // другой вектор - конечную инвертированно
+        // (чтобы оба изгибали в одну сторону нужно сделать векторы равными +- число для изгиба)
+        int start_vector = 50;
+        int finish_vector = -50;
+        image.draw_spline(x1, y1,
+                          0, // хз, что это
+                          start_vector, x2, y2,
+                          0, // хз, что это
+                          finish_vector, list_param::black);
+        // необходимо дописать реализацию на основе вышеописанного функционала рисовалки сплина
     }
 
     void List::draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept {
