@@ -100,23 +100,28 @@ namespace harmony_core {
          * \brief Добавляет тактовую черту после ноты по индексу.
          * Кидает std::serr, если не получается добавить.
          */
-        void add_bar(uint16_t index);
+        void add_bar(uint16_t index) noexcept;
 
         /*!
          * \brief Удаляет тактовую черту после ноты по индексу.
          * Кидает std::serr, если не получается удалить.
          */
-        void rm_bar(uint16_t index);
+        void rm_bar(uint16_t index) noexcept;
 
         /*!
          * \brief Возвращает индекс из списка индексов нот, после которых идет тактовая черта
          */
-        uint16_t get_bar(uint16_t index);
+        uint16_t get_bar(uint16_t index) const noexcept;
 
         /*!
          * \brief Исправляет расположение тактовых черт.
          */
-        void fix_bar();
+        void fix_bar() noexcept;
+
+        /*!
+         * \brief Возвращает количество тактовых черт в стане.
+         */
+        size_t bar_size() const noexcept;
 
         /*!
          * \brief Добавляет ноту в такт.

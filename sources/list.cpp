@@ -245,6 +245,9 @@ namespace hc2img {
             static harmony_core::Key k;
             k.set_step(acc_index);
             std::vector<harmony_core::Note> acc_vector = k.get_accidentals();
+
+            // Данный фрагмент принудительно меняет октаву знака.
+            // Не требуется, тк алгоритм меняет октавы в зависимости от позиции знака на нотном стане.
             // for (int s = 0; s < acc_vector.size(); ++s) {
             //     if (staff_list[x].get_clef().get_type() == harmony_core::Clef_type::C_CLEF) {
             //         acc_vector[s].set_octave(harmony_core::Octave::SMALL);
@@ -256,6 +259,7 @@ namespace hc2img {
             //         acc_vector[s].set_octave(harmony_core::Octave::SMALL);
             //     }
             // }
+
             while (acc_index != 0) {
                 // std::cout << "acc_vector notes: " << acc_vector[acc_num].get_name() << std::endl;
                 if (acc_index > 0) {
@@ -330,7 +334,7 @@ namespace hc2img {
                 // В этих переменных хранятся переменные прошлых нот
                 static int past_note_height;
                 static uint16_t past_note_index;
-                static uint8_t add_gap = 0;
+                uint8_t add_gap = 0;
 
                 // Получаем место ноты на нотном стане
                 int note_place =

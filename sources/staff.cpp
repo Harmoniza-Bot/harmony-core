@@ -23,9 +23,9 @@ Staff::Staff(const harmony_core::Staff &s) {
         tie_list.resize(tie_list.size() + 1);
         tie_list[x] = s.get_tie(x);
     }
-    for (int x = 0; x < s.tie_size(); ++x) {
+    for (int x = 0; x < s.bar_size(); ++x) {
         bar_list.resize(bar_list.size() + 1);
-        bar_list[x] = s.get_tie(x);
+        bar_list[x] = s.get_bar(x);
     }
 }
 
@@ -109,7 +109,7 @@ uint16_t Staff::get_tie(uint16_t index) const noexcept {
     return tie_list[index];
 }
 
-void Staff::add_bar(uint16_t index){
+void Staff::add_bar(uint16_t index) noexcept {
     if (index > note_list.size()) {
         std::cerr << "From add_bar: Слишком большой индекс ноты..." << std::endl;
         return;
@@ -126,7 +126,7 @@ void Staff::add_bar(uint16_t index){
     bar_list.push_back(index);
 }
 
-void Staff::rm_bar(uint16_t index){
+void Staff::rm_bar(uint16_t index) noexcept {
     for (int x = 0; x < bar_list.size(); ++x) {
         if (bar_list[x] == index) {
             bar_list.erase(bar_list.begin() + x);
@@ -136,8 +136,15 @@ void Staff::rm_bar(uint16_t index){
     std::cerr << "From rm_bar: После ноты " << index << " нет тактовой черты..." << std::endl;
 }
 
-void Staff::fix_bar(){
+uint16_t Staff::get_bar(uint16_t index) const noexcept {
+    return bar_list[index];
+}
 
+void Staff::fix_bar() noexcept {
+}
+
+size_t Staff::bar_size() const noexcept {
+    return bar_list.size();
 }
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
