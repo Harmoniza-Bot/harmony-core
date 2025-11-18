@@ -114,6 +114,11 @@ namespace harmony_core {
         uint16_t get_bar(uint16_t index) const noexcept;
 
         /*!
+         * \brief Проверяет есть ли тактовая черта после ноты по индексу
+         */
+        bool is_bar(uint16_t index) const noexcept;
+
+        /*!
          * \brief Исправляет расположение тактовых черт.
          */
         void fix_bar() noexcept;

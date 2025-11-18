@@ -110,6 +110,11 @@ namespace hc2img {
         void draw_notes(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
 
         /*!
+         * \brief Рисует тактовые черты после нот, указанных нотных станах.
+         */
+        void draw_bar(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
+
+        /*!
          * \brief Хранит информацию о патаметрах листа.
          * Бит \code 0 \endcode хранит информацию об ориентации нотоносца: 0 - линейный, 1 - переносной.
          * Биты \code 1-3 \endcode хранят множитель размера такта от 1 до 8.

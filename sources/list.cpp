@@ -32,9 +32,10 @@ namespace hc2img {
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
         draw_clefs(image, s);
         draw_accidentals(image, s);
-        draw_time_signature(image, s); // нуждается в доработке
+        draw_time_signature(image, s);
         s = draw_staffs(image);
         draw_notes(image, s);
+        draw_bar(image, s);
         image.display("winnn");
 
         // image.save_bmp("img/list.bmp");
@@ -399,6 +400,33 @@ namespace hc2img {
                             /*цвет*/ list_param::black);
                         start_cord -= list_param::staff_line_gap;
                     }
+                }
+            }
+        }
+    }
+
+    void List::draw_bar(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
+        if (staff_list.size() == 0) {
+            return;
+        }
+
+        for (int x = 0; x < staff_list.size(); ++x) {
+            if (staff_list[x].get_clef().check_clef()) {
+                std::cerr << "from List::draw_bar(iteration " << x << "): clef is none or type & name dont fit"
+                          << std::endl;
+                return;
+            }
+            for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
+                if (staff_list[x].is_bar(staff_list[x].get_note(y).second)) {
+                    uint16_t x_bar = list_param::staff_edge_gap + list_param::start_note_gap +
+                                     (staff_list[x].get_note(y).second * list_param::note_gap) +
+                                     (list_param::note_gap / 1.2);
+
+
+                    image.draw_line(
+                        /*первая координата*/ x_bar, cord[x]._1_LINE,
+                        /*вторая координата*/ x_bar, cord[x]._1_LINE - list_param::staff_line_gap * 4,
+                        /*цвет*/ list_param::black);
                 }
             }
         }

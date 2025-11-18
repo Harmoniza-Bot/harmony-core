@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cmath>
 #include <harmony-core/harmony-core.hpp>
 using namespace harmony_core;
@@ -139,6 +140,11 @@ void Staff::rm_bar(uint16_t index) noexcept {
 uint16_t Staff::get_bar(uint16_t index) const noexcept {
     return bar_list[index];
 }
+
+bool Staff::is_bar(uint16_t index) const noexcept {
+    return std::count(bar_list.begin(), bar_list.end(), index) != 0;
+}
+
 
 void Staff::fix_bar() noexcept {
 }
