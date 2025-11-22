@@ -59,7 +59,7 @@ git submodule update --remote
 При добавлении библиотеки в проект (процесс добавления описан выше) эти модули можно подключить как вместе так и по отдельности:
 ``` C++
 #include <harmony_core/harmony_core.hpp>
-#include <hc2img/hc2img.hpp>
+#include <harmony-core/hc2img.hpp>
 
 harmony_core::Note n; // из модуля harmony_core
 hc2img::List l; // из модуля hc2img
