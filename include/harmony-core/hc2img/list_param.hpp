@@ -10,6 +10,7 @@ namespace list_param {
     constexpr uint8_t note_stem_length = 30; // длина штиля ноты
 
     constexpr uint8_t tie_height = 30; // выстоа лиги
+    constexpr uint8_t tie_gap = 10; // расстояние от ноты до лиги
 
     constexpr uint8_t clef_acc_gap = 30; // зазор между ключем и ключевыми знаками
     constexpr uint8_t acc_ts_gap = 80; // зазор между ключевыми знаками и размером

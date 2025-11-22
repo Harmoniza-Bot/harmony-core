@@ -159,6 +159,12 @@ namespace hc2img {
                           start_vector, x2, y2,
                           0, // хз, что это
                           finish_vector, list_param::black);
+        for(int x=0; x<staff_list.size(); ++x){
+            std::vector<std::pair<int, int>> ties;
+            for(int y=0; y<staff_list[x].get_note_list_size(); ++y){
+
+            }
+        }
         // необходимо дописать реализацию на основе вышеописанного функционала рисовалки сплина
     }
 
@@ -356,6 +362,13 @@ namespace hc2img {
                           << std::endl;
                 return;
             }
+
+            // Хранир информацию, является ли залигованная нот началом лиги или концом
+            bool tie_flag = 0;
+
+            // Стартовые координаты лиги
+            std::pair<int, int> start_tie;
+
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
                 // В этих переменных хранятся переменные прошлых нот
                 static int past_note_height;
@@ -403,8 +416,12 @@ namespace hc2img {
                     }
                 }
 
-                // рисуем ноту
-                draw_parts(image, images::note, x_gap, y_gap);
+                // рисуем ноту (закрашенную или не закрашенную)
+                if(static_cast<int>(staff_list[x].get_note(y).first.get_duration()) > 2){
+                    draw_parts(image, images::note_1, x_gap, y_gap);
+                } else {
+                    draw_parts(image, images::note, x_gap, y_gap);
+                }
 
                 // Рисуем добавочные линейки
 
@@ -426,8 +443,57 @@ namespace hc2img {
                         start_cord -= list_param::staff_line_gap;
                     }
                 }
+
+                // Проверка на наличие лиги и ее отрисовка
+                if(staff_list[x].is_tie(y)){
+                    int tie_gap = 2;
+                    if(!tie_flag){
+                        if(note_place > 2){
+                            start_tie.first = x_gap + 5;
+                            start_tie.second = y_gap + tie_gap + pixel_index * 3;
+                        } else {
+                            start_tie.first = x_gap + 5;
+                            start_tie.second = y_gap - tie_gap;
+                        }
+                        tie_flag = 1;
+                    } else {
+                        std::pair<int, int> fin_tie;
+                        if(note_place > 2){
+                            fin_tie.first = x_gap + 5;
+                            fin_tie.second = y_gap + tie_gap + pixel_index * 3;
+                        } else {
+                            fin_tie.first = x_gap + 5;
+                            fin_tie.second = y_gap - tie_gap;
+                        }
+                        if(note_place > 2){
+                            image.draw_spline(
+                                start_tie.first, start_tie.second,
+                                0, // хз, что это
+                                -list_param::tie_height,
+
+                                fin_tie.first, fin_tie.second,
+                                0, // хз, что это
+                                list_param::tie_height,
+                                list_param::black
+                            );
+                        } else {
+                            image.draw_spline(
+                                start_tie.first, start_tie.second,
+                                0, // хз, что это
+                                list_param::tie_height,
+
+                                fin_tie.first, fin_tie.second,
+                                0, // хз, что это
+                                -list_param::tie_height,
+                                list_param::black
+                            );
+                        }
+                        tie_flag = 0;
+                    }
+                }
             }
         }
+
     }
 
     void List::draw_bar(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
