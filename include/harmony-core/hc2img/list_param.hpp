@@ -1,5 +1,8 @@
 #ifndef HC2IMG_LIST_PARAM
 #define HC2IMG_LIST_PARAM
+
+// Данное пространство имен хранит параметры, связанные с визуализацией.
+
 namespace list_param {
     constexpr uint8_t staff_line_gap = 10; // расстояние между линиями стана
     constexpr uint8_t staff_gap = 45; // расстояние между нотными станами

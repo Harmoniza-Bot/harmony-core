@@ -14,49 +14,58 @@ namespace harmony_core {
     class Clef final {
     public:
         /*!
-         * \brief Создает скрипичный ключ
+         * \brief Создает скрипичный ключ.
          */
         Clef() noexcept;
 
         /*!
-         * \brief Создает ключ по типу и имени ключа
+         * \brief Создает ключ по типу и имени ключа.
+         * \param [in] harmony_core::Clef_name имя ключа.
+         * \param [in] harmony_core::Clef_type тип ключа.
          */
         Clef(Clef_name n, Clef_type t) noexcept;
 
         /*!
-         * \brief Создает ключ по информации о ключе
+         * \brief Создает ключ по информации о ключе.
+         * \param [in] uint8_t информация другого ключа.
          */
         Clef(uint8_t data) noexcept;
 
         // getters & setters
 
         /*!
-         * \brief Задает всю информацию
+         * \brief Задает всю информацию.
+         * \param [in] uint_fast8_t информация ключа.
          */
         void set_data(uint_fast8_t d) noexcept;
 
         /*!
-         * \brief Возвращает информацию о ключе
+         * \brief Возвращает информацию о ключе.
+         * \return Информация о ключе.
          */
         [[nodiscard]] uint8_t get_data() const noexcept;
 
         /*!
-         * \brief Задает тип ключа
+         * \brief Задает тип ключа.
+         * \param [in] harmony_core::Clef_type тип ключа.
          */
         void set_type(Clef_type t) noexcept;
 
         /*!
          * \brief Возвращает тип ключа
+         * \return Тип ключа.
          */
         [[nodiscard]] Clef_type get_type() const noexcept;
 
         /*!
-         * \brief Задает имя ключа
+         * \brief Задает имя ключа.
+         * \param [in] harmony_core::Clef_name имя ключа.
          */
         void set_name(Clef_name n) noexcept;
 
         /*!
          * \brief Возвращает имя ключа в формате Clef_name.
+         * \return Имя ключа.
          */
         [[nodiscard]] Clef_name get_clef_name() const noexcept;
 
@@ -96,11 +105,13 @@ namespace harmony_core {
          * \brief Провеояет ключ на правильночть.
          * Возвращает false, если ключ верный.
          * В противном случае - true.
+         * \return Ответ, является ли ключ правильным.
          */
         bool check_clef();
 
         /*!
          * \brief Возвращает имя ключа в строковом формате.
+         * \return Имя ключа.
          */
         [[nodiscard]] std::string get_name() const noexcept;
 

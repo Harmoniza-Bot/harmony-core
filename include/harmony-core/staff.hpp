@@ -14,107 +14,133 @@ namespace harmony_core {
     class Staff final {
     public:
         /*!
-         * \brief создает нотный стан без нот со скрипичным ключем в размере 4/4.
+         * \brief Создает нотный стан без нот со скрипичным ключем в размере 4/4.
          */
         explicit Staff();
 
         /*!
-         * \brief создает нотный стан на основе днугого нотного стана.
+         * \brief Создает нотный стан на основе днугого нотного стана.
          */
         Staff(const harmony_core::Staff &);
         /*!
-         * \brief устанавливает ключ.
+         * \brief Устанавливает ключ.
          * \param [in] harmony_core::Clef
          */
         void set_clef(harmony_core::Clef) noexcept;
 
         /*!
-         * \brief возвращает ключ.
-         * \return ключ стана.
+         * \brief Возвращает ключ.
+         * \return Ключ стана.
          */
         harmony_core::Clef get_clef() const noexcept;
 
         /*!
-         * \brief устанавливает размер нотного стана.
+         * \brief Устанавливает размер нотного стана.
          * \param [in] harmony_core::Time_signature
          */
         void set_time_signature(harmony_core::Time_signature) noexcept;
 
         /*!
-         * \brief возвращает музыкальный размер стана.
-         * \return размер стана (один на весь стан).
+         * \brief Возвращает музыкальный размер стана.
+         * \return Музыкальный размер стана (один на весь стан).
          */
         harmony_core::Time_signature get_time_signature() const noexcept;
 
         /*!
-         * \brief возвращает ноту по индексу.
+         * \brief Возвращает ноту по индексу.
+         * \return Ноту и индекс, на котором в нотном стане она расположена
          */
         std::pair<harmony_core::Note, uint16_t> get_note(uint16_t i) const noexcept;
 
         /*!
-         * \brief возвращает количество нот и пауз в нотном стане.
+         * \brief Возвращает количество нот и пауз в нотном стане.
+         * \return Количество элементов в стане.
          */
         size_t get_note_list_size() const noexcept;
 
         /*!
+         * \brief Возвращает количество занятых индексов в нотном стане.
+         * Например, если в стане хранятся 5 нот, две из которых образуют аккорх
+         * (то есть расположены на одном индексе)
+         * то функция возвращает 4.
+         * \return Количество занятых индексов в стане.
+         */
+        size_t get_index_size() const noexcept;
+
+        /*!
          * \brief Задает знаки нотного стана.
          * Отрицательное число - бемоли, положительное - диезы.
+         * \param [in] int8_t знаки нотного стана.
          */
         void set_key(int8_t) noexcept;
 
 
         /*!
          * \brief Возвращает количество знаков нотного стана
+         * \return Количество знаков нотного стана.
          */
         int get_key() const noexcept;
 
         /*!
          *\brief Добавляет номера нот, которые нужно залиговать.
          * Используются номера от общего к-ва нот в стане.
+         * Добавлять ноты желательно парами, одиночная нота не залигуется.
+         * \param [in] uint16_t Номер ноты, который нужно залиговать.
          */
         void add_tie(uint16_t index) noexcept;
 
         /*!
          * \brief Убирает номера нот, которые нужно залиговать
          * Используются номера от общего к-ва нот в стане.
+         * \param [in] uint16_t Индекс ноты, которую нужно разлиговать.
          */
         void rm_tie(uint16_t index) noexcept;
 
         /*!
          * \brief Проверяет, является ли нота по указанному индексу залигованой
          * Используются номера от общего к-ва нот в стане.
+         * \param [in] uint16_t Нота для проверки на залигованность
          */
         bool is_tie(uint16_t index) const noexcept;
 
         /*!
          * \brief Возвращает элемент из списка лиг по индексу.
+         * \param [in] uint16_t индекс списка залигованных нот.
+         * \return Элемент из списка.
          */
         uint16_t get_tie(uint16_t index) const noexcept;
 
         /*!
          * \brief Возвращает количество залигованных нот.
+         * \return Количество залигованных нот.
          */
         size_t tie_size() const noexcept;
 
         /*!
          * \brief Добавляет тактовую черту после ноты по индексу.
          * Кидает std::serr, если не получается добавить.
+         * \param [in] uint16_t Индекс ноты, после которой нужно добавить тактовую черту.
          */
         void add_bar(uint16_t index) noexcept;
 
         /*!
          * \brief Удаляет тактовую черту после ноты по индексу.
          * Кидает std::serr, если не получается удалить.
+         * \param [in] uint16_t индекс для удаления.
          */
         void rm_bar(uint16_t index) noexcept;
 
         /*!
          * \brief Возвращает индекс из списка индексов нот, после которых идет тактовая черта
+         * \param [in] uint16_t индекс списка нот, после которых стоит черта.
+         * \return Номер ноты их индекса.
          */
         uint16_t get_bar(uint16_t index) const noexcept;
 
         /*!
          * \brief Проверяет есть ли тактовая черта после ноты по индексу
+         * \param [in] uint16_t индекс для проверки.
+         * \return Ответ, стоит ли после данной ноты тактовая черта.
          */
         bool is_bar(uint16_t index) const noexcept;
 
@@ -125,6 +151,7 @@ namespace harmony_core {
 
         /*!
          * \brief Возвращает количество тактовых черт в стане.
+         * \return количество тактовых черт.
          */
         size_t bar_size() const noexcept;
 
@@ -144,6 +171,7 @@ namespace harmony_core {
 
         /*!
          * \brief Возвращает количество тактов в нотном стане.
+         * \return количество тактов в нотном стане
          */
         size_t get_size() const noexcept;
 

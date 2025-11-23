@@ -21,11 +21,14 @@ namespace harmony_core {
 
         /*!
          * \brief Создает размер по числителю и знаменателю.
+         * \param [in] uint8_t числитель
+         * \param [in] uint8_t знаменатель
          */
         Time_signature(uint8_t, uint8_t);
 
         /*!
          * \brief Создает размер на основе другого размера.
+         * \param [in] Time_signature другой размер
          */
         Time_signature(const Time_signature &);
 
@@ -33,16 +36,20 @@ namespace harmony_core {
 
         /*!
          * \brief Задает числитель и знаменатель.
+         * \param [in] uint8_t числитель
+         * \param [in] uint8_t знаменатель
          */
         void set_signature(uint8_t, uint8_t) noexcept;
 
         /*!
          * \brief Возвращает числитель размера.
+         * \return Числитель.
          */
         uint8_t get_numerator() const noexcept;
 
         /*!
          * \brief Возвращает знаменатель размера.
+         * \return Знаменатель.
          */
         uint8_t get_denominator() const noexcept;
 

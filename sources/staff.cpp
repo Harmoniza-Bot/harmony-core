@@ -54,6 +54,17 @@ size_t Staff::get_note_list_size() const noexcept {
     return note_list.size();
 }
 
+size_t Staff::get_index_size() const noexcept {
+    size_t s = 0;
+    for (int x = 1; x < note_list.size(); ++x) {
+        if (note_list[x].second != note_list[x - 1].second) {
+            ++s;
+        }
+    }
+    return s;
+}
+
+
 void Staff::set_key(int8_t k) noexcept {
     key = k;
 }
