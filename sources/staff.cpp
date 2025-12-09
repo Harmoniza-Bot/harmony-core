@@ -164,7 +164,7 @@ size_t Staff::bar_size() const noexcept {
     return bar_list.size();
 }
 
-void Staff::add(std::pair<harmony_core::Note, uint16_t> &n) noexcept {
+void Staff::add(std::pair<harmony_core::Note, uint16_t> n) noexcept {
     // Происходит умная вставка: ноты сортируются по индексу (2 элемент пары)
     auto &notes = note_list;
 

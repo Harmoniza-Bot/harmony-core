@@ -71,6 +71,6 @@ hc2img::List l; // из модуля hc2img
 
 > Для функционирования модуля `hc2img` необходимо скачать библиотеку <a href="https://github.com/GreycLab/CImg">CImg.h</a>
 , которую нужно добавить в каталог с библиотеками, 
-> такой, как `/usr/include`(Linux) или `C:\Program Files (x86)\Windows Kits\10\Includ`(Windowx). 
+> такой, как `/usr/include`(Linux) или `C:\Windows\System32`(Windowx). 
 > Также можно просто копировать папку CImg в корневой каталог библиотеки.
 

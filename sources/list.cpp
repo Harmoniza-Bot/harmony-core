@@ -2,6 +2,8 @@
 #include <hc2img/list.hpp>
 namespace hc2img {
 
+    // последнего знака
+
     List::List() {
     }
 
@@ -154,11 +156,13 @@ namespace hc2img {
         // (чтобы оба изгибали в одну сторону нужно сделать векторы равными +- число для изгиба)
         int start_vector = 50;
         int finish_vector = -50;
+        /*
         image.draw_spline(x1, y1,
                           0, // хз, что это
                           start_vector, x2, y2,
                           0, // хз, что это
                           finish_vector, list_param::black);
+        */
         for (int x = 0; x < staff_list.size(); ++x) {
             std::vector<std::pair<int, int>> ties;
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
@@ -334,19 +338,32 @@ namespace hc2img {
             std::cerr << "from List::draw_time_signature: clef is none or type & name dont fit" << std::endl;
         }
 
-        // Рисуем числитель размера
         for (int x = 0; x < cord.size(); ++x) {
-            std::string num = std::to_string(staff_list[x].get_time_signature().get_numerator());
-            image.draw_text(cord[x].time_signature_cord.first,
-                            cord[x].time_signature_cord.second - list_param::staff_line_gap * 3, num.c_str(),
-                            list_param::black, list_param::white, 1.0f, 30);
-        }
 
-        // Рисуем знаменатель размера
-        for (int x = 0; x < cord.size(); ++x) {
+            // Получаем количество знаков
+            int acc_size = staff_list[x].get_key();
+            if (acc_size < 0) {
+                acc_size = -acc_size;
+            }
+
+            int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
+                                  (list_param::pixel_index * 5) + // примерный размер ключа
+                                  (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
+                                  20; // зазор между ключевыми знаками и размером.
+                                      // Почему-то из list_param берется неправильно
+
+            // Получаем числитель в виде строки
+            std::string num = std::to_string(staff_list[x].get_time_signature().get_numerator());
+            // Получаем знаменатель в виде строки
             std::string den = std::to_string(staff_list[x].get_time_signature().get_denominator());
-            image.draw_text(cord[x].time_signature_cord.first, cord[x].time_signature_cord.second, den.c_str(),
-                            list_param::black, list_param::white, 1.0f, 30);
+
+            // Рисуем))
+            image.draw_text(x_cord_last_acc, cord[x].time_signature_cord.second, den.c_str(), list_param::black,
+                            list_param::white, 1.0f, 30);
+
+            // Числитель рисуется выше знаменателья на 3 линейки
+            image.draw_text(x_cord_last_acc, cord[x].time_signature_cord.second - list_param::staff_line_gap * 3,
+                            num.c_str(), list_param::black, list_param::white, 1.0f, 30);
         }
     }
 
@@ -393,8 +410,21 @@ namespace hc2img {
                 past_note_height = note_place;
                 past_note_index = staff_list[x].get_note(y).second;
 
-                uint16_t x_gap = list_param::staff_edge_gap + list_param::start_note_gap +
-                                 (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
+                // Рассчитываем координату последнего знака
+
+                // Получаем количество знаков
+                int acc_size = staff_list[x].get_key();
+                if (acc_size < 0) {
+                    acc_size = -acc_size;
+                }
+
+                int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
+                                      (list_param::pixel_index * 5) + // примерный размер ключа
+                                      (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
+                                      20; // зазор между ключевыми знаками и размером.
+                // Почему-то из list_param берется неправильно
+
+                uint16_t x_gap = x_cord_last_acc + (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
 
                 uint16_t y_gap = 0;
 
@@ -445,44 +475,6 @@ namespace hc2img {
 
                 // Проверка на наличие лиги и ее отрисовка
                 if (staff_list[x].is_tie(y)) {
-                    int tie_gap = 2;
-                    if (!tie_flag) {
-                        if (note_place > 2) {
-                            start_tie.first = x_gap + 5;
-                            start_tie.second = y_gap + tie_gap + pixel_index * 3;
-                        } else {
-                            start_tie.first = x_gap + 5;
-                            start_tie.second = y_gap - tie_gap;
-                        }
-                        tie_flag = 1;
-                    } else {
-                        std::pair<int, int> fin_tie;
-                        if (note_place > 2) {
-                            fin_tie.first = x_gap + 5;
-                            fin_tie.second = y_gap + tie_gap + pixel_index * 3;
-                        } else {
-                            fin_tie.first = x_gap + 5;
-                            fin_tie.second = y_gap - tie_gap;
-                        }
-                        if (note_place > 2) {
-                            image.draw_spline(start_tie.first, start_tie.second,
-                                              0, // хз, что это
-                                              -list_param::tie_height,
-
-                                              fin_tie.first, fin_tie.second,
-                                              0, // хз, что это
-                                              list_param::tie_height, list_param::black);
-                        } else {
-                            image.draw_spline(start_tie.first, start_tie.second,
-                                              0, // хз, что это
-                                              list_param::tie_height,
-
-                                              fin_tie.first, fin_tie.second,
-                                              0, // хз, что это
-                                              -list_param::tie_height, list_param::black);
-                        }
-                        tie_flag = 0;
-                    }
                 }
             }
         }

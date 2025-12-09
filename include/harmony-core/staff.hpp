@@ -161,7 +161,7 @@ namespace harmony_core {
          * \param [in] is_pause Флаг, обозначающий добавление паузы. В этом случае считывается только размер ноты.
          * Такты и связки штилей расставляются автоматически.
          */
-        void add(std::pair<harmony_core::Note, uint16_t> &n) noexcept;
+        void add(std::pair<harmony_core::Note, uint16_t> n) noexcept;
 
         /*!
          * \brief Удаляет из нотного стана ноту по индексу.

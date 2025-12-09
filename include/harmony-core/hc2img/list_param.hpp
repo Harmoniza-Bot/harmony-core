@@ -16,7 +16,7 @@ namespace list_param {
     constexpr uint8_t tie_gap = 10; // расстояние от ноты до лиги
 
     constexpr uint8_t clef_acc_gap = 30; // зазор между ключем и ключевыми знаками
-    constexpr uint8_t acc_ts_gap = 80; // зазор между ключевыми знаками и размером
+    constexpr uint8_t acc_ts_gap = 20; // зазор между ключевыми знаками и размером
 
     constexpr unsigned char black[] = {0, 0, 0}; // цвет нот и станов (черный)
     constexpr unsigned char white[] = {255, 255, 255}; // белый цвет
