@@ -71,7 +71,8 @@ namespace hc2img {
         void draw_parts(cimg_library::CImg<unsigned char> &image, T part, int x, int y);
 
         /*!
-         * Рисует лигу между двумя координатами.
+         * Рисует лигу между всеми залигованными нотами
+         * (чьи индексы были добавлены методом .add_tie(index)) 
          * \param image лист для рисования.
          * \param cord вектор из координат нотных станов (возвращается функцией рисования станов).
          */

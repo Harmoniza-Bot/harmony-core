@@ -141,26 +141,13 @@ namespace hc2img {
 
 
     void List::draw_tie(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
-        // Координаты начальной и конечной точки сплина
-        int x1 = 30;
-        int y1 = 30;
-
-        int x2 = 200;
-        int y2 = 30;
-
-        // вектора, ответственные за изгиб линии.
+        // вектора, ответственные за изгиб лиги.
         // один из векторов изгибает стартовую точку в одну сторону,
         // другой вектор - конечную инвертированно
         // (чтобы оба изгибали в одну сторону нужно сделать векторы равными +- число для изгиба)
         int start_vector = 50;
-        int finish_vector = -50;
-        /*
-        image.draw_spline(x1, y1,
-                          0, // хз, что это
-                          start_vector, x2, y2,
-                          0, // хз, что это
-                          finish_vector, list_param::black);
-        */
+        int finish_vector = 50;
+        
         for (int x = 0; x < staff_list.size(); ++x) {
             std::vector<std::pair<int, int>> ties;
 
@@ -190,21 +177,75 @@ namespace hc2img {
             // Почему-то из list_param берется неправильно
 
             for (int y = 0; y < ties.size(); ++y) {
-                int first_x_cord = 0;
-                int first_y_cord = 0;
-                int second_x_cord = 0;
-                int second_y_cord = 0;
+                std::pair<int, int> note_place_for_arc;
 
-                first_x_cord = x_cord_last_acc + (staff_list[x].get_note(ties[y].first).second * list_param::note_gap);
+                 int first_x_cord = 
+                    x_cord_last_acc + (staff_list[x].get_note(ties[y].first).second * list_param::note_gap);
 
-                second_x_cord =
+                int second_x_cord =
                     x_cord_last_acc + (staff_list[x].get_note(ties[y].second).second * list_param::note_gap);
-
-                // Здесь я получаю координаты тех нот, которые нужно залиговать
-                // Необходимо дописать
+                
+                int first_y_cord = cord[x]._1_LINE;
+                int second_y_cord = cord[x]._1_LINE;
+                
+                // Получаем место ноты на нотном стане
+                int note_place =
+                    static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(ties[y].first).first) * 2 + 1);
+                note_place_for_arc.first = note_place;
+                
+                 while (note_place != 0) {
+                    if (note_place > 0) {
+                        --note_place;
+                        first_y_cord -= list_param::staff_line_gap / 2;
+                    }
+                    if (note_place < 0) {
+                        ++note_place;
+                        first_y_cord += list_param::staff_line_gap / 2;
+                    }
+                    if (first_y_cord < list_param::staff_line_gap / 2) {
+                        note_place = 0;
+                        std::cerr << "from List::draw_tie: note outs from list!" << std::endl;
+                    }
+                }
+                note_place =
+                    static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(ties[y].second).first) * 2 + 1);
+                note_place_for_arc.second = note_place;
+                    
+                 while (note_place != 0) {
+                    if (note_place > 0) {
+                        --note_place;
+                        second_y_cord -= list_param::staff_line_gap / 2;
+                    }
+                    if (note_place < 0) {
+                        ++note_place;
+                        second_y_cord += list_param::staff_line_gap / 2;
+                    }
+                    if (second_y_cord < list_param::staff_line_gap / 2) {
+                        note_place = 0;
+                        std::cerr << "from List::draw_tie: note outs from list!" << std::endl;
+                    }
+                }
+                // Теперь мы имеем пару координат, 
+                // в которые нужно нарисовать лигу.
+                
+                // данные ифы отвечают за переворот лиги, 
+                // если ноты на разной высоте.
+                if(note_place_for_arc.first > 2){
+                    start_vector = -start_vector;
+                }
+                if(note_place_for_arc.second > 2){
+                    finish_vector = -finish_vector;
+                }
+                
+                image.draw_spline(first_x_cord, first_y_cord,
+                          0, // хз, что это
+                          start_vector, 
+                          x2, y2,
+                          0, // хз, что это
+                          finish_vector, 
+                          list_param::black);
             }
         }
-        // необходимо дописать реализацию
     }
 
     void List::draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept {
