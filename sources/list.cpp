@@ -2,8 +2,6 @@
 #include <hc2img/list.hpp>
 namespace hc2img {
 
-    // последнего знака
-
     List::List() {
     }
 
@@ -165,10 +163,48 @@ namespace hc2img {
         */
         for (int x = 0; x < staff_list.size(); ++x) {
             std::vector<std::pair<int, int>> ties;
-            for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
+
+            // Создаем пары залигованных нот
+            for (int y = 0; y < staff_list[x].tie_size(); ++y) {
+                static int flag = 0;
+                if (!flag) {
+                    std::pair<int, int> p;
+                    p.first = staff_list[x].get_tie(y);
+                    ties.push_back(p);
+                    flag = 1;
+                } else {
+                    ties.second = staff_list[x].get_tie(y);
+                    flag = 0;
+                }
+            }
+
+            // Удаляем неполную пару лиг, если индекс нечетный.
+            if (staff_list[x].tie_size() % 2) {
+                ties.pop_back();
+            }
+
+            int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
+                                  (list_param::pixel_index * 5) + // примерный размер ключа
+                                  (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
+                                  20; // зазор между ключевыми знаками и размером.
+            // Почему-то из list_param берется неправильно
+
+            for (int y = 0; y < ties.size(); ++y) {
+                int first_x_cord = 0;
+                int first_y_cord = 0;
+                int second_x_cord = 0;
+                int second_y_cord = 0;
+
+                first_x_cord = x_cord_last_acc + (staff_list[x].get_note(ties[y].first).second * list_param::note_gap);
+
+                second_x_cord =
+                    x_cord_last_acc + (staff_list[x].get_note(ties[y].second).second * list_param::note_gap);
+
+                // Здесь я получаю координаты тех нот, которые нужно залиговать
+                // Необходимо дописать
             }
         }
-        // необходимо дописать реализацию на основе вышеописанного функционала рисовалки сплина
+        // необходимо дописать реализацию
     }
 
     void List::draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept {
@@ -422,7 +458,7 @@ namespace hc2img {
                                       (list_param::pixel_index * 5) + // примерный размер ключа
                                       (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
                                       20; // зазор между ключевыми знаками и размером.
-                // Почему-то из list_param берется неправильно
+                // Почему-то значение из list_param берется неправильно, поэтому mag-val 20.
 
                 uint16_t x_gap = x_cord_last_acc + (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
 
@@ -471,10 +507,6 @@ namespace hc2img {
                             /*цвет*/ list_param::black);
                         start_cord -= list_param::staff_line_gap;
                     }
-                }
-
-                // Проверка на наличие лиги и ее отрисовка
-                if (staff_list[x].is_tie(y)) {
                 }
             }
         }
