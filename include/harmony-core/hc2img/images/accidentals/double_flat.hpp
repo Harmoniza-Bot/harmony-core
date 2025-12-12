@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace images {
+    /*! Хранит опорные точки дубль бемоля */
     extern const struct Double_flat final {
     public:
         size_t size() {

@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace images {
+    /*! Хранит опорные точки бекара */
     extern const struct Natural final {
     public:
         size_t size() {

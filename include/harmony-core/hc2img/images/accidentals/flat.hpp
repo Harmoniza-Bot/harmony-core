@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace images {
+    /*! Хранит опорные точки бемоля */
     extern const struct Flat final {
     public:
         size_t size() {

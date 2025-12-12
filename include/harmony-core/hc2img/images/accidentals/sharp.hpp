@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace images {
+    /*! Хранит опорные точки диеза */
     extern const struct Sharp final {
     public:
         size_t size() {

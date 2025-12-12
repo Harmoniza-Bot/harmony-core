@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace images {
+    /*! Хранит опорные точки дубль диеза */
     extern const struct Double_sharp final {
     public:
         size_t size() {
