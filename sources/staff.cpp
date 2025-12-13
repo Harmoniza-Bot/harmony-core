@@ -73,8 +73,8 @@ int Staff::get_key() const noexcept {
     return static_cast<int>(key);
 }
 
-void Staff::add_tie(uint16_t index) noexcept {
-    if (index > note_list.size()) {
+void Staff::add_tie(std::pair<uint16_t, uint16_t> index) noexcept {
+    if (index.first > note_list.size() || index.second > note_list.size()) {
         std::cerr << "From add_tie: Слишком большой индекс ноты..." << std::endl;
         return;
     }
@@ -83,7 +83,7 @@ void Staff::add_tie(uint16_t index) noexcept {
         return;
     }
     for (int x = 0; x < tie_list.size(); ++x) {
-        if (index <= tie_list[x]) {
+        if (index.first <= tie_list[x].first) {
             tie_list.insert(tie_list.begin() + x, index);
         }
     }
@@ -92,7 +92,7 @@ void Staff::add_tie(uint16_t index) noexcept {
 
 void Staff::rm_tie(uint16_t index) noexcept {
     for (int x = 0; x < tie_list.size(); ++x) {
-        if (tie_list[x] == index) {
+        if (tie_list[x].first == index || tie_list[x].second == index) {
             tie_list.erase(tie_list.begin() + x);
             return;
         }
@@ -100,23 +100,30 @@ void Staff::rm_tie(uint16_t index) noexcept {
     std::cerr << "From rm_tie: Нота " << index << " и так не залигована..." << std::endl;
 }
 
-bool Staff::is_tie(uint16_t index) const noexcept {
+int Staff::is_tie(uint16_t index) const noexcept {
+    if (index > note_list.size()) {
+        std::cerr << "From is_tie: Слишком большой индекс для поиска..." << std::endl;
+        return -1;
+    }
     for (int x = 0; x < tie_list.size(); ++x) {
-        if (tie_list[x] == index) {
-            return 1;
+        if (tie_list[x].first == index) {
+            return static_cast<int>(tie_list[x].second);
+        }
+        if (tie_list[x].second == index) {
+            return static_cast<int>(tie_list[x].first);
         }
     }
-    return 0;
+    return -1;
 }
 
 size_t Staff::tie_size() const noexcept {
     return tie_list.size();
 }
 
-uint16_t Staff::get_tie(uint16_t index) const noexcept {
+std::pair<uint16_t, uint16_t> Staff::get_tie(uint16_t index) const noexcept {
     if (index > tie_list.size()) {
         std::cerr << "From get_tie: Слишком большой индекс..." << std::endl;
-        return 0;
+        return {0, 0};
     }
     return tie_list[index];
 }
@@ -165,30 +172,7 @@ size_t Staff::bar_size() const noexcept {
 }
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> n) noexcept {
-    // Происходит умная вставка: ноты сортируются по индексу (2 элемент пары)
-    auto &notes = note_list;
-
-    // Определяем размер списка
-    int size = notes.size();
-
-    if (size != 0) { // Если список не пустой
-        for (int i = 0; i < size; ++i) {
-            // Теперь проверяем, что текущий элемент больше нового
-            if (notes[i].second >= n.second) {
-                // Вставляем новую пару в позицию перед текущим элементом
-                notes.insert(notes.begin() + i, n);
-                return;
-            }
-        }
-
-        // Если не нашли подходящего места, значит добавляем в конец
-        notes.push_back(n);
-        return;
-    } else {
-        // Если список пуст, просто добавляем новую пару
-        notes.push_back(n);
-        return;
-    }
+    note_list.push_back(n);
 }
 
 

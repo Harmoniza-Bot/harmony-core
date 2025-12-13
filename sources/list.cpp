@@ -143,7 +143,12 @@ namespace hc2img {
 
     void List::draw_tie(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
         for (int x = 0; x < staff_list.size(); ++x) {
-            std::vector<std::pair<int, int>> ties;
+
+            std::vector<std::pair<uint16_t, uint16_t>> tie_list;
+
+            for (int y = 0; y < staff_list[x].tie_size(); ++y) {
+                tie_list.push_back(staff_list[x].get_tie(y));
+            }
 
             // вектора, ответственные за изгиб лиги.
             // один из векторов изгибает стартовую точку в одну сторону,
@@ -158,55 +163,26 @@ namespace hc2img {
                 acc_size = -acc_size;
             }
 
-            // Создаем пары залигованных нот
-            for (int y = 0; y < staff_list[x].tie_size(); ++y) {
-                std::pair<int, int> last_index{staff_list[x].get_tie(0), staff_list[x].get_tie(1)};
-                static int flag = 0;
-                if (y > 2) {
-                    last_index.first = staff_list[x].get_tie(y - 2);
-                    last_index.first = staff_list[x].get_tie(y - 1);
-                }
-
-                if (y > 1) {
-                    if (last_index.first == staff_list[x].get_tie(y) - 2 &&
-                        last_index.second == staff_list[x].get_tie(y) - 1) {
-                        std::pair<int, int> p;
-                        p.first = staff_list[x].get_tie(y - 1);
-                        ties.push_back(p);
-                        flag = 1;
-                    }
-                }
-                if (!flag) {
-                    std::pair<int, int> p;
-                    p.first = staff_list[x].get_tie(y);
-                    ties.push_back(p);
-                    flag = 1;
-                } else {
-                    ties.back().second = staff_list[x].get_tie(y);
-                    flag = 0;
-                }
-            }
-
             int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
                                   (list_param::pixel_index * 5) + // примерный размер ключа
                                   (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
                                   20; // зазор между ключевыми знаками и размером.
             // Почему-то из list_param берется неправильно
 
-            for (int y = 0; y < ties.size(); ++y) {
+            for (int y = 0; y < tie_list.size(); ++y) {
 
                 int first_x_cord =
-                    x_cord_last_acc + (staff_list[x].get_note(ties[y].first).second * list_param::note_gap);
+                    x_cord_last_acc + (staff_list[x].get_note(tie_list[y].first).second * list_param::note_gap);
 
                 int second_x_cord =
-                    x_cord_last_acc + (staff_list[x].get_note(ties[y].second).second * list_param::note_gap);
+                    x_cord_last_acc + (staff_list[x].get_note(tie_list[y].second).second * list_param::note_gap);
 
                 int first_y_cord = cord[x]._1_LINE;
                 int second_y_cord = cord[x]._1_LINE;
 
                 // Получаем место ноты на нотном стане
                 int note_place = static_cast<int>(
-                    staff_list[x].get_clef().get_place(staff_list[x].get_note(ties[y].first).first) * 2 + 1);
+                    staff_list[x].get_clef().get_place(staff_list[x].get_note(tie_list[y].first).first) * 2 + 1);
 
                 if (note_place < 1) {
                     start_vector = 50;
@@ -233,7 +209,7 @@ namespace hc2img {
                     }
                 }
                 note_place = static_cast<int>(
-                    staff_list[x].get_clef().get_place(staff_list[x].get_note(ties[y].second).first) * 2 + 1);
+                    staff_list[x].get_clef().get_place(staff_list[x].get_note(tie_list[y].second).first) * 2 + 1);
 
                 while (note_place != 0) {
                     if (note_place > 0) {
