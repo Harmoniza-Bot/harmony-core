@@ -252,7 +252,7 @@ namespace harmony_core {
         std::vector<std::pair<harmony_core::Note, uint16_t>> note_list;
 
         /*!
-         * \brief Хранит список  залигованных нот
+         * \brief Хранит список залигованных нот
          */
         std::vector<std::pair<uint16_t, uint16_t>> tie_list;
 
