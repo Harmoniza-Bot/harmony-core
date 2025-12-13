@@ -6,6 +6,12 @@ namespace hc2img {
     List::List() {
     }
 
+    // List::List(const List &l){
+    //     for(int x=0; x<l.size(); ++x){
+    //         staff_list.push_back(l[x]);
+    //     }
+    // }
+
     void List::add(harmony_core::Staff &s) {
         if (staff_list.size() == 0) {
             staff_list.push_back(s);

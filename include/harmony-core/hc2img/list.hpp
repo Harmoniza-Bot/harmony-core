@@ -26,6 +26,11 @@ namespace hc2img {
         List();
 
         /*!
+         * \brief Создает стан на основе другого стана
+         */
+        List(const hc2img::List &);
+
+        /*!
          * \brief Добавляет нотный стан в лист.
          * \param[in] Staff Ссылка на стан для добавления
          */

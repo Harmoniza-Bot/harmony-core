@@ -82,11 +82,6 @@ void Staff::add_tie(std::pair<uint16_t, uint16_t> index) noexcept {
         tie_list.push_back(index);
         return;
     }
-    for (int x = 0; x < tie_list.size(); ++x) {
-        if (index.first <= tie_list[x].first) {
-            tie_list.insert(tie_list.begin() + x, index);
-        }
-    }
     tie_list.push_back(index);
 }
 
