@@ -1,6 +1,6 @@
-#include <hc2img/images/images.hpp>
-#include <hc2img/list.hpp>
-#include <hc2img/list_param.hpp>
+#include <harmony-core/hc2img/images/images.hpp>
+#include <harmony-core/hc2img/list.hpp>
+#include <harmony-core/hc2img/list_param.hpp>
 namespace hc2img {
 
     List::List() {
@@ -44,6 +44,7 @@ namespace hc2img {
         draw_notes(image, s);
         draw_bar(image, s);
         draw_tie(image, s);
+        draw_stem(image, s);
         image.display("winnn");
 
         // image.save_bmp("img/list.bmp");
@@ -172,8 +173,7 @@ namespace hc2img {
             int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
                                   (list_param::pixel_index * 5) + // примерный размер ключа
                                   (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
-                                  20; // зазор между ключевыми знаками и размером.
-            // Почему-то из list_param берется неправильно
+                                  list_param::acc_ts_gap;
 
             for (int y = 0; y < tie_list.size(); ++y) {
 
@@ -421,8 +421,7 @@ namespace hc2img {
             int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
                                   (list_param::pixel_index * 5) + // примерный размер ключа
                                   (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
-                                  20; // зазор между ключевыми знаками и размером.
-                                      // Почему-то из list_param берется неправильно
+                                  list_param::acc_ts_gap;
 
             // Получаем числитель в виде строки
             std::string num = std::to_string(staff_list[x].get_time_signature().get_numerator());
@@ -491,8 +490,7 @@ namespace hc2img {
                 int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
                                       (list_param::pixel_index * 5) + // примерный размер ключа
                                       (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
-                                      20; // зазор между ключевыми знаками и размером.
-                // Почему-то значение из list_param берется неправильно, поэтому mag-val 20.
+                                      list_param::acc_ts_gap;
 
                 uint16_t x_gap = x_cord_last_acc + (staff_list[x].get_note(y).second * list_param::note_gap) + add_gap;
 
@@ -559,8 +557,18 @@ namespace hc2img {
             }
             for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
                 if (staff_list[x].is_bar(staff_list[x].get_note(y).second)) {
-                    uint16_t x_bar = list_param::staff_edge_gap + list_param::start_note_gap +
-                                     (staff_list[x].get_note(y).second * list_param::note_gap) +
+                    int acc_size = staff_list[x].get_key();
+
+                    if (acc_size < 0) {
+                        acc_size = -acc_size;
+                    }
+
+                    int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
+                                          (list_param::pixel_index * 5) + // примерный размер ключа
+                                          (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
+                                          list_param::acc_ts_gap;
+
+                    uint16_t x_bar = x_cord_last_acc + (staff_list[x].get_note(y).second * list_param::note_gap) +
                                      (list_param::note_gap / 1.2);
 
 
@@ -568,8 +576,109 @@ namespace hc2img {
                         /*первая координата*/ x_bar, cord[x]._1_LINE,
                         /*вторая координата*/ x_bar, cord[x]._1_LINE - list_param::staff_line_gap * 4,
                         /*цвет*/ list_param::black);
+
+                    // Если такт последний - рисуем двойную черту.
+                    if (y == staff_list[x].get_note_list_size() - 1) {
+                        image.draw_line(
+                            /*первая координата*/ x_bar + 5, cord[x]._1_LINE,
+                            /*вторая координата*/ x_bar + 5, cord[x]._1_LINE - list_param::staff_line_gap * 4,
+                            /*цвет*/ list_param::black);
+                    }
                 }
             }
         }
     }
+
+    void List::draw_stem(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) {
+        if (staff_list.size() == 0) {
+            return;
+        }
+
+        for (int x = 0; x < staff_list.size(); ++x) {
+            if (staff_list[x].get_clef().check_clef()) {
+                std::cerr << "from List::draw_stem(iteration " << x << "): clef is none or type & name dont fit"
+                          << std::endl;
+                return;
+            }
+            for (int y = 0; y < staff_list[x].get_note_list_size(); ++y) {
+                if (staff_list[x].get_note(y).first.get_duration() != harmony_core::Duration::WHOLE) {
+                    int acc_size = staff_list[x].get_key();
+                    if (acc_size < 0) {
+                        acc_size = -acc_size;
+                    }
+
+                    int x_cord_last_acc = list_param::staff_edge_gap + // расстояние до стана
+                                          (list_param::pixel_index * 5) + // примерный размер ключа
+                                          (acc_size * list_param::staff_line_gap) + // примерный общий размер знаков
+                                          list_param::acc_ts_gap;
+
+                    uint16_t x_note = x_cord_last_acc + (staff_list[x].get_note(y).second * list_param::note_gap);
+
+                    // Получаем у координату
+                    int note_place =
+                        static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y).first) * 2 + 1);
+
+                    uint16_t y_note = cord[x]._1_LINE;
+                    while (note_place != 0) {
+                        if (note_place > 0) {
+                            --note_place;
+                            y_note -= list_param::staff_line_gap / 2;
+                        }
+                        if (note_place < 0) {
+                            ++note_place;
+                            y_note += list_param::staff_line_gap / 2;
+                        }
+                        if (y_note < list_param::staff_line_gap / 2) {
+                            note_place = 0;
+                            std::cerr << "from List::draw_notes: note outs from list!" << std::endl;
+                        }
+                    }
+
+                    note_place =
+                        static_cast<int>(staff_list[x].get_clef().get_place(staff_list[x].get_note(y).first) * 2 + 1);
+
+                    if (staff_list[x].get_note(y).first.get_duration() == harmony_core::Duration::DOUBLE) {
+                        image.draw_line(
+                            /*первая координата*/ x_note, y_note + list_param::pixel_index * 2,
+                            /*вторая координата*/ x_note, y_note,
+                            /*цвет*/ list_param::black);
+                        image.draw_line(
+                            /*первая координата*/ x_note + list_param::pixel_index * 2,
+                            y_note + list_param::pixel_index * 2,
+                            /*вторая координата*/ x_note + list_param::pixel_index * 2, y_note,
+                            /*цвет*/ list_param::black);
+                    } else if (staff_list[x].get_note(y).first.get_duration() == harmony_core::Duration::HALF ||
+                               staff_list[x].get_note(y).first.get_duration() == harmony_core::Duration::QUARTER) {
+                        if (note_place >= 2) {
+                            image.draw_line(
+                                /*первая координата*/ x_note, y_note + list_param::pixel_index,
+                                /*вторая координата*/ x_note, y_note + list_param::note_stem_length,
+                                /*цвет*/ list_param::black);
+                        } else {
+                            image.draw_line(
+                                /*первая координата*/ x_note + list_param::pixel_index * 2.1,
+                                y_note + list_param::pixel_index,
+                                /*вторая координата*/ x_note + list_param::pixel_index * 2.1,
+                                y_note - list_param::note_stem_length,
+                                /*цвет*/ list_param::black);
+                        }
+                    } else {
+                        // image.draw_line(
+                        //     /*первая координата*/ x_note, cord[x]._1_LINE,
+                        //     /*вторая координата*/ x_note, cord[x]._1_LINE - list_param::staff_line_gap * 4,
+                        //     /*цвет*/ list_param::black);
+                        // for(;;){
+                        //     image.draw_line(
+                        //         /*первая координата*/ x_note, cord[x]._1_LINE,
+                        //         /*вторая координата*/ x_note, cord[x]._1_LINE - list_param::staff_line_gap * 4,
+                        //         /*цвет*/ list_param::black);
+                        // }
+                        std::cerr << "From draw_stem: Отрисовка 1/8, 1/16 и тд. пока не работает..." << std::endl;
+                    }
+                }
+            }
+        }
+    }
+
+
 } // namespace hc2img

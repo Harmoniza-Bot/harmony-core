@@ -117,8 +117,16 @@ namespace hc2img {
          * \brief Рисует тактовые черты после нот, указанных нотных станах.
          * \param &image объект cimg_library (лист) для рисования.
          * \param cord вектор из координат нотных станов.
+         * Важный момено - ноты начинаются с первой ноты (не с нулевой!).
          */
         void draw_bar(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
+
+        /*!
+         * \brief Рисует штили, если нужно.
+         * \param &image объект cimg_library (лист) для рисования.
+         * \param cord вектор из координат нотных станов.
+         */
+        void draw_stem(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord);
 
         /*!
          * \brief Хранит информацию о патаметрах листа.

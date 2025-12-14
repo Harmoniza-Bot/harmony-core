@@ -1,6 +1,6 @@
 #ifndef HC2IMG_INCLUDE_OUTSIDE
 #define HC2IMG_INCLUDE_OUTSIDE
 
-#include "hc2img/hc2img.hpp"
+#include "hc2img/list.hpp"
 
 #endif // HC2IMG_INCLUDE_OUTSIDE
