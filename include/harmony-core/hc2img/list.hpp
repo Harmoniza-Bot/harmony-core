@@ -15,28 +15,28 @@ namespace hc2img {
      * \brief Представляет нотный лист.
      * В него можно добавить нотный стан (harmony_core::Staff).
      * Также можно сохранить лист как изображение.
-     * (Для работы с графикой используется библиотека CImg.h)
+     * (Для работы с графикой используется библиотека CImg.h).
      */
     class List final {
     public:
         /*!
-         * \brief Создает пустой нотный лист
+         * \brief Создает пустой нотный лист.
          */
         List();
 
         /*!
-         * \brief Создает стан на основе другого стана
+         * \brief Создает стан на основе другого стана.
          */
         List(const hc2img::List &);
 
         /*!
          * \brief Добавляет нотный стан в лист.
-         * \param[in] Staff Ссылка на стан для добавления
+         * \param[in] Staff Ссылка на стан для добавления.
          */
         void add(harmony_core::Staff &s);
 
         /*!
-         * \brief Удаляет нотный стан из листа
+         * \brief Удаляет нотный стан из листа.
          */
         void rm(uint8_t index);
 
@@ -46,7 +46,7 @@ namespace hc2img {
         void save() noexcept;
 
         /*!
-         * \brief Возвращает количество нотных станов в листе
+         * \brief Возвращает количество нотных станов в листе.
          */
         size_t size() const noexcept;
 
@@ -92,14 +92,14 @@ namespace hc2img {
         void draw_clefs(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> cord) noexcept;
 
         /*!
-         * Рисует знаки по координатам нотного стана.
+         * \brief Рисует знаки по координатам нотного стана.
          * \param &image общект cimg_library (лист) для рисования.
          * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
         void draw_accidentals(cimg_library::CImg<unsigned char> &image, std::vector<hc2img::Staff_cord> &cord) noexcept;
 
         /*!
-         * Рисует нотный размер по координатам нотного стана.
+         * \brief Рисует нотный размер по координатам нотного стана.
          * \param &image общект cimg_library (лист) для рисования.
          * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */
@@ -107,7 +107,7 @@ namespace hc2img {
                                  std::vector<hc2img::Staff_cord> &cord) noexcept;
 
         /*!
-         * Рисует ноты по координатам нотного стана.
+         * \brief Рисует ноты по координатам нотного стана.
          * \param &image общект cimg_library (лист) для рисования.
          * \param cord объект класса с координатами нотного стана (возвращается функцией рисования стана).
          */

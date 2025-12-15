@@ -647,12 +647,12 @@ namespace hc2img {
                             y_note + list_param::pixel_index * 2,
                             /*вторая координата*/ x_note + list_param::pixel_index * 2, y_note,
                             /*цвет*/ list_param::black);
-                    } else if (staff_list[x].get_note(y).first.get_duration() == harmony_core::Duration::HALF ||
-                               staff_list[x].get_note(y).first.get_duration() == harmony_core::Duration::QUARTER) {
+                    } else {
                         if (note_place >= 2) {
                             image.draw_line(
                                 /*первая координата*/ x_note, y_note + list_param::pixel_index,
-                                /*вторая координата*/ x_note, y_note + list_param::note_stem_length,
+                                /*вторая координата*/ x_note,
+                                y_note + list_param::note_stem_length + 10, // почему-то он короче
                                 /*цвет*/ list_param::black);
                         } else {
                             image.draw_line(
@@ -662,18 +662,37 @@ namespace hc2img {
                                 y_note - list_param::note_stem_length,
                                 /*цвет*/ list_param::black);
                         }
-                    } else {
-                        // image.draw_line(
-                        //     /*первая координата*/ x_note, cord[x]._1_LINE,
-                        //     /*вторая координата*/ x_note, cord[x]._1_LINE - list_param::staff_line_gap * 4,
-                        //     /*цвет*/ list_param::black);
-                        // for(;;){
-                        //     image.draw_line(
-                        //         /*первая координата*/ x_note, cord[x]._1_LINE,
-                        //         /*вторая координата*/ x_note, cord[x]._1_LINE - list_param::staff_line_gap * 4,
-                        //         /*цвет*/ list_param::black);
-                        // }
-                        std::cerr << "From draw_stem: Отрисовка 1/8, 1/16 и тд. пока не работает..." << std::endl;
+
+                        if (static_cast<int>(staff_list[x].get_note(y).first.get_duration()) >= 4) {
+                            // Если следующая нота есть и она является короче 1/8 - нарисовать общий штили.
+                            // В противном случае - нарисовать одинарный штиль.
+                            if (y < (staff_list[x].get_note_list_size() - 1)) {
+                                if (static_cast<int>(staff_list[x].get_note(y + 1).first.get_duration()) >= 4) {
+                                    // Нужно дописать реализацию общих штилей...
+                                }
+                                goto else_ch;
+                            } else {
+                            else_ch:
+                                for (int z = 0;
+                                     z < static_cast<int>(staff_list[x].get_note(y).first.get_duration()) - 3; ++z) {
+                                    if (note_place >= 2) {
+                                        image.draw_line(
+                                            /*первая координата*/ x_note,
+                                            y_note + list_param::note_stem_length + (z * 3) + 10,
+                                            /*вторая координата*/ x_note + 5,
+                                            y_note + list_param::note_stem_length - 15 + (z * 3) + 10,
+                                            /*цвет*/ list_param::black);
+                                    } else {
+                                        image.draw_line(
+                                            /*первая координата*/ x_note + list_param::pixel_index * 2.1,
+                                            y_note - list_param::note_stem_length + (z * 3),
+                                            /*вторая координата*/ x_note + list_param::pixel_index * 2.1 + 5,
+                                            y_note - list_param::note_stem_length + 15 + (z * 3),
+                                            /*цвет*/ list_param::black);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -14,22 +14,22 @@ namespace hc2img {
     struct Staff_cord final {
 
         /*!
-         * \brief первая линейка нотного стана
+         * \brief первая линейка нотного стана.
          */
         uint16_t _1_LINE = 0;
 
         /*!
-         * \brief Координаты ключа
+         * \brief Координаты ключа.
          */
         std::pair<uint16_t, uint16_t> clef_cord;
 
         /*!
-         * \brief Координаты размера
+         * \brief Координаты размера.
          */
         std::pair<uint16_t, uint16_t> time_signature_cord;
 
         /*!
-         * \brief Координаты ключевых знаков
+         * \brief Координаты ключевых знаков.
          */
         std::pair<uint16_t, uint16_t> accidental_cord;
     };
