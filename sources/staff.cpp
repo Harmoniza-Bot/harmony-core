@@ -160,6 +160,51 @@ bool Staff::is_bar(uint16_t index) const noexcept {
 
 
 void Staff::fix_bar() noexcept {
+    bar_list.clear();
+    float note_stack = 0; // сюда добавляется размер нот.
+    // Если он переваливает за размер такта нотного стана - нота,
+    // на которой произошло переполнение разбивается.
+
+    float staff_size = static_cast<float>(time_sig.get_numerator()) / static_cast<float>(time_sig.get_denominator());
+
+    int note_size = 0; // Количество полей с нотами.
+
+    const float epsilon = 1.0f / 254.0f; // эпсилон для сравнения чисел с плавающей точкой
+    const float min_gap = 1.0f / 64.0f; // Минимальный зазор между нот
+
+    // Ищем к-во полей с нотами
+    for (int x = 0; x < note_list.size(); ++x) {
+        std::vector<uint16_t> note_finder;
+        if (std::find(note_finder.begin(), note_finder.end(), note_list[x].second) == note_finder.end()) {
+            note_finder.push_back(note_list[x].second);
+            ++note_size;
+        }
+    }
+
+    // Основной цикл, проверяющий длительности нот
+    for (int x = 0; x < note_size; ++x) {
+        if (note_list[x].first.get_duration() == Duration::DOUBLE) {
+            note_stack += 2.0;
+        } else {
+            // Лямбда вычисляет степень двойки
+            int s = [](int n) {
+                if (n < 0)
+                    return 1;
+                return 1 << n;
+            }(static_cast<int>(note_list[x].first.get_duration()) - 1);
+            note_stack += 1.0f / s;
+        }
+
+        if (std::abs(note_stack - staff_size) < epsilon) {
+            // Если общий размер нот равен размеру такта с точностью до epsilon
+            note_stack = 0.0f;
+            bar_list.push_back(x + 1);
+        }
+        if ((note_stack > staff_size + epsilon) && (std::abs(note_stack - staff_size) > min_gap + epsilon)) {
+            std::cerr << "Fron Staff::fix_bar: Слишком большая длительность ноты " << x + 1 << std::endl;
+            return;
+        }
+    }
 }
 
 size_t Staff::bar_size() const noexcept {
@@ -167,12 +212,42 @@ size_t Staff::bar_size() const noexcept {
 }
 
 void Staff::add(std::pair<harmony_core::Note, uint16_t> n) noexcept {
+
+    // Проверка начального индекса
+    if (n.second == 0) {
+        std::cerr << "from Staff::add: Индексация нот начинается с 1" << std::endl;
+        return;
+    }
+
+    // Проверка на то, что индекс добавляемой ноты следующий после самого большoго индекса
+    int max_i = 0;
+    for (int x = 0; x < note_list.size(); ++x) {
+        if (max_i < note_list[x].second) {
+            max_i = note_list[x].second;
+        }
+    }
+    if (n.second > (max_i + 1)) {
+        std::cerr << "from Staff::add: Индекс ноты должен быть не больше (max индекса + 1)" << std::endl;
+        return;
+    }
+
+    // Проверка парных нот на одинаковость длительностей.
+    for (int x = 0; x < note_list.size(); ++x) {
+        if (n.second == note_list[x].second) {
+            if (n.first.get_duration() != note_list[x].first.get_duration()) {
+                std::cerr << "From Staff::add: Слияние нот с разной длительностью не доступно..." << std::endl;
+                return;
+            }
+        }
+    }
+
     note_list.push_back(n);
 }
 
 
 void Staff::rm(uint16_t index) noexcept {
     if (index + 1 > note_list.size()) {
+        std::cerr << "From Staff::rm: Ноты с таким индексом нет" << std::endl;
         return;
     }
     note_list.erase(note_list.begin() + index);
@@ -193,6 +268,52 @@ void Staff::rm(uint16_t index) noexcept {
 //     full_note_size /= (static_cast<float>(time_sig.get_numerator()) /
 //     static_cast<float>(time_sig.get_denominator())); return static_cast<size_t>(full_note_size);
 // }
+
+void Staff::fix_err() noexcept {
+    bar_list.clear();
+    float note_stack = 0; // сюда добавляется размер нот.
+    // Если он переваливает за размер такта нотного стана - нота,
+    // на которой произошло переполнение разбивается.
+
+    float staff_size = static_cast<float>(time_sig.get_numerator()) / static_cast<float>(time_sig.get_denominator());
+
+    int note_size = 0; // Количество полей с нотами.
+
+    const float epsilon = 1.0f / 254.0f; // эпсилон для сравнения чисел с плавающей точкой
+    const float min_gap = 1.0f / 64.0f; // минимальное изменение нотной длительности
+
+    // Ищем к-во полей с нотами
+    for (int x = 0; x < note_list.size(); ++x) {
+        std::vector<uint16_t> note_finder;
+        if (std::find(note_finder.begin(), note_finder.end(), note_list[x].second) == note_finder.end()) {
+            note_finder.push_back(note_list[x].second);
+            ++note_size;
+        }
+    }
+
+    // Основной цикл, проверяющий ноты на правильность группировки
+    for (int x = 0; x < note_size; ++x) {
+        if (note_list[x].first.get_duration() == Duration::DOUBLE) {
+            note_stack += 2.0;
+        } else {
+            // Лямбда вычисляет степень двойки
+            int s = [](int n) {
+                if (n < 0)
+                    return 1;
+                return 1 << n;
+            }(static_cast<int>(note_list[x].first.get_duration()) - 1);
+            note_stack += 1.0f / s;
+        }
+
+        if (std::abs(note_stack - staff_size) < epsilon) {
+            // Если общий размер нот равен размеру такта с точностью до epsilon
+            note_stack = 0.0f;
+            bar_list.push_back(x + 1);
+        } else if ((note_stack > staff_size + epsilon) && (std::abs(note_stack - staff_size) > min_gap + epsilon)) {
+            std::cerr << "Fron Staff::fix_err: Исправление группировок пока не работает..." << std::endl;
+        }
+    }
+}
 
 Staff &Staff::operator++() {
     if (ptr_index == 65'536) {
