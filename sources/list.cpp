@@ -1,3 +1,5 @@
+#include <filesystem>
+#include <fstream>
 #include <harmony-core/hc2img/images/images.hpp>
 #include <harmony-core/hc2img/list.hpp>
 #include <harmony-core/hc2img/list_param.hpp>
@@ -33,7 +35,52 @@ namespace hc2img {
         this->staff_list.erase(staff_list.begin() + index);
     }
 
-    void List::save() noexcept {
+    void List::save(std::string name) noexcept {
+
+        if (std::filesystem::create_directory("img")) {
+            std::cout << "Папка img успешно создана." << std::endl;
+        } else {
+            std::cout << "Не удалось создать папку img, возможно она уже есть." << std::endl;
+        }
+
+        std::string full_name = "img/";
+        full_name += name;
+        full_name += ".bmp";
+
+        std::ofstream outFile(full_name.c_str());
+
+        if (outFile.is_open()) {
+            outFile.close(); // Закрываем файл
+            std::cout << "Успешно создан файл " << full_name << std::endl;
+        } else {
+            std::cerr << "from List::save: Не удалось создать файл..." << std::endl;
+        }
+
+        cimg_library::CImg<unsigned char> image(list_param::list_size_x, list_param::list_size_y, 1, 3, 255);
+
+        std::vector<hc2img::Staff_cord> s = draw_staffs(image);
+        draw_clefs(image, s);
+        draw_accidentals(image, s);
+        draw_time_signature(image, s);
+        s = draw_staffs(image);
+        draw_notes(image, s);
+        draw_bar(image, s);
+        draw_tie(image, s);
+        draw_stem(image, s);
+        // image.display("winnn");
+        image.save_bmp(full_name.c_str());
+        // Для сохранения фотки
+
+        // for(int x=0; x<staff_list.size(); ++x){
+        //     for(int y=0; y<staff_list[x].get_note_list_size(); ++y){
+        //         std::cout << "note index " << y << " in " << x << " staff: " << staff_list[x].get_note(y).second <<
+        //         std::endl;
+        //     }
+        // }
+        // Для проверки сортировки нот
+    }
+
+    void List::display() noexcept {
         cimg_library::CImg<unsigned char> image(list_param::list_size_x, list_param::list_size_y, 1, 3, 255);
 
         std::vector<hc2img::Staff_cord> s = draw_staffs(image);
@@ -46,17 +93,6 @@ namespace hc2img {
         draw_tie(image, s);
         draw_stem(image, s);
         image.display("winnn");
-
-        // image.save_bmp("img/list.bmp");
-        // Для сохранения фотки
-
-        // for(int x=0; x<staff_list.size(); ++x){
-        //     for(int y=0; y<staff_list[x].get_note_list_size(); ++y){
-        //         std::cout << "note index " << y << " in " << x << " staff: " << staff_list[x].get_note(y).second <<
-        //         std::endl;
-        //     }
-        // }
-        // Для проверки сортировки нот
     }
 
     size_t List::size() const noexcept {

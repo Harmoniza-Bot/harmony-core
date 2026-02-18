@@ -2,6 +2,7 @@
 #define HC2IMG_LIST
 
 #include <cstdint>
+#include <string>
 #include "CImg/CImg.h"
 
 #include <harmony-core/harmony-core.hpp>
@@ -42,8 +43,15 @@ namespace hc2img {
 
         /*!
          * \brief Сохраняет лист как изображение.
+         * Данный метол сохраняет изображения в папке 'img/'.
+         * Если данная папка отсутствует в папке с исполняемым файлом то метод создаст её.
          */
-        void save() noexcept;
+        void save(std::string) noexcept;
+
+        /*!
+         * \brief Отображает лист как изображение.
+         */
+        void display() noexcept;
 
         /*!
          * \brief Возвращает количество нотных станов в листе.

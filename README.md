@@ -58,7 +58,7 @@ git submodule update --remote
 Библиотека состоит из двух основных модулей, разделенных неймспейсами `harmony_core` и `hc2img`.
 При добавлении библиотеки в проект (процесс добавления описан выше) эти модули можно подключить как вместе так и по отдельности:
 ``` C++
-#include <harmony_core/harmony_core.hpp>
+#include <harmony-core/harmony-core.hpp>
 #include <harmony-core/hc2img.hpp>
 
 harmony_core::Note n; // из модуля harmony_core

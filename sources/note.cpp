@@ -2,9 +2,11 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <cctype>
+
 using namespace harmony_core;
 
-Note::Note() noexcept : Note(Base::A, Octave::SUB_CONTRA, Accidental::NATURAL, Accidental::UNDEFINED, Duration::WHOLE) {
+Note::Note() noexcept : Note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::UNDEFINED, Duration::WHOLE) {
 }
 
 Note::Note(const Base base, const Octave octave, const Accidental key_accidental, Accidental const random_accidental,
@@ -126,11 +128,16 @@ uint_fast8_t Note::get_height() const noexcept {
 }
 
 std::string Note::get_name() const noexcept {
-    std::string name{static_cast<char>(64 + static_cast<int>(get_base()))};
-
-    if (name == "B") {
-        name = "H";
+    std::string name{static_cast<char>(66 + static_cast<int>(get_base()))};
+    if(static_cast<int>(get_base()) > 5){
+        name[0] -= 7;
     }
+
+    // if (name == "B") {
+    //     name = "H";
+    // }
+    // Во всех форматах эта фигня не используется
+
     switch (static_cast<uint8_t>(get_accidental())) {
         case 1: {
             if (name == "A" || name == "E") {
@@ -161,11 +168,77 @@ std::string Note::get_name() const noexcept {
             break;
         }
     };
-    if (name == "Hes") {
-        name = "B";
-    }
+
+    // if (name == "Hes") {
+    //     name = "B";
+    // }
+
     return name;
 }
+
+std::string Note::get_name_abc(){
+    std::string ans;
+    ans += get_name();
+    std::cout << "Ans in start: " << ans << std::endl;
+
+    if(static_cast<int>(get_octave()) > 4){
+        ans[0] = std::tolower(ans[0]);
+        for(int x=static_cast<int>(get_octave()); x>5; --x){
+            ans.insert(1, "'");
+        }
+    }
+
+    if(static_cast<int>(get_octave()) == 5){
+        ans[0] = std::tolower(ans[0]);
+    }
+
+    if(static_cast<int>(get_octave()) < 5){
+        ans[0] = std::toupper(ans[0]);
+        for(int x=5; x<static_cast<int>(get_octave()); ++x){
+            ans.insert(1, ",");
+        }
+    }
+
+    if(ans.ends_with("is")){
+        ans.erase(ans.length() - 2);
+        if(ans.ends_with("is")){
+            ans.erase(ans.length() - 2);
+            ans += "^^";
+            return ans;
+        }
+        if(ans.ends_with("s")){
+            ans.erase(ans.length() - 1);
+            ans += "^^";
+            return ans;
+        }
+        ans += "^";
+        return ans;
+    }
+
+    if(ans.ends_with("es")){
+        ans.erase(ans.length() - 2);
+        if(ans.ends_with("es")){
+            ans.erase(ans.length() - 2);
+            ans += "__";
+            return ans;
+        }
+        if(ans.ends_with("s")){
+            ans.erase(ans.length() - 1);
+            ans += "__";
+            return ans;
+        }
+        ans += "_";
+        return ans;
+    }
+
+    if(ans.ends_with("s")){
+        ans.pop_back();
+        ans += "_";
+    }
+
+    return ans;
+}
+
 
 void Note::set_pause(bool i) {
     is_pause_data = i;

@@ -12,31 +12,31 @@ namespace harmony_core {
         /*!
          * \brief Представляет собой ноту \code Ля \endcode.
          */
-        A = 0b001,
+        C = 0b001,
         /*!
          * \brief Представляет собой ноту \code Си бемоль \endcode.
          */
-        B = 0b010,
+        D = 0b010,
         /*!
          * \brief Представляет собой ноту \code До \endcode.
          */
-        C = 0b011,
+        E = 0b011,
         /*!
          * \brief Представляет собой ноту \code Ре \endcode.
          */
-        D = 0b100,
+        F = 0b100,
         /*!
          * \brief Представляет собой ноту \code Ми \endcode.
          */
-        E = 0b101,
+        G = 0b101,
         /*!
          * \brief Представляет собой ноту \code Фа \endcode.
          */
-        F = 0b110,
+        A = 0b110,
         /*!
          * \brief Представляет собой ноту \code Соль \endcode.
          */
-        G = 0b111
+        B = 0b111
     };
 
     /*!

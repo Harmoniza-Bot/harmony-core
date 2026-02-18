@@ -174,6 +174,10 @@ namespace harmony_core {
          */
         std::string get_name() const noexcept;
 
+        /*!
+         * \brief Возвращает ноту в .abc формате
+         */
+        std::string get_name_abc();
 
         /*!
          * \brief Превращает ноту в паузу.
