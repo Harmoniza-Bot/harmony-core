@@ -179,7 +179,6 @@ std::string Note::get_name() const noexcept {
 std::string Note::get_name_abc(){
     std::string ans;
     ans += get_name();
-    std::cout << "Ans in start: " << ans << std::endl;
 
     if(static_cast<int>(get_octave()) > 4){
         ans[0] = std::tolower(ans[0]);
@@ -192,9 +191,9 @@ std::string Note::get_name_abc(){
         ans[0] = std::tolower(ans[0]);
     }
 
-    if(static_cast<int>(get_octave()) < 5){
+    if(static_cast<int>(get_octave()) < 4){
         ans[0] = std::toupper(ans[0]);
-        for(int x=5; x<static_cast<int>(get_octave()); ++x){
+        for(int x=4; x>static_cast<int>(get_octave()); --x){
             ans.insert(1, ",");
         }
     }
@@ -203,37 +202,47 @@ std::string Note::get_name_abc(){
         ans.erase(ans.length() - 2);
         if(ans.ends_with("is")){
             ans.erase(ans.length() - 2);
-            ans += "^^";
+            ans.insert(0, "^^");
             return ans;
         }
         if(ans.ends_with("s")){
             ans.erase(ans.length() - 1);
-            ans += "^^";
+            ans.insert(0, "^^");
             return ans;
         }
-        ans += "^";
+        ans.insert(0, "^");
         return ans;
     }
 
     if(ans.ends_with("es")){
+
+        // Персональная обработка ноты es.
+        if(ans == "es"){
+            ans.pop_back();
+            goto not_touch_es;
+        }
+
         ans.erase(ans.length() - 2);
         if(ans.ends_with("es")){
             ans.erase(ans.length() - 2);
-            ans += "__";
+            ans.insert(0, "__");
             return ans;
         }
         if(ans.ends_with("s")){
             ans.erase(ans.length() - 1);
-            ans += "__";
+            ans.insert(0, "__");
             return ans;
         }
-        ans += "_";
+
+        not_touch_es:
+
+        ans.insert(0, "_");
         return ans;
     }
 
     if(ans.ends_with("s")){
         ans.pop_back();
-        ans += "_";
+        ans.insert(0, "_");
     }
 
     return ans;
@@ -327,40 +336,43 @@ Note &Note::operator++() {
         this->set_random_accidental(Accidental::NATURAL);
     }
 
-    // если знак не равен дубль диезу любую ноту можно повысить, сместив знак в диезную сторону
-    if (this->get_accidental() != Accidental::DOUBLE_SHARP) {
-        uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-        this->set_random_accidental(static_cast<Accidental>(++acc));
-    }
-    // если нота не ми и си можно повысить ее установкой диеза и повышением основания. В противном случае просто
-    // повысить основание
-    else {
-        uint8_t base = static_cast<uint8_t>(this->get_base());
-        ++base;
-        if (base > 7) {
-            base = 1;
-            if (this->get_octave() == Octave::_5_LINE) {
-                std::cerr << "from Note::operator++: Эта нота слишком высокая" << std::endl;
-                return *this;
-            }
-            this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) + 1));
-        }
-        if (this->get_base() != Base::B && this->get_base() != Base::E) {
-            this->set_random_accidental(Accidental::SHARP);
-            this->set_base(static_cast<Base>(base));
+    int first_base = static_cast<int>(get_base());
+
+    if(get_base() == Base::E || get_base() == Base::B){
+        if(get_base() != static_cast<Base>(7)){
+            set_base(static_cast<Base>(static_cast<int>(get_base()) + 1));
         } else {
-            this->set_base(static_cast<Base>(base));
+            set_base(static_cast<Base>(1));
+        }
+    } else {
+        if(get_accidental() == Accidental::DOUBLE_SHARP){
+            set_random_accidental(Accidental::NATURAL);
+            if(get_base() != static_cast<Base>(7)){
+                set_base(static_cast<Base>(static_cast<int>(get_base()) + 1));
+            } else {
+                set_base(static_cast<Base>(1));
+            }
+        }
+        set_random_accidental(static_cast<Accidental>(static_cast<int>(get_accidental()) + 1));
+    }
+
+    if(get_accidental() == Accidental::DOUBLE_SHARP){
+        set_random_accidental(Accidental::NATURAL);
+        if(get_base() != static_cast<Base>(7)){
+            set_base(static_cast<Base>(static_cast<int>(get_base()) + 1));
+        } else {
+            set_base(static_cast<Base>(1));
         }
     }
 
-    if ((this->get_base() == Base::B || this->get_base() == Base::E) && this->get_accidental() == Accidental::SHARP) {
-        this->enharmony_сhange(1);
-        return *this;
+    if(first_base == 7 && first_base != static_cast<int>(get_base())){
+        if(get_octave() != Octave::_5_LINE){
+            set_octave(static_cast<Octave>(static_cast<int>(get_octave()) + 1));
+        } else {
+            std::cout << "From Note::operator++: Нота слишком высокая..." << std::endl;
+        }
     }
-    if (this->get_accidental() == Accidental::DOUBLE_SHARP) {
-        this->enharmony_сhange(1);
-        return *this;
-    }
+
     return *this;
 }
 
@@ -375,37 +387,42 @@ Note &Note::operator--() {
         this->set_random_accidental(Accidental::NATURAL);
     }
 
-    // если знак не равен дубль бемолю любую ноту можно понизить, сместив знак в бемоьнуб сторону
-    if (this->get_accidental() != Accidental::DOUBLE_FLAT) {
-        uint8_t acc = static_cast<uint8_t>(this->get_accidental());
-        this->set_random_accidental(static_cast<Accidental>(--acc));
-    }
-    // если нота не фа и до можно понизить ее установкой бемоля и понижением основания. В противном случае просто
-    // понизить основание
-    else {
-        uint8_t base = static_cast<uint8_t>(this->get_base());
-        --base;
-        if (base == 0) {
-            base = 7;
-            if (this->get_octave() == Octave::SUB_CONTRA) {
-                std::cerr << "from Note::operator--: Эта нота очень низкая" << std::endl;
-                return *this;
-            }
-            this->set_octave(static_cast<Octave>(static_cast<int>(this->get_octave()) - 1));
-        }
-        if (this->get_base() != Base::B || this->get_base() != Base::E) {
-            this->set_random_accidental(Accidental::FLAT);
-            this->set_base(static_cast<Base>(base));
+    int first_base = static_cast<int>(get_base());
+
+    if(get_base() == Base::F || get_base() == Base::C){
+        if(get_base() != static_cast<Base>(1)){
+            set_base(static_cast<Base>(static_cast<int>(get_base()) - 1));
         } else {
-            this->set_base(static_cast<Base>(base));
+            set_base(static_cast<Base>(7));
+        }
+    } else {
+        if(get_accidental() == Accidental::DOUBLE_FLAT){
+            set_random_accidental(Accidental::NATURAL);
+            if(get_base() != static_cast<Base>(1)){
+                set_base(static_cast<Base>(static_cast<int>(get_base()) - 1));
+            } else {
+                set_base(static_cast<Base>(7));
+            }
+        }
+        set_random_accidental(static_cast<Accidental>(static_cast<int>(get_accidental()) - 1));
+    }
+
+    if(get_accidental() == Accidental::DOUBLE_FLAT){
+        set_random_accidental(Accidental::NATURAL);
+        if(get_base() != static_cast<Base>(1)){
+            set_base(static_cast<Base>(static_cast<int>(get_base()) - 1));
+        } else {
+            set_base(static_cast<Base>(7));
         }
     }
-    if ((this->get_base() == Base::C || this->get_base() == Base::F) && this->get_accidental() == Accidental::FLAT) {
-        this->enharmony_сhange(0);
-        return *this;
+
+    if(first_base == 1 && first_base != static_cast<int>(get_base())){
+        if(get_octave() != Octave::SUB_CONTRA){
+            set_octave(static_cast<Octave>(static_cast<int>(get_octave()) - 1));
+        } else {
+            std::cout << "From Note::operator++: Нота слишком низкая..." << std::endl;
+        }
     }
-    if (this->get_accidental() == Accidental::DOUBLE_FLAT)
-        this->enharmony_сhange(0);
 
     return *this;
 }
