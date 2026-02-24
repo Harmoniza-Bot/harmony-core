@@ -24,6 +24,78 @@ Note::Note(const uint_fast16_t data) noexcept : data(data) {
 Note::Note(const Note &note) noexcept : Note(note.data) {
 }
 
+Note::Note(std::string input) noexcept : Note(){
+    if (input.empty()){
+        std::cerr << "From Note(): Пустой аргумент. Вызван конструктор по умолчанию\n";
+        return;
+    }
+
+    int i = 0;
+    int accidental = 0;
+
+    // 1. Обработка знаков альтерации
+    while (i < input.length()) {
+        if (input[i] == '^'){
+            accidental++; i++;
+        } else if (input[i] == '_'){
+            accidental--; i++;
+        } else if (input[i] == '=') {
+            accidental = 0; i++;
+        } else {
+            break;
+        }
+    }
+
+    // 2. Определение базовой ноты и начальной октавы
+    char noteChar = input[i];
+    int base = 0;
+    int octave = 0;
+
+    // Таблица соответствия CDEFGAB -> 1234567
+    static std::unordered_map<char, int> baseMap = {
+        {'C', 1}, {'D', 2}, {'E', 3}, {'F', 4}, {'G', 5}, {'A', 6}, {'B', 7},
+        {'c', 1}, {'d', 2}, {'e', 3}, {'f', 4}, {'g', 5}, {'a', 6}, {'b', 7}
+    };
+
+    base = baseMap[noteChar];
+
+    // В abc notation:
+    // Заглавные (C,D..) — это "Middle C" (4-я октава в MIDI, но в abc это обычно 3-я/4-я).
+    // Согласно твоему ТЗ (F, - малая октава, т.е. 4), примем:
+    // Заглавные (C) = 4 (Малая), Строчные (c) = 5 (Первая).
+    if (noteChar >= 'A' && noteChar <= 'G') {
+        octave = 4;
+    } else {
+        octave = 5;
+    }
+    i++;
+
+    // 3. Обработка октавных модификаторов
+    while (i < input.length()) {
+        if (input[i] == ',') { octave--; }
+        else if (input[i] == '\'') { octave++; }
+        i++;
+    }
+
+    // 4. Проверка даных и установка их в объект.
+    if(octave > 9 || octave < 1){
+        std::cerr << "From Note(): Некорректная октава. Вызван конструктор по умолчанию\n";
+        return;
+    }
+    if(base > 7 || base < 1){
+        std::cerr << "From Note(): Некорректное основание. Вызван конструктор по умолчанию\n";
+        return;
+    }
+    if(accidental > 2 || base < -2){
+        std::cerr << "From Note(): Некорректный знак. Вызван конструктор по умолчанию\n";
+        return;
+    }
+
+    set_base(static_cast<Base>(base));
+    set_octave(static_cast<Octave>(octave));
+    set_random_accidental(static_cast<Accidental>(accidental + 3));
+}
+
 void Note::set_data(const uint_fast16_t data) noexcept {
     this->data = data;
 }

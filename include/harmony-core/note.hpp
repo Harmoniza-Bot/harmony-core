@@ -2,8 +2,9 @@
 #define HARMONY_CORE_NOTE_HPP
 
 #include <cstdint>
-#include <harmony-core/enums.hpp>
 #include <string>
+#include <unordered_map>
+#include <harmony-core/enums.hpp>
 
 namespace harmony_core {
     /*! \brief Представляет собой ноту.
@@ -50,6 +51,13 @@ namespace harmony_core {
          * \param [in] note другая нота.
          */
         Note(const Note &note) noexcept;
+
+        /*!
+         * \brief Создает ноту на основе строки с нотой в фотмате .abc
+         * \param [in] note Строка с нотой в формате .abc
+         * \warning Если данные введены в неправильном формате - UB!
+         */
+        Note(std::string) noexcept;
 
         /*!
          * \brief Удаляет ноту.
