@@ -3,7 +3,6 @@ add_library(harmony-core
             key.cpp
             interval.cpp
             clef.cpp
-            list.cpp
             staff.cpp
             time_signature.cpp)
 
