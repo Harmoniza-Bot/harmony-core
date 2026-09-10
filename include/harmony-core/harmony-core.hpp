@@ -15,5 +15,6 @@ namespace harmony_core {}
 #include "note.hpp"
 #include "staff.hpp"
 #include "time_signature.hpp"
+#include "document.hpp"
 
 #endif // HARMONY_CORE_INCLUDES
