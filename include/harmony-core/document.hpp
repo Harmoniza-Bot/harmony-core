@@ -33,7 +33,7 @@ namespace harmony_core{
         * Хранит нотные станы.
         */
         std::vector<harmony_core::Staff> staff_list;
-    }
+    };
 }
 
 #endif // DOCUMENT_HPP

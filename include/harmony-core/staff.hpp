@@ -58,10 +58,19 @@ namespace harmony_core {
         std::pair<harmony_core::Note, uint16_t> get_note(uint16_t i) const noexcept;
 
         /*!
+         * \brief Возвращает по индексу все ноты, имеющие одинаковый индекс.
+         * Например, если в стане 5 нот, 2 из которых лежат на 1 индексе,
+         * то метод от индекса 1 вернет две ноты, лежащие на первом индексе,
+         * а вызова от индекса 2 вернет ноту на 2 индексе ().
+         */
+        std::vector<harmony_core::Note> get_note_to_index(uint16_t i) const noexcept;
+
+        /*!
          * \brief Возвращает количество нот и пауз в нотном стане.
+         * Не важно, по какому индексу нота, метод включает в подсчет абсолютно все ноты.
          * \return Количество элементов в стане.
          */
-        size_t get_note_list_size() const noexcept;
+        size_t get_size() const noexcept;
 
         /*!
          * \brief Возвращает количество занятых индексов в нотном стане.
@@ -150,12 +159,6 @@ namespace harmony_core {
         void rm(uint16_t index) noexcept;
 
         /*!
-         * \brief Возвращает количество тактов в нотном стане.
-         * \return количество тактов в нотном стане
-         */
-        size_t get_size() const noexcept;
-
-        /*!
          * \brief Исправляет группировку нот и расставляет тактовые черты.
          * Исправляется только количество нот в такте.
          * Например, если в стане с размером 2/4 встречается целая нота
@@ -184,20 +187,6 @@ namespace harmony_core {
          */
         Staff operator--(int);
 
-        // /*!
-        //  * Копирует один стан в другой
-        //  */
-        // Staff &operator=(const Staff &staff) {
-        //     clef.set_data(staff.get_clef().get_data());
-        //     time_sig.set_data(staff.get_time_signature().get_data());
-        //     note_list.resize(staff.get_note_list_size());
-        //     for (int x = 0; x < note_list.size(); ++x) {
-        //         note_list[x].first = staff.get_note(x).first;
-        //         note_list[x].second = staff.get_note(x).second;
-        //     }
-        //     return *this;
-        // }
-
     private:
         /*!
          * \brief Хранит Ключ нотного стана.
@@ -220,7 +209,7 @@ namespace harmony_core {
          * Если две ноты и более имеют одит и тот же индекс, значит это интервал или аккорд.
          * Ноты с одинаковым индексом добавляются строго по порядку.
          * Поэтому две и более нот с одинаковым, идущие подряд - это аккорд, первая нота в порядке - нижняя.
-         * Вот более понятная визуализация:
+         * Вот более понятная визуализация, в которой ноты представлены в виде {порядковый_номер, индекс}:
          *
          * ----------------------------------
          * ----(3,0)-------------------------

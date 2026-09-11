@@ -15,7 +15,7 @@ Staff::Staff(const harmony_core::Staff &s) {
     time_sig = s.get_time_signature();
     ptr_index = 0;
     key = s.get_key();
-    for (int x = 0; x < s.get_note_list_size(); ++x) {
+    for (int x = 0; x < s.get_size(); ++x) {
         note_list.resize(note_list.size() + 1);
         note_list[x].first = s.get_note(x).first;
         note_list[x].second = s.get_note(x).second;
@@ -43,10 +43,27 @@ harmony_core::Time_signature Staff::get_time_signature() const noexcept {
 }
 
 std::pair<harmony_core::Note, uint16_t> Staff::get_note(uint16_t i) const noexcept {
+    if(i > note_list.size()){
+        std::cerr << "From get_note: номер получаемой ноты слишком большой, UB!\n";
+    }
     return note_list[i];
 }
 
-size_t Staff::get_note_list_size() const noexcept {
+std::vector<harmony_core::Note> Staff::get_note_to_index(uint16_t i) const noexcept{
+    if(i > get_index_size()){
+        std::cout << "From get_note_to_index: Индекс слишком большой, UB!\n";
+    }
+    std::vector<harmony_core::Note> ans;
+    for(int x=0; x<get_size(); ++x){
+        if(note_list[x].second == i){
+            ans.push_back(note_list[x].first);
+        }
+    }
+    return ans;
+}
+
+
+size_t Staff::get_size() const noexcept {
     return note_list.size();
 }
 
@@ -164,22 +181,6 @@ void Staff::rm(uint16_t index) noexcept {
     }
     note_list.erase(note_list.begin() + index);
 }
-
-// size_t Staff::get_size() const noexcept {
-//     float full_note_size = 0;
-//     for (int x = 0; x < note_list.size(); ++x) {
-//         static uint8_t note_size;
-//         note_size = static_cast<int>(note_list[x].get_duration());
-//         if (note_size == 0) {
-//             full_note_size += 2;
-//         } else {
-//             --note_size;
-//             full_note_size += 1 / pow(2, note_size);
-//         }
-//     }
-//     full_note_size /= (static_cast<float>(time_sig.get_numerator()) /
-//     static_cast<float>(time_sig.get_denominator())); return static_cast<size_t>(full_note_size);
-// }
 
 Staff &Staff::operator++() {
     if (ptr_index == 65'536) {
