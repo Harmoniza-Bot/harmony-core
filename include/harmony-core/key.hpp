@@ -86,7 +86,7 @@ namespace harmony_core {
          * \brief Возвращает тонику тон-ти.
          * \return текущую тонику тональности.
          */
-        [[nodiscard]] Note get_main() noexcept;
+        [[nodiscard]] Note get_main() const noexcept;
 
         // mode getter & setter
 
@@ -100,7 +100,7 @@ namespace harmony_core {
          * \brief Возвращает лад тон-ти.
          * \return текущий лад тональности.
          */
-        [[nodiscard]] Mode get_mode() noexcept;
+        [[nodiscard]] Mode get_mode() const noexcept;
 
         // specie getter & setter
 
@@ -114,7 +114,7 @@ namespace harmony_core {
          * \brief Возвращает вид тон-ти.
          * \return текущий лад тональности.
          */
-        [[nodiscard]] Specie get_specie() noexcept;
+        [[nodiscard]] Specie get_specie() const noexcept;
 
         //----- Знаковые и нотные функции ------
 
@@ -131,7 +131,7 @@ namespace harmony_core {
          * \param [in] note нота для поиска
          * \return Индекс ноты в звукоряде тон-ти или -1 если нота не найдена.
          */
-        [[nodiscard]] int8_t search_tone(Note note) noexcept;
+        [[nodiscard]] int8_t search_tone(Note note) const noexcept;
 
         // interval functions
         /*!
@@ -140,7 +140,7 @@ namespace harmony_core {
          * \param [in] uint8_t вторая нота интервала
          * \return Interval Интервал
          */
-        [[nodiscard]] Interval get_interval(uint8_t, uint8_t) noexcept;
+        [[nodiscard]] Interval get_interval(uint8_t, uint8_t) const noexcept;
 
 
         /*!
@@ -148,7 +148,7 @@ namespace harmony_core {
          * \param [in] Interval интервал для поиска.
          * \return std::vector Вектор из первых нот введенного интервала для данной тональности.
          */
-        [[nodiscard]] std::vector<Note> search_interval(const Interval &interval) noexcept;
+        [[nodiscard]] std::vector<Note> search_interval(const Interval &interval) const noexcept;
 
         // accidental getter
 
@@ -179,7 +179,7 @@ namespace harmony_core {
          * \brief Возвращает вектор из семи нот - гаммы данной тональности в первой - второй октаве
          * \return std::vector<Note> Вектор из нот, образующий гамму.
          */
-        std::vector<Note> get_scale() noexcept;
+        std::vector<Note> get_scale() const noexcept;
 
         /*!
          * \brief Делает шаг по кварто-квинтовому кругу в сторону диезных тональностей.

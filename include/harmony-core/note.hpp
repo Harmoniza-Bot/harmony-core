@@ -198,7 +198,7 @@ namespace harmony_core {
          * true - нота является паузой.
          * false - нота не является паузой.
          */
-        bool is_pause();
+        bool is_pause() const noexcept;
 
         //---------------
 
@@ -207,7 +207,7 @@ namespace harmony_core {
          * \param [in] dir Направление замены.
          * 0 - энгармонизм вниз, 1 - энгармонизм наверх
          */
-        void enharmony_сhange(bool dir) noexcept;
+        void enharmony_change(bool dir) noexcept;
 
         // equality operators
 

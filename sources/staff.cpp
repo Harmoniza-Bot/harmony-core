@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cmath>
+#include <set>
 #include <harmony-core/harmony-core.hpp>
 using namespace harmony_core;
 
@@ -136,8 +137,62 @@ std::pair<uint16_t, uint16_t> Staff::get_tie(uint16_t index) const noexcept {
     return tie_list[index];
 }
 
+// Вспомогательная функция: переводит энум длительности в относительные единицы (кванты)
+// Целая нота (WHOLE) = 64 кванта.
+static uint32_t duration_to_ticks(harmony_core::Duration dur) noexcept {
+    switch (dur) {
+        case harmony_core::Duration::DOUBLE:        return 128;
+        case harmony_core::Duration::WHOLE:         return 64;
+        case harmony_core::Duration::HALF:          return 32;
+        case harmony_core::Duration::QUARTER:       return 16;
+        case harmony_core::Duration::EIGHTH:        return 8;
+        case harmony_core::Duration::SIXTEENTH:     return 4;
+        case harmony_core::Duration::THIRTY_SECOND: return 2;
+        case harmony_core::Duration::SIXTY_FOURTH:  return 1;
+    }
+    return 16; // По умолчанию четвертная
+}
 bool Staff::is_bar(uint16_t index) const noexcept {
-    // Написать на основе суммы длительностей нот
+    // 1. Получаем емкость одного такта в тех же квантах
+    // Емкость = (64 * числитель) / знаменатель
+    uint32_t bar_capacity = (64 * time_sig.get_numerator()) / time_sig.get_denominator();
+
+    uint32_t current_measure_ticks = 0;
+    std::set<uint16_t> processed_time_indexes; // Чтобы не считать ноты в аккордах дважды
+
+    // 2. Бежим по всему плоскому вектору нот с самого начала
+    for (size_t i = 0; i < note_list.size(); ++i) {
+        const auto& note_pair = note_list[i];
+        harmony_core::Note note = note_pair.first;
+        uint16_t time_index = note_pair.second;
+
+        // Если мы эту временную точку еще не обсчитывали, добавляем её длительность
+        if (processed_time_indexes.find(time_index) == processed_time_indexes.end()) {
+            current_measure_ticks += duration_to_ticks(note.get_duration());
+            processed_time_indexes.insert(time_index);
+        }
+
+        // 3. Если мы дошли в цикле до запрашиваемой ноты (по ее порядковому индексу `i`)
+        if (static_cast<uint16_t>(i) == index) {
+            // Проверяем: заполнился ли текущий такт ровно без остатка?
+            // current_measure_ticks % bar_capacity == 0 означает, что на этой ноте такт завершен
+            // Также проверяем, что мы вообще добавили хоть какие-то ноты (ticks > 0)
+            if (current_measure_ticks > 0 && (current_measure_ticks % bar_capacity == 0)) {
+
+                // Важная проверка для аккордов: если следующая нота в векторе имеет ТАКУЮ ЖЕ
+                // временную позицию (time_index), значит текущая нота — это середина аккорда.
+                // Тактовую черту посреди аккорда ставить нельзя! Ждем последнюю ноту аккорда.
+                if (i + 1 < note_list.size() && note_list[i + 1].second == time_index) {
+                    return false;
+                }
+
+                return true; // Такт заполнен, это последняя нота аккорда или одиночная нота
+            }
+            break; // Дальше запрашиваемого индекса считать нет смысла
+        }
+    }
+
+    return false;
 }
 
 void Staff::add_note(std::pair<harmony_core::Note, uint16_t> n) noexcept {
@@ -180,6 +235,13 @@ void Staff::rm(uint16_t index) noexcept {
         return;
     }
     note_list.erase(note_list.begin() + index);
+}
+
+bool Staff::test_bijection(const harmony_core::Staff& s) const noexcept{
+    if(s.get_index_size() != get_index_size()){
+        return 1;
+    }
+    return 0;
 }
 
 Staff &Staff::operator++() {

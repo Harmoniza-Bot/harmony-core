@@ -80,7 +80,7 @@ std::pair<int, int> Time_signature::get_remainder(harmony_core::Note note) const
     return get_remainder(note, numerator, denominator);
 }
 
-std::pair<int, int> Time_signature::get_remainder(std::vector<harmony_core::Note> note) const noexcept {
+std::pair<int, int> Time_signature::get_remainder(std::vector<harmony_core::Note>& note) const noexcept {
     int s = note.size();
     std::pair<int, int> flag_t_s = {numerator, denominator};
     for (int x = 0; x < s; ++x) {

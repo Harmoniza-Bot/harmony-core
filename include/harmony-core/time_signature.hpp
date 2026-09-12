@@ -73,7 +73,7 @@ namespace harmony_core {
          * \brief Возвращает остаточный размер такта после добавления нескольких нот.
          * Используется размер объекта.
          */
-        std::pair<int, int> get_remainder(std::vector<harmony_core::Note> note) const noexcept;
+        std::pair<int, int> get_remainder(std::vector<harmony_core::Note>& note) const noexcept;
 
     private:
         /*!

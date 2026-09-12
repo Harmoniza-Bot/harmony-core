@@ -8,31 +8,42 @@
 #include "note.hpp"
 #include "staff.hpp"
 #include "time_signature.hpp"
-#include "document.hpp"
 
 #include <string>
 
 namespace harmony_core{
 
 /*!
- * Данный класс представляет документ, в который помещаются нотные станы, ключи, ноты и тд.
- * Предназначен для конвертации нот в другие форматы (в первую очередь musicXML и abc).
+ * Данная структура представляет документ, в который группируются нотные станы.
+ * Предназначен для конвертации нот в другие форматы (в первую очередь musicXML).
  */
-    class Document final {
-
+    struct Document final {
 
     public:
-        // Здесь должны храниться функции конвертирования в musicxml и abc
-    private:
+
+        /*!
+         * Создает нотный лист
+         */
+        Document() = default;
+
+        /*! \brief Возвращает содержимое структуры в формате musicxml
+         */
+        std::string get_musicxml() const noexcept;
+
         /*!
         * Хранит название произведения.
         */
-        std::string name;
+        std::string name = "harmony_core document";
+
+        /*!
+         * \brief Хранит подпись перед нотными станами.
+         */
+        std::string staffs_name = "Music";
 
         /*!
         * Хранит нотные станы.
         */
-        std::vector<harmony_core::Staff> staff_list;
+        std::vector<harmony_core::Staff> staffs;
     };
 }
 

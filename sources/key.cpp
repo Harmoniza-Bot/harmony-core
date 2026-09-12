@@ -95,7 +95,7 @@ void Key::set_main(Note note) noexcept {
     }
 }
 
-Note Key::get_main() noexcept {
+Note Key::get_main() const noexcept {
     Note note(Base::C, Octave::_1_LINE, Accidental::NATURAL, Accidental::NATURAL, Duration::WHOLE);
     if (this->get_mode() == Mode::IONIAN) {
         note.set_base(Base::C);
@@ -143,7 +143,7 @@ void Key::set_mode(Mode mode) noexcept {
     data = data & 0b11100000 | (static_cast<uint16_t>(mode) << 3);
 }
 
-Mode Key::get_mode() noexcept {
+Mode Key::get_mode() const noexcept {
     return static_cast<Mode>((data & 0b11100000) >> 5);
 }
 
@@ -151,7 +151,7 @@ void Key::set_specie(Specie specie) noexcept {
     data = data & 0b11100000000 | (static_cast<uint16_t>(specie) << 3);
 }
 
-Specie Key::get_specie() noexcept {
+Specie Key::get_specie() const noexcept {
     return static_cast<Specie>((data & 0b11100000000) >> 7);
 }
 
@@ -210,7 +210,7 @@ Note Key::get_tone(uint8_t index) const noexcept {
     return note;
 }
 
-int8_t Key::search_tone(Note note) noexcept {
+int8_t Key::search_tone(Note note) const noexcept {
     note.set_octave(Octave::_1_LINE);
     for (int x = 0; x < 7; ++x) {
         Note answer = this->get_tone(x);
@@ -221,12 +221,12 @@ int8_t Key::search_tone(Note note) noexcept {
     return -1;
 }
 
-Interval Key::get_interval(uint8_t first, uint8_t second) noexcept {
+Interval Key::get_interval(uint8_t first, uint8_t second) const noexcept {
     Interval i(this->get_tone(first), this->get_tone(second));
     return i;
 }
 
-std::vector<Note> Key::search_interval(const Interval &interval) noexcept {
+std::vector<Note> Key::search_interval(const Interval &interval) const noexcept {
     std::vector<Note> interval_base_list;
 
     std::vector<Note> scale = this->get_scale();
@@ -453,7 +453,7 @@ Note Key::get_resolution(Note note, bool dir) const noexcept {
     return note;
 }
 
-std::vector<Note> Key::get_scale() noexcept {
+std::vector<Note> Key::get_scale() const noexcept {
     bool octave_trig = 0;
     std::vector<Note> scale;
     for (int x = 0; x < 7; ++x) {
